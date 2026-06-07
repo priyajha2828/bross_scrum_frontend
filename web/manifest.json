@@ -1,6 +1,6 @@
 {
-    "name": "bross_scrum_frontend",
-    "short_name": "bross_scrum_frontend",
+    "name": "BrossScrum",
+    "short_name": "BrossScrum",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,4 +1,4 @@
-# bross_scrum_frontend
+# BrossScrum
 
 A new Flutter project.
 
