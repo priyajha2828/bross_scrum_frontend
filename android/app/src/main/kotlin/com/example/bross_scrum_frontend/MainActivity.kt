@@ -1,4 +1,4 @@
-package com.example.bross_scrum_frontend
+package com.example.BrossScrum
 
 import io.flutter.embedding.android.FlutterActivity
 
