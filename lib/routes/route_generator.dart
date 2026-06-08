@@ -1,5 +1,5 @@
 import 'package:BrossScrum/pages/auth_pages/loginpage.dart';
-import 'package:BrossScrum/pages/dashboard/main_dashboard.dart';
+import 'package:BrossScrum/pages/home_screen/homeScreen.dart';
 import 'package:BrossScrum/routes/app_route.dart';
 import 'package:flutter/material.dart';
 
@@ -20,8 +20,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const RecoveryPage());
       case AppRoute.otp:
         return MaterialPageRoute(builder: (_)=> const OtpPage());
-      case AppRoute.maindashboard:
-        return MaterialPageRoute(builder: (_) => const MainDashboard());
+      case AppRoute.homescreen:
+        return MaterialPageRoute(builder: (_) => const Homescreen());
 
         default:
           return _errorRoute();

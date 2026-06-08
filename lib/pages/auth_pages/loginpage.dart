@@ -297,6 +297,19 @@ class LoginPage extends StatelessWidget {
                                     fontWeight: FontWeight.w500,
                                   ),
                                 )
+                            ),
+
+                            TextButton(
+                              onPressed: (){
+                                Navigator.pushNamed(context, AppRoute.homescreen);
+                              },
+                              child: Text(
+                                "Skip Login",
+                                    style: TextStyle(
+                                      color: CustomColor.bross_scrum,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                              ),
                             )
                           ],
                         ),

@@ -111,7 +111,7 @@ class OtpPage extends StatelessWidget {
                                       keyboardType: TextInputType.number,
                                       maxLength: 1,
                                       style: const TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 12,
                                         fontWeight: FontWeight.bold,
                                       ),
                                       decoration: InputDecoration(
@@ -178,7 +178,7 @@ class OtpPage extends StatelessWidget {
                                         onPressed: () {
                                           Navigator.pushNamed(
                                             context,
-                                            AppRoute.maindashboard,
+                                            AppRoute.homescreen,
                                           );
                                         },
                                         child: Text(
