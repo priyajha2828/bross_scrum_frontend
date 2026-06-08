@@ -2,6 +2,7 @@ import 'package:BrossScrum/providers/splash_provider/splash_screen_provider.dart
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../intro/intro_page.dart';
 import 'loginpage.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -26,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> with SingleTickerProviderSt
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-              builder: (_) => const LoginPage(),
+              builder: (_) => const IntroPage(),
           ),
         );
       }
