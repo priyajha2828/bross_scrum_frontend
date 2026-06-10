@@ -1,4 +1,6 @@
 import 'package:BrossScrum/pages/auth_pages/splash_screen.dart';
+import 'package:BrossScrum/providers/account_screen_provider/account_screen_provider.dart';
+import 'package:BrossScrum/providers/account_screen_provider/notification_settings_provider/notification_settings_provider.dart';
 import 'package:BrossScrum/providers/auth_provider/auth_provider.dart';
 import 'package:BrossScrum/providers/home_screen/home_screen_provider.dart';
 import 'package:BrossScrum/providers/intro/intro_provider.dart';
@@ -16,6 +18,8 @@ void main(){
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => IntroProvider()),
         ChangeNotifierProvider(create: (_) => HomeScreenProvider()),
+        ChangeNotifierProvider(create: (_) => AccountScreenProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
     ],
     child: const MyApp(),
     )
