@@ -1,3 +1,5 @@
+import 'package:BrossScrum/pages/account/account_screen.dart';
+import 'package:BrossScrum/pages/account/notification_setting/notification_setting.dart';
 import 'package:BrossScrum/pages/auth_pages/loginpage.dart';
 import 'package:BrossScrum/pages/home_screen/homeScreen.dart';
 import 'package:BrossScrum/routes/app_route.dart';
@@ -21,7 +23,11 @@ class RouteGenerator {
       case AppRoute.otp:
         return MaterialPageRoute(builder: (_)=> const OtpPage());
       case AppRoute.homescreen:
-        return MaterialPageRoute(builder: (_) => const Homescreen());
+        return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case AppRoute.accountscreen:
+        return MaterialPageRoute(builder: (_) => const AccountScreen());
+      case AppRoute.notificationsetting:
+        return MaterialPageRoute(builder: (_) => const NotificationsPage());
 
         default:
           return _errorRoute();

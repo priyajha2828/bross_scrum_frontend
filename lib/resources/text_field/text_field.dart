@@ -1,4 +1,4 @@
-// lib/widgets/custom_text_field.dart
+
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
@@ -11,6 +11,7 @@ class TextFromFieldWithPrefixSuffix extends StatefulWidget {
     this.prefixIcon,
     required this.validator,
     this.keyboardType = TextInputType.text,
+    this.textInputAction, // 1. Added parameter here
     this.obscure = false,
     this.applyPrefix = true,
     this.applySuffixIcon = false,
@@ -56,6 +57,7 @@ class TextFromFieldWithPrefixSuffix extends StatefulWidget {
   final bool autoFocus;
   final bool readOnly;
   final TextInputType keyboardType;
+  final TextInputAction? textInputAction; // 2. Declared field here
   final int minLine;
   final int maxLines;
   final Function(String?)? onChange;
@@ -114,6 +116,7 @@ class _TextFromFieldWithPrefixSuffixState
           child: TextFormField(
             textCapitalization: TextCapitalization.sentences,
             keyboardType: widget.keyboardType,
+            textInputAction: widget.textInputAction, // 3. Wired it up to the TextFormField
             controller: widget.controller,
             obscureText: widget.obscure,
             validator: widget.validator,
