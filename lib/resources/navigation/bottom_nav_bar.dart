@@ -10,17 +10,22 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        border: Border(top: BorderSide(color: Color(0xFFE0E0E0), width: 1)),
+      decoration: BoxDecoration(
+        color: CustomColor.navBg(context),
+        border: Border(
+          top: BorderSide(
+            color: CustomColor.navBorder(context),
+            width: 1,
+          ),
+        ),
       ),
       child: BottomNavigationBar(
         currentIndex: provider.currentTab,
         onTap: provider.changeTab,
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.white,
+        backgroundColor: CustomColor.navBg(context),
         selectedItemColor: CustomColor.primarySelectedBlue,
-        unselectedItemColor: Colors.grey[600],
+        unselectedItemColor: CustomColor.navUnselectedItem(context),
         selectedFontSize: 12,
         unselectedFontSize: 12,
         items: [
@@ -30,7 +35,9 @@ class CustomBottomNavBar extends StatelessWidget {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
                 decoration: BoxDecoration(
-                  color: provider.currentTab == 0 ? CustomColor.secondaryContainerBlue : Colors.transparent,
+                  color: provider.currentTab == 0
+                      ? CustomColor.secondaryContainerBlue
+                      : Colors.transparent,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: const Icon(Icons.home_outlined),

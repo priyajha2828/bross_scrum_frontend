@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+// TODO: Adjust this path to match your folder structure
+import '../color/custom_color.dart';
 
 class ActivityFeedRow extends StatelessWidget {
   final String title;
@@ -24,16 +26,22 @@ class ActivityFeedRow extends StatelessWidget {
   Widget build(BuildContext context) {
     BorderRadius borderRadius = BorderRadius.circular(16);
     if (isTopRoundedOnly) {
-      borderRadius = const BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16));
+      borderRadius = const BorderRadius.only(
+        topLeft: Radius.circular(16),
+        topRight: Radius.circular(16),
+      );
     }
     if (isBottomRoundedOnly) {
-      borderRadius = const BorderRadius.only(bottomLeft: Radius.circular(16), bottomRight: Radius.circular(16));
+      borderRadius = const BorderRadius.only(
+        bottomLeft: Radius.circular(16),
+        bottomRight: Radius.circular(16),
+      );
     }
 
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: CustomColor.feedRowBg(context),
         borderRadius: borderRadius,
       ),
       child: Row(
@@ -54,11 +62,21 @@ class ActivityFeedRow extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16, color: Colors.black87),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    color: CustomColor.feedTextPrimary(context),
+                  ),
                   overflow: TextOverflow.ellipsis,
                 ),
                 const SizedBox(height: 2),
-                Text(subtitle, style: TextStyle(color: Colors.grey[500], fontSize: 13)),
+                Text(
+                  subtitle,
+                  style: TextStyle(
+                    color: CustomColor.feedTextSecondary(context),
+                    fontSize: 13,
+                  ),
+                ),
               ],
             ),
           )

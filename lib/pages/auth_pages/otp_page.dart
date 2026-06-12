@@ -10,7 +10,7 @@ class OtpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CustomColor.bg_color,
+      backgroundColor: CustomColor.bg_color(context),
       body: _body(context),
     );
   }
@@ -38,7 +38,7 @@ class OtpPage extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(28),
                           decoration: BoxDecoration(
-                            color: CustomColor.logincontainer,
+                            color: CustomColor.logincontainer(context),
                             borderRadius: BorderRadius.circular(28),
                           ),
                           child: Column(
@@ -69,7 +69,7 @@ class OtpPage extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 19,
                                     fontWeight: FontWeight.bold,
-                                    color: CustomColor.textcolor,
+                                    color: CustomColor.tileTextPrimary(context),
                                   ),
                                 ),
                               ),

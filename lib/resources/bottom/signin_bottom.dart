@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../color/custom_color.dart';
+
 class loginpageButton extends StatelessWidget {
   final String label;
   final IconData iconData;
@@ -34,7 +36,7 @@ class loginpageButton extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               label,
-              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: Color(0xFF253858)),
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14, color: CustomColor.tileTextPrimary(context),),
             ),
           )
         ],

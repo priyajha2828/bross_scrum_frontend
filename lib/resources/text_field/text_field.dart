@@ -1,6 +1,6 @@
-
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import '../color/custom_color.dart';
 
 class TextFromFieldWithPrefixSuffix extends StatefulWidget {
   const TextFromFieldWithPrefixSuffix({
@@ -11,7 +11,7 @@ class TextFromFieldWithPrefixSuffix extends StatefulWidget {
     this.prefixIcon,
     required this.validator,
     this.keyboardType = TextInputType.text,
-    this.textInputAction, // 1. Added parameter here
+    this.textInputAction,
     this.obscure = false,
     this.applyPrefix = true,
     this.applySuffixIcon = false,
@@ -57,7 +57,7 @@ class TextFromFieldWithPrefixSuffix extends StatefulWidget {
   final bool autoFocus;
   final bool readOnly;
   final TextInputType keyboardType;
-  final TextInputAction? textInputAction; // 2. Declared field here
+  final TextInputAction? textInputAction;
   final int minLine;
   final int maxLines;
   final Function(String?)? onChange;
@@ -97,7 +97,7 @@ class _TextFromFieldWithPrefixSuffixState
         borderRadius: BorderRadius.circular(widget.borderRadius),
         boxShadow: [
           BoxShadow(
-            color: Colors.white.withOpacity(0.1),
+            color: CustomColor.inputGlassBaseWhite(context).withValues(alpha: 0.1),
             spreadRadius: 1,
             blurRadius: widget.blurAmount,
           ),
@@ -116,7 +116,7 @@ class _TextFromFieldWithPrefixSuffixState
           child: TextFormField(
             textCapitalization: TextCapitalization.sentences,
             keyboardType: widget.keyboardType,
-            textInputAction: widget.textInputAction, // 3. Wired it up to the TextFormField
+            textInputAction: widget.textInputAction,
             controller: widget.controller,
             obscureText: widget.obscure,
             validator: widget.validator,
@@ -130,13 +130,13 @@ class _TextFromFieldWithPrefixSuffixState
             onChanged: widget.onChanged,
             decoration: InputDecoration(
               hintStyle: TextStyle(
-                color: widget.hintTextColor ?? Colors.grey.shade400,
+                color: widget.hintTextColor ?? CustomColor.inputHintDefault(context),
               ),
               filled: true,
               fillColor: widget.glassEffect
-                  ? Colors.white.withOpacity(widget.glassOpacity)
-                  : widget.fillColor ?? Colors.white,
-              focusColor: Colors.white,
+                  ? CustomColor.inputGlassBaseWhite(context).withValues(alpha: widget.glassOpacity)
+                  : widget.fillColor ?? CustomColor.inputBg(context),
+              focusColor: CustomColor.inputFocusBg(context),
               labelText: widget.labelText,
               hintText: widget.hintText,
               prefixIcon: widget.applyPrefix ? widget.prefixIcon : null,
@@ -147,7 +147,7 @@ class _TextFromFieldWithPrefixSuffixState
                 borderSide: widget.glassEffect
                     ? BorderSide.none
                     : BorderSide(
-                  color: widget.borderColor ?? Colors.grey,
+                  color: widget.borderColor ?? CustomColor.inputBorderDefault(context),
                   width: 1.0,
                 ),
               ),
@@ -156,30 +156,30 @@ class _TextFromFieldWithPrefixSuffixState
                 borderSide: widget.glassEffect
                     ? BorderSide.none
                     : BorderSide(
-                  color: widget.enabledBorderColor ?? widget.borderColor ?? Colors.grey,
+                  color: widget.enabledBorderColor ?? widget.borderColor ?? CustomColor.inputBorderDefault(context),
                   width: 1.0,
                 ),
               ),
               errorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius),
                 borderSide: BorderSide(
-                  color: widget.errorBorderColor ?? Colors.red.shade800,
+                  color: widget.errorBorderColor ?? CustomColor.inputBorderError(context),
                   width: 1.5,
                 ),
               ),
               focusedErrorBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius),
                 borderSide: BorderSide(
-                  color: widget.errorBorderColor ?? Colors.red.shade800,
+                  color: widget.errorBorderColor ?? CustomColor.inputBorderError(context),
                   width: 2.0,
                 ),
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(widget.borderRadius),
                 borderSide: widget.glassEffect
-                    ? BorderSide(color: Colors.white.withOpacity(0.3), width: 1.5)
+                    ? BorderSide(color: CustomColor.inputGlassBaseWhite(context).withValues(alpha: 0.3), width: 1.5)
                     : BorderSide(
-                  color: widget.focusedBorderColor ?? widget.borderColor ?? Colors.grey,
+                  color: widget.focusedBorderColor ?? widget.borderColor ?? CustomColor.inputBorderDefault(context),
                   width: 2.0,
                 ),
               ),

@@ -13,13 +13,14 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CustomColor.bg_color,
+      backgroundColor: CustomColor.bg_color(context),
       body: _body(context),
     );
   }
 
   Widget _body(BuildContext context) {
     final double topPadding = MediaQuery.of(context).padding.top;
+    final bool isDark = CustomColor.isDark(context);
 
     return Consumer<AuthProvider>(
       builder: (context, provider, _) {
@@ -41,7 +42,7 @@ class LoginPage extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(28),
                           decoration: BoxDecoration(
-                            color: CustomColor.logincontainer,
+                            color: CustomColor.logincontainer(context),
                             borderRadius: BorderRadius.circular(28),
                           ),
                           child: Column(
@@ -72,7 +73,7 @@ class LoginPage extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
-                                    color: CustomColor.textcolor,
+                                    color: CustomColor.tileTextPrimary(context),
                                   ),
                                 ),
                               ),
@@ -83,7 +84,7 @@ class LoginPage extends StatelessWidget {
                                     "Email ",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: CustomColor.textcolor,
+                                      color: CustomColor.tileTextPrimary(context),
                                     ),
                                   ),
                                   const Text(
@@ -99,6 +100,8 @@ class LoginPage extends StatelessWidget {
                               TextFromFieldWithPrefixSuffix(
                                 controller: provider.emailController,
                                 hintText: "Enter your email",
+                                hintTextColor: CustomColor.textMutedLabel(context),
+                                fillColor: CustomColor.card_bg(context),
                                 borderRadius: 4.0,
                                 applyPrefix: false,
                                 keyboardType: TextInputType.emailAddress,
@@ -150,17 +153,17 @@ class LoginPage extends StatelessWidget {
                                         value: provider.rememberMe,
                                         onChanged: (val) => provider.toggleRememberMe(val),
                                         activeColor: const Color(0xFF0052CC),
-                                        side: const BorderSide(
-                                          color: Colors.grey,
+                                        side: BorderSide(
+                                          color: isDark ? Colors.grey.shade400 : Colors.grey,
                                           width: 1.5,
                                         ),
                                       ),
                                     ),
                                     const SizedBox(width: 8),
-                                    const Text(
+                                    Text(
                                       "Remember me",
                                       style: TextStyle(
-                                        color: Colors.black,
+                                        color: CustomColor.tileTextPrimary(context), // Changes cleanly across dark/light contexts
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
@@ -256,7 +259,7 @@ class LoginPage extends StatelessWidget {
                             loginpageButton(
                               label: 'Apple',
                               iconData: Icons.apple,
-                              iconColor: Colors.black,
+                              iconColor: isDark ? Colors.white : Colors.black,
                               onPressed: () => provider.LoginWithApple(),
                             ),
                           ],
@@ -298,17 +301,16 @@ class LoginPage extends StatelessWidget {
                                   ),
                                 )
                             ),
-
                             TextButton(
                               onPressed: (){
                                 Navigator.pushNamed(context, AppRoute.homescreen);
                               },
                               child: Text(
                                 "Skip Login",
-                                    style: TextStyle(
-                                      color: CustomColor.bross_scrum,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                                style: TextStyle(
+                                  color: CustomColor.bross_scrum,
+                                  fontWeight: FontWeight.w500,
+                                ),
                               ),
                             )
                           ],
