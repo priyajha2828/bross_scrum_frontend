@@ -26,7 +26,7 @@ class FilterToggleButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            color: isSelected ? CustomColor.primarySelectedBlue : Colors.grey[700],
+            color: isSelected ? CustomColor.primarySelectedBlue : CustomColor.filterUnselectedText(context),
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
             fontSize: 15,
           ),
@@ -53,7 +53,7 @@ class SpaceShortcutCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: CustomColor.shortcutCardBg(context),
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
@@ -65,7 +65,7 @@ class SpaceShortcutCard extends StatelessWidget {
               color: iconBgColor,
               borderRadius: BorderRadius.circular(10),
             ),
-            child: Icon(icon, color: Colors.white, size: 22),
+            child: Icon(icon, color: CustomColor.shortcutIconDefault, size: 22),
           ),
           const SizedBox(width: 12),
           Expanded(
@@ -78,7 +78,10 @@ class SpaceShortcutCard extends StatelessWidget {
                   style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   overflow: TextOverflow.ellipsis,
                 ),
-                Text('Space', style: TextStyle(color: Colors.grey[500], fontSize: 13)),
+                Text(
+                  'Space',
+                  style: TextStyle(color: CustomColor.shortcutSubtitle(context), fontSize: 13),
+                ),
               ],
             ),
           )

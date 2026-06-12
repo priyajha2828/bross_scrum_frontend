@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import '../color/custom_color.dart';
+
 class CustomListTile extends StatelessWidget {
-  CustomListTile({
+  const CustomListTile({
     required this.onTap,
     required this.isTabActive,
     this.tabColor,
@@ -63,7 +65,7 @@ class CustomListTile extends StatelessWidget {
       height: tileHeight,
       width: tileWidth,
       decoration: BoxDecoration(
-        color: isTabActive ? (tabColor ?? Colors.white) : Colors.transparent,
+        color: isTabActive ? (tabColor ?? CustomColor.tileActiveBg(context)) : Colors.transparent,
       ),
       child: Material(
         color: Colors.transparent,
@@ -73,19 +75,19 @@ class CustomListTile extends StatelessWidget {
               ? Container(
             padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: const Color(0xFFF4F5F7),
+              color: CustomColor.tileIconContainerBg(context),
               borderRadius: BorderRadius.circular(8),
             ),
-            child: _buildLeadingWidget(),
+            child: _buildLeadingWidget(context),
           )
-              : _buildLeadingWidget(),
+              : _buildLeadingWidget(context),
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
                 text,
                 style: TextStyle(
-                  color: textColor ?? const Color(0xFF1F2937),
+                  color: textColor ?? CustomColor.tileTextPrimary(context),
                   fontWeight: textFontWeight ?? FontWeight.w500,
                   fontSize: textSize ?? 16,
                 ),
@@ -95,12 +97,12 @@ class CustomListTile extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE5E7EB),
+                    color: CustomColor.tileBadgeBg(context),
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  child: const Text(
+                  child: Text(
                     'Recommended',
-                    style: TextStyle(fontSize: 10, color: Color(0xFF4B5563)),
+                    style: TextStyle(fontSize: 10, color: CustomColor.tileBadgeText(context)),
                   ),
                 ),
               ]
@@ -111,9 +113,9 @@ class CustomListTile extends StatelessWidget {
             padding: const EdgeInsets.only(top: 2),
             child: Text(
               subtitle!,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
-                color: Color(0xFF9CA3AF),
+                color: CustomColor.tileTextSecondary(context),
               ),
             ),
           )
@@ -123,9 +125,9 @@ class CustomListTile extends StatelessWidget {
             value: switchValue,
             onChanged: onSwitchChanged,
             activeColor: Colors.white,
-            activeTrackColor: const Color(0xFF2563EB),
-            inactiveThumbColor: const Color(0xFF4B5563),
-            inactiveTrackColor: const Color(0xFFE5E7EB),
+            activeTrackColor: CustomColor.switchActiveTrack(context),
+            inactiveThumbColor: CustomColor.switchInactiveThumb(context),
+            inactiveTrackColor: CustomColor.switchInactiveTrack(context),
           )
               : null,
           onTap: showSwitch && onSwitchChanged != null
@@ -136,7 +138,7 @@ class CustomListTile extends StatelessWidget {
     );
   }
 
-  Widget _buildLeadingWidget() {
+  Widget _buildLeadingWidget(BuildContext context) {
     if (!isIcon) {
       if (networkImageUrl != null) {
         return _buildNetworkImage();
@@ -144,7 +146,7 @@ class CustomListTile extends StatelessWidget {
         return _buildAssetImage();
       }
     }
-    return _buildIcon();
+    return _buildIcon(context);
   }
 
   Widget _buildNetworkImage() {
@@ -172,18 +174,18 @@ class CustomListTile extends StatelessWidget {
     );
   }
 
-  Widget _buildIcon() {
+  Widget _buildIcon(BuildContext context) {
     if (icon is FaIconData) {
       return FaIcon(
         icon as FaIconData?,
         size: iconSize ?? 22,
-        color: iconColor ?? const Color(0xFF42526E),
+        color: iconColor ?? CustomColor.tileIconDefault(context),
       );
     }
     return Icon(
       icon,
       size: iconSize ?? 22,
-      color: iconColor ?? const Color(0xFF42526E),
+      color: iconColor ?? CustomColor.tileIconDefault(context),
     );
   }
 

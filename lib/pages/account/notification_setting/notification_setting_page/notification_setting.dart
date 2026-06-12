@@ -1,8 +1,10 @@
+import 'package:BrossScrum/resources/color/custom_color.dart';
+import 'package:BrossScrum/routes/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../providers/account_screen_provider/notification_settings_provider/notification_settings_provider.dart';
-import '../../../resources/tile/custom_tile.dart';
+import '../../../../providers/account_screen_provider/notification_settings_provider/notification_setting/notification_settings_provider.dart';
+import '../../../../resources/tile/custom_tile.dart';
 
 class NotificationsPage extends StatelessWidget {
   const NotificationsPage({super.key});
@@ -12,18 +14,18 @@ class NotificationsPage extends StatelessWidget {
     final provider = Provider.of<NotificationProvider>(context);
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF3F4F6),
+      backgroundColor: CustomColor.bg_color(context),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF3F4F6),
+        backgroundColor: CustomColor.appbar(context),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Color(0xFF374151)),
+          icon: Icon(Icons.arrow_back, color: CustomColor.arrowback(context)),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           'Notifications',
           style: TextStyle(
-            color: Color(0xFF1F2937),
+            color: CustomColor.textPrimary(context),
             fontSize: 22,
             fontWeight: FontWeight.w500,
           ),
@@ -32,25 +34,27 @@ class NotificationsPage extends StatelessWidget {
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         children: [
-          const Text(
+          Text(
             'General',
             style: TextStyle(
-              color: Color(0xFF6B7280),
+              color: CustomColor.smalltext(context),
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
           ),
           const SizedBox(height: 8),
           Card(
-            color: Colors.white,
+            color: CustomColor.card_bg(context),
             elevation: 0,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(24),
               child: CustomListTile(
                 text: 'Notification categories',
                 textSize: 16,
-                textColor: const Color(0xFF1F2937),
+                textColor: CustomColor.textPrimary(context),
                 icon: Icons.tune_outlined,
                 enableIconContainer: true,
                 isTabActive: false,
@@ -59,19 +63,21 @@ class NotificationsPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 20),
-          const Text(
+          Text(
             'Work item notification',
             style: TextStyle(
-              color: Color(0xFF6B7280),
+              color: CustomColor.smalltext(context),
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
           ),
           const SizedBox(height: 8),
           Card(
-            color: Colors.white,
+            color: CustomColor.card_bg(context),
             elevation: 0,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
             child: Padding(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: Column(
@@ -88,7 +94,7 @@ class NotificationsPage extends StatelessWidget {
                     isTabActive: false,
                     onTap: () {},
                   ),
-                  _buildDivider(),
+                  _buildDivider(context),
                   CustomListTile(
                     text: 'Watching',
                     subtitle: "Updates on work items you're watching",
@@ -100,7 +106,7 @@ class NotificationsPage extends StatelessWidget {
                     isTabActive: false,
                     onTap: () {},
                   ),
-                  _buildDivider(),
+                  _buildDivider(context),
                   CustomListTile(
                     text: 'Assigned',
                     subtitle: 'Updates on work items assigned to you',
@@ -112,7 +118,7 @@ class NotificationsPage extends StatelessWidget {
                     isTabActive: false,
                     onTap: () {},
                   ),
-                  _buildDivider(),
+                  _buildDivider(context),
                   CustomListTile(
                     text: 'Reported',
                     subtitle: 'Updates on work items you created',
@@ -124,7 +130,7 @@ class NotificationsPage extends StatelessWidget {
                     isTabActive: false,
                     onTap: () {},
                   ),
-                  _buildDivider(),
+                  _buildDivider(context),
                   CustomListTile(
                     text: 'New work',
                     subtitle: 'New work items created in select projects',
@@ -136,7 +142,7 @@ class NotificationsPage extends StatelessWidget {
                     isTabActive: false,
                     onTap: () {},
                   ),
-                  _buildDivider(),
+                  _buildDivider(context),
                   CustomListTile(
                     text: 'Approval requests',
                     subtitle: 'When someone adds you as an approver',
@@ -148,7 +154,7 @@ class NotificationsPage extends StatelessWidget {
                     isTabActive: false,
                     onTap: () {},
                   ),
-                  _buildDivider(),
+                  _buildDivider(context),
                   CustomListTile(
                     text: 'Due or Overdue',
                     subtitle: 'Work items due today or in the last 7 days',
@@ -166,19 +172,23 @@ class NotificationsPage extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           Card(
-            color: Colors.white,
+            color: CustomColor.card_bg(context),
             elevation: 0,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(24),
               child: CustomListTile(
                 text: 'Do not disturb',
                 textSize: 16,
-                textColor: const Color(0xFF1F2937),
+                textColor: CustomColor.textPrimary(context),
                 icon: Icons.do_not_disturb_on_outlined,
                 enableIconContainer: true,
                 isTabActive: false,
-                onTap: () {},
+                onTap: () {
+                  Navigator.pushNamed(context, AppRoute.donotdisturb);
+                },
               ),
             ),
           ),
@@ -188,11 +198,11 @@ class NotificationsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildDivider() {
-    return const Divider(
+  Widget _buildDivider(BuildContext context) {
+    return Divider(
       height: 1,
       thickness: 1,
-      color: Color(0xFFF3F4F6),
+      color: CustomColor.dividerColor(context),
       indent: 68,
     );
   }

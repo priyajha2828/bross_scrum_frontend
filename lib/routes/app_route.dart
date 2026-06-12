@@ -1,5 +1,6 @@
 class AppRoute {
 
+  static const String intro = "/intro";
   static const String login = "/login";
   static const String signup = "/signup";
   static const String recovery = "/recovery";
@@ -7,4 +8,9 @@ class AppRoute {
   static const String homescreen = "/homescreen";
   static const String accountscreen = "/accountscreen";
   static const String notificationsetting = "/notificationsetting";
+  static const String donotdisturb = "/donotdisturb";
+  static const String setting = "/setting";
+  static const String theme = "/theme";
+  static const String manageaccount = "/manageaccount";
+  static const String invitepeople = "/invitepeole";
 }

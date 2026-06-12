@@ -13,7 +13,7 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CustomColor.bg_color,
+      backgroundColor: CustomColor.bg_color(context),
       body: _body(context),
     );
   }
@@ -41,7 +41,7 @@ class SignUpPage extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(28),
                           decoration: BoxDecoration(
-                            color: CustomColor.logincontainer,
+                            color: CustomColor.logincontainer(context),
                             borderRadius: BorderRadius.circular(28),
                           ),
                           child: Column(
@@ -72,7 +72,7 @@ class SignUpPage extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
-                                    color: CustomColor.textcolor,
+                                    color: CustomColor.tileTextPrimary(context),
                                   ),
                                 ),
                               ),
@@ -83,7 +83,7 @@ class SignUpPage extends StatelessWidget {
                                     "Email ",
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
-                                      color: CustomColor.textcolor,
+                                      color: CustomColor.tileTextPrimary(context),
                                     ),
                                   ),
                                   const Text(
@@ -157,10 +157,10 @@ class SignUpPage extends StatelessWidget {
                                       ),
                                     ),
                                     const SizedBox(width: 8),
-                                    const Text(
+                                    Text(
                                       "Remember me",
                                       style: TextStyle(
-                                        color: Colors.black,
+                                        color: CustomColor.tileTextPrimary(context),
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),

@@ -10,7 +10,7 @@ class RecoveryPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: CustomColor.bg_color,
+      backgroundColor: CustomColor.bg_color(context),
       body: _body(context),
     );
   }
@@ -37,7 +37,7 @@ class RecoveryPage extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(28),
                           decoration: BoxDecoration(
-                            color: CustomColor.logincontainer,
+                            color: CustomColor.logincontainer(context),
                             borderRadius: BorderRadius.circular(28),
                           ),
                           child: Column(
@@ -68,7 +68,7 @@ class RecoveryPage extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
-                                    color: CustomColor.textcolor,
+                                    color: CustomColor.tileTextPrimary(context),
                                   ),
                                 ),
                               ),
