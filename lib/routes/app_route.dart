@@ -12,5 +12,10 @@ class AppRoute {
   static const String setting = "/setting";
   static const String theme = "/theme";
   static const String manageaccount = "/manageaccount";
-  static const String invitepeople = "/invitepeole";
+  static const String invitepeople = "/invitepeople";
+  static const String feedback = "/feedback";
+  static const String notification = "/notification";
+  static const String bottonnavibar = "/bottonnavibar";
+  static const String dashboard = "/dashboard";
+
 }

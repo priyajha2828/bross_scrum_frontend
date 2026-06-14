@@ -4,7 +4,6 @@ import '../color/custom_color.dart';
 import '../dropdown/custom_time_dropdown.dart';
 import '../tile/custom_tile.dart';
 
-
 class DndScheduleCard extends StatelessWidget {
   final DndProvider dndProvider;
 

@@ -303,7 +303,7 @@ class LoginPage extends StatelessWidget {
                             ),
                             TextButton(
                               onPressed: (){
-                                Navigator.pushNamed(context, AppRoute.homescreen);
+                                Navigator.pushNamed(context, AppRoute.bottonnavibar);
                               },
                               child: Text(
                                 "Skip Login",

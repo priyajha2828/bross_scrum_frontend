@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../providers/home_screen/home_screen_provider.dart';
-import '../../resources/bottom/custom_bottom.dart';
-import '../../resources/bottom/project_card.dart';
-import '../../resources/color/custom_color.dart';
-import '../../resources/navigation/bottom_nav_bar.dart';
-import '../../resources/text_field/text_field.dart';
-import '../../routes/app_route.dart';
-import '../account/account_screen_page/account_screen.dart';
+import '../../../providers/home_screen/home_screen_provider/home_screen_provider.dart';
+import '../../../resources/bottom/custom_bottom.dart';
+import '../../../resources/bottom/project_card.dart';
+import '../../../resources/color/custom_color.dart';
+import '../../../resources/text_field/text_field.dart';
+import '../../../routes/app_route.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -35,8 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final provider = Provider.of<HomeScreenProvider>(context);
 
-    return Scaffold(
-      body: Container(
+    return Material(
+      color: Colors.transparent,
+      child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
@@ -47,46 +46,36 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         child: SafeArea(
           bottom: false,
-          child: Column(
-            children: [
-              // Main Dashboard Scrollable View
-              Expanded(
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // Header Module Block
-                      _buildHeader(),
-                      const SizedBox(height: 20),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Header Module Block
+                _buildHeader(),
+                const SizedBox(height: 20),
 
-                      // Search text field
-                      _buildSearchBar(),
-                      const SizedBox(height: 24),
+                // Search text field
+                _buildSearchBar(),
+                const SizedBox(height: 24),
 
-                      // Overview Section
-                      _buildOverviewSection(),
-                      const SizedBox(height: 16),
+                // Overview Section
+                _buildOverviewSection(),
+                const SizedBox(height: 16),
 
-                      // Horizontal Shortcut Cards
-                      _buildHorizontalAppCards(),
-                      const SizedBox(height: 15),
+                // Horizontal Shortcut Cards
+                _buildHorizontalAppCards(),
+                const SizedBox(height: 15),
 
-                      // Filter Toggle Setup (Viewed vs Activity)
-                      _buildToggleFilter(provider),
-                      const SizedBox(height: 20),
+                // Filter Toggle Setup (Viewed vs Activity)
+                _buildToggleFilter(provider),
+                const SizedBox(height: 20),
 
-                      // Recent Activity List
-                      _buildRecentActivityList(provider),
-                      const SizedBox(height: 24),
-                    ],
-                  ),
-                ),
-              ),
-
-              // Bottom Nav Dock Component
-              CustomBottomNavBar(provider: provider),
-            ],
+                // Recent Activity List
+                _buildRecentActivityList(provider),
+                const SizedBox(height: 24),
+              ],
+            ),
           ),
         ),
       ),
@@ -99,7 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         CircleAvatar(
           radius: 18,
-          backgroundColor: CustomColor.profileAvatarPurple,
+          backgroundColor:Colors.cyan[700],
           child: ClipOval(
             child: TextButton(
               style: TextButton.styleFrom(
@@ -220,9 +209,12 @@ class _HomeScreenState extends State<HomeScreen> {
             const SizedBox(width: 8),
             Icon(Icons.info_outline, size: 14, color: mutedColor),
             const SizedBox(width: 4),
-            Text(
-              'Uses AI. Verify results.',
-              style: TextStyle(color: mutedColor, fontSize: 13),
+            Flexible(
+              child: Text(
+                'Uses AI. Verify results.',
+                style: TextStyle(color: mutedColor, fontSize: 13),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
             const Spacer(),
             Icon(Icons.thumb_up_alt_outlined, size: 16, color: mutedColor),

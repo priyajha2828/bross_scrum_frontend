@@ -109,6 +109,22 @@ class CustomColor {
   static Color smalltext(BuildContext context) =>
       isDark(context) ? const Color(0xFF9CA3AF) : const Color(0xFF6B7280);
 
+  static Color actionBlueText(BuildContext context) =>
+      isDark(context) ? const Color(0xFF60A5FA) : const Color(0xFF0052CC);
+
+  // Filter Chips (Dynamic Layout Elements)
+  static Color chipSelectedBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF3B82F6).withOpacity(0.3) : const Color(0xFFD3E2FF);
+
+  static Color chipSelectedText(BuildContext context) =>
+      isDark(context) ? const Color(0xFF60A5FA) : const Color(0xFF0C3D91);
+
+  static Color chipUnselectedBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF374151) : const Color(0xFFF3F4F6);
+
+  static Color chipUnselectedBorder(BuildContext context) =>
+      isDark(context) ? const Color(0xFF4B5563) : const Color(0xFFE5E7EB);
+
   // Day Selector Colors
   static Color daySelectedBg(BuildContext context) =>
       isDark(context) ? const Color(0xFF3B82F6) : const Color(0xFF2563EB);
@@ -135,6 +151,16 @@ class CustomColor {
   static Color navUnselectedItem(BuildContext context) =>
       isDark(context) ? Colors.grey[400]! : Colors.grey[600]!;
 
+  static Color bottomNavSelected(BuildContext context) =>
+      isDark(context) ? const Color(0xFF60A5FA) : const Color(0xFF0C3D91);
+
+  static Color bottomNavUnselected(BuildContext context) =>
+      isDark(context) ? const Color(0xFF9CA3AF) : const Color(0xFF4B5563);
+
+  // Overlays & Overrides
+  static Color overlayBarrier(BuildContext context) =>
+      isDark(context) ? const Color(0x99000000) : const Color(0x66000000);
+
   // Form & TextField Component Colors
   static Color inputBg(BuildContext context) => card_bg(context);
   static Color inputFocusBg(BuildContext context) => card_bg(context);
@@ -143,7 +169,7 @@ class CustomColor {
       isDark(context) ? Colors.grey.shade500 : Colors.grey.shade400;
 
   static Color inputBorderDefault(BuildContext context) =>
-      isDark(context) ? Colors.grey.shade600 : Colors.grey;
+      isDark(context) ? const Color(0xFF4B5563) : const Color(0xFFE5E7EB);
 
   static Color inputBorderError(BuildContext context) =>
       isDark(context) ? Colors.red.shade400 : Colors.red.shade800;
@@ -169,4 +195,11 @@ class CustomColor {
 
   static Color feedTextSecondary(BuildContext context) =>
       isDark(context) ? Colors.grey[400]! : Colors.grey[500]!;
+
+  // Toast / SnackBar Notification Components
+  static Color toast_bg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF374151) : const Color(0xFF1F2937);
+
+  static Color toast_text(BuildContext context) =>
+      isDark(context) ? const Color(0xFFF9FAFB) : Colors.white;
 }

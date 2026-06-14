@@ -1,9 +1,10 @@
 import 'package:BrossScrum/pages/account/account_screen_page/account_screen.dart';
+import 'package:BrossScrum/pages/account/give_feedback/give_feedback_page/give_feedback.dart';
 import 'package:BrossScrum/pages/account/notification_setting/do_not_disturb/do_not_disturb.dart';
 import 'package:BrossScrum/pages/account/notification_setting/notification_setting_page/notification_setting.dart';
 import 'package:BrossScrum/pages/account/settings/theme/theme_page.dart';
 import 'package:BrossScrum/pages/auth_pages/loginpage.dart';
-import 'package:BrossScrum/pages/home_screen/homeScreen.dart';
+import 'package:BrossScrum/pages/home_screen/home_screen/homeScreen.dart';
 import 'package:BrossScrum/routes/app_route.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,10 @@ import '../pages/account/settings/settingsPage/settings.dart';
 import '../pages/auth_pages/otp_page.dart';
 import '../pages/auth_pages/recovery_page.dart';
 import '../pages/auth_pages/signuppage.dart';
+import '../pages/home_screen/dashboard/dashboard.dart';
+import '../pages/home_screen/notifications/notifications_page.dart';
 import '../pages/intro/intro_page.dart';
+import '../resources/navigation/bottom_navi_bar.dart';
 
 
 
@@ -47,6 +51,15 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const ManageAccountPage());
       case AppRoute.invitepeople:
         return MaterialPageRoute(builder: (_) => const InviteContactPage());
+      case AppRoute.feedback:
+        return MaterialPageRoute(builder: (_) => const SendFeedbackPage());
+      case AppRoute.notification:
+        return MaterialPageRoute(builder: (_) => const NotificationsScreen());
+      case AppRoute.bottonnavibar:
+        return MaterialPageRoute(builder: (_) => const BottomNaviBarPage());
+      case AppRoute.dashboard:
+        return MaterialPageRoute(builder: (_) => const DashboardsScreen());
+
 
         default:
           return _errorRoute();
