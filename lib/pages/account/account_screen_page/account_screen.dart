@@ -169,7 +169,9 @@ class AccountScreen extends StatelessWidget {
                     color: CustomColor.dividerColor(context),
                   ),
                   CustomListTile(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushNamed(context, AppRoute.feedback);
+                    },
                     icon: Icons.mail_outlined,
                     isTabActive: false,
                     text: "Give Feedback",
@@ -182,7 +184,9 @@ class AccountScreen extends StatelessWidget {
                     color: CustomColor.dividerColor(context),
                   ),
                   CustomListTile(
-                    onTap: () {},
+                    onTap: () {
+                      context.read<AccountScreenProvider>().redirectToPlayStore();
+                    },
                     icon: Icons.star_border,
                     isTabActive: false,
                     text: "Rate Us",

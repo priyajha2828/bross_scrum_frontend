@@ -12,6 +12,7 @@ class DoNotDisturbPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dndProvider = Provider.of<DndProvider>(context);
+    final bool isDark = CustomColor.isDark(context);
 
     return Scaffold(
       backgroundColor: CustomColor.bg_color(context),
@@ -19,15 +20,16 @@ class DoNotDisturbPage extends StatelessWidget {
         backgroundColor: CustomColor.appbar(context),
         elevation: 0,
         leading: IconButton(
-          icon:  Icon(Icons.arrow_back,
-              color:CustomColor.arrowback(context)
+          icon: Icon(
+            Icons.arrow_back,
+            color: CustomColor.arrowback(context),
           ),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
+        title: Text(
           'Do not disturb',
           style: TextStyle(
-            color: Color(0xFF1F2937),
+            color: CustomColor.textPrimary(context),
             fontSize: 22,
             fontWeight: FontWeight.w500,
           ),
@@ -37,7 +39,7 @@ class DoNotDisturbPage extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         children: [
           Card(
-            color: Colors.white,
+            color: CustomColor.card_bg(context),
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(24),
@@ -51,8 +53,8 @@ class DoNotDisturbPage extends StatelessWidget {
                     ? 'Snoozed until ${dndProvider.snoozeUntil!.hour.toString().padLeft(2, '0')}:${dndProvider.snoozeUntil!.minute.toString().padLeft(2, '0')}'
                     : 'Pause push notifications for a set time',
                 textColor: dndProvider.isSnoozed
-                    ? const Color(0xFF2563EB)
-                    : const Color(0xFF1F2937),
+                    ? (isDark ? const Color(0xFF3B82F6) : const Color(0xFF2563EB))
+                    : CustomColor.textPrimary(context),
                 isTabActive: false,
                 onTap: () => _showSnoozeBottomSheet(context, dndProvider),
               ),
@@ -68,7 +70,7 @@ class DoNotDisturbPage extends StatelessWidget {
   void _showSnoozeBottomSheet(BuildContext context, DndProvider provider) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: CustomColor.card_bg(context),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
@@ -83,17 +85,17 @@ class DoNotDisturbPage extends StatelessWidget {
                   width: 40,
                   height: 4,
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE5E7EB),
+                    color: CustomColor.inputBorderDefault(context),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
                 const SizedBox(height: 16),
-                const Text(
+                Text(
                   'Snooze Notifications',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF1F2937),
+                    color: CustomColor.textPrimary(context),
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -122,13 +124,13 @@ class DoNotDisturbPage extends StatelessWidget {
                   provider,
                 ),
                 if (provider.isSnoozed) ...[
-                  const Divider(color: Color(0xFFF3F4F6)),
+                  Divider(color: CustomColor.dividerColor(context)),
                   ListTile(
-                    title: const Center(
+                    title: Center(
                       child: Text(
                         'Turn Off Snooze',
                         style: TextStyle(
-                          color: Colors.red,
+                          color: CustomColor.logout_text(context),
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -148,23 +150,30 @@ class DoNotDisturbPage extends StatelessWidget {
   }
 
   Widget _buildSnoozeOption(
-    BuildContext context,
-    String title,
-    Duration duration,
-    DndProvider provider,
-  ) {
+      BuildContext context,
+      String title,
+      Duration duration,
+      DndProvider provider,
+      ) {
     return ListTile(
       title: Text(
         title,
         textAlign: TextAlign.center,
-        style: const TextStyle(fontSize: 16, color: Color(0xFF4B5563)),
+        style: TextStyle(
+          fontSize: 16,
+          color: CustomColor.textMutedLabel(context),
+        ),
       ),
       onTap: () {
         provider.snoozeNotifications(duration);
         Navigator.pop(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Notifications paused for $title'),
+            backgroundColor: CustomColor.toast_bg(context),
+            content: Text(
+              'Notifications paused for $title',
+              style: TextStyle(color: CustomColor.toast_text(context)),
+            ),
             behavior: SnackBarBehavior.floating,
           ),
         );
