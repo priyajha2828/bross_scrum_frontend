@@ -235,6 +235,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Expanded(
             child: SpaceShortcutCard(
+              onTap: (){},
               title: 'app1',
               iconBgColor: CustomColor.appShortcutBlue,
               icon: Icons.album,
@@ -243,9 +244,11 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(width: 12),
           Expanded(
             child: SpaceShortcutCard(
+              onTap: (){},
               title: 'App 2',
               iconBgColor: CustomColor.appShortcutOrange,
               icon: Icons.dashboard_customize,
+
             ),
           ),
         ],
@@ -295,6 +298,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Text('Live Updates', style: subheadStyle),
           const SizedBox(height: 10),
           ActivityFeedRow(
+            onTap: (){},
             title: 'No recent tracking changes logs.',
             subtitle: 'Sync completed',
             icon: Icons.sync,
@@ -311,6 +315,9 @@ class _HomeScreenState extends State<HomeScreen> {
         Text('Today', style: subheadStyle),
         const SizedBox(height: 10),
         ActivityFeedRow(
+          onTap: (){
+            Navigator.pushNamed(context, AppRoute.myopenissue);
+          },
           title: 'My open issues',
           subtitle: 'Filter • Viewed',
           icon: Icons.filter_list,
@@ -321,6 +328,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Text('This month', style: subheadStyle),
         const SizedBox(height: 10),
         ActivityFeedRow(
+          onTap: (){},
           title: 'App 2',
           subtitle: 'Space • Viewed',
           icon: Icons.dashboard_customize,
@@ -335,6 +343,7 @@ class _HomeScreenState extends State<HomeScreen> {
           color: CustomColor.dividerColor(context),
         ),
         ActivityFeedRow(
+          onTap: (){},
           title: 'SCRUM board',
           subtitle: 'Space • Viewed',
           icon: Icons.album,

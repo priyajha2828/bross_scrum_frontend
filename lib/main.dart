@@ -10,6 +10,7 @@ import 'package:BrossScrum/providers/auth_provider/auth_provider.dart';
 import 'package:BrossScrum/providers/home_screen/dashboard/dashboard_provider.dart';
 import 'package:BrossScrum/providers/home_screen/home_screen_provider/home_screen_provider.dart';
 import 'package:BrossScrum/providers/home_screen/notifications/notification_provider.dart';
+import 'package:BrossScrum/providers/home_screen/spaces/space_provider.dart';
 import 'package:BrossScrum/providers/intro/intro_provider.dart';
 import 'package:BrossScrum/providers/splash_provider/splash_screen_provider.dart';
 import 'package:BrossScrum/routes/route_generator.dart';
@@ -33,6 +34,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => ManageAccountProvider()),
         ChangeNotifierProvider(create: (_) => NotificationsProvider()),
         ChangeNotifierProvider(create: (_) => DashboardsProvider()),
+        ChangeNotifierProvider(create: (_) => SpacesProvider()),
       ],
       child: const MyApp(),
     ),

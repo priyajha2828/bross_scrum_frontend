@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-
 import '../color/custom_color.dart';
 
 class CustomListTile extends StatelessWidget {
   const CustomListTile({
     required this.onTap,
     required this.isTabActive,
+    required this.text,
     this.tabColor,
     this.icon,
     this.iconSize,
     this.iconColor,
-    required this.text,
     this.textSize,
     this.textColor,
     this.textFontWeight,
@@ -65,12 +64,17 @@ class CustomListTile extends StatelessWidget {
       height: tileHeight,
       width: tileWidth,
       decoration: BoxDecoration(
-        color: isTabActive ? (tabColor ?? CustomColor.tileActiveBg(context)) : Colors.transparent,
+        color: isTabActive
+            ? (tabColor ?? CustomColor.tileActiveBg(context))
+            : Colors.transparent,
       ),
       child: Material(
         color: Colors.transparent,
         child: ListTile(
           contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+          onTap: showSwitch && onSwitchChanged != null
+              ? () => onSwitchChanged!(!switchValue)
+              : onTap,
           leading: enableIconContainer
               ? Container(
             padding: const EdgeInsets.all(6),
@@ -84,12 +88,15 @@ class CustomListTile extends StatelessWidget {
           title: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                text,
-                style: TextStyle(
-                  color: textColor ?? CustomColor.tileTextPrimary(context),
-                  fontWeight: textFontWeight ?? FontWeight.w500,
-                  fontSize: textSize ?? 16,
+              Expanded(
+                child: Text(
+                  text,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: textColor ?? CustomColor.tileTextPrimary(context),
+                    fontWeight: textFontWeight ?? FontWeight.w500,
+                    fontSize: textSize ?? 16,
+                  ),
                 ),
               ),
               if (showBadge) ...[
@@ -102,10 +109,13 @@ class CustomListTile extends StatelessWidget {
                   ),
                   child: Text(
                     'Recommended',
-                    style: TextStyle(fontSize: 10, color: CustomColor.tileBadgeText(context)),
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: CustomColor.tileBadgeText(context),
+                    ),
                   ),
                 ),
-              ]
+              ],
             ],
           ),
           subtitle: subtitle != null
@@ -130,9 +140,6 @@ class CustomListTile extends StatelessWidget {
             inactiveTrackColor: CustomColor.switchInactiveTrack(context),
           )
               : null,
-          onTap: showSwitch && onSwitchChanged != null
-              ? () => onSwitchChanged!(!switchValue)
-              : onTap,
         ),
       ),
     );
@@ -201,7 +208,61 @@ class CustomListTile extends StatelessWidget {
     return SizedBox(
       width: imgWidth ?? 40,
       height: imgHeigt ?? 40,
-      child: const CircularProgressIndicator(),
+      child: const Center(
+        child: CircularProgressIndicator(
+          strokeWidth: 2,
+        ),
+      ),
     );
   }
+}
+
+// --- छुट्टै सेपरेट ThemeTile विजेट ---
+class ThemeTile extends StatelessWidget {
+  final String title;
+  final ThemeMode value;
+  final ThemeMode currentMode;
+  final VoidCallback onTap;
+
+  const ThemeTile({
+    required this.title,
+    required this.value,
+    required this.currentMode,
+    required this.onTap,
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isSelected = currentMode == value;
+    final theme = Theme.of(context);
+
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 16,
+                color: theme.textTheme.bodyLarge?.color,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            if (isSelected)
+              Icon(
+                Icons.check,
+                color: theme.colorScheme.primary,
+                size: 20,
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+
+
 }
