@@ -17,5 +17,7 @@ class AppRoute {
   static const String notification = "/notification";
   static const String bottonnavibar = "/bottonnavibar";
   static const String dashboard = "/dashboard";
+  static const String spaces = "/spaces";
+  static const String myopenissue = "/myopenissue";
 
 }

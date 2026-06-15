@@ -5,6 +5,7 @@ import 'package:BrossScrum/pages/account/notification_setting/notification_setti
 import 'package:BrossScrum/pages/account/settings/theme/theme_page.dart';
 import 'package:BrossScrum/pages/auth_pages/loginpage.dart';
 import 'package:BrossScrum/pages/home_screen/home_screen/homeScreen.dart';
+import 'package:BrossScrum/pages/home_screen/my_open_issue/my_open_issue.dart';
 import 'package:BrossScrum/routes/app_route.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ import '../pages/auth_pages/recovery_page.dart';
 import '../pages/auth_pages/signuppage.dart';
 import '../pages/home_screen/dashboard/dashboard.dart';
 import '../pages/home_screen/notifications/notifications_page.dart';
+import '../pages/home_screen/spaces/spaces_screen/spaces_screen.dart';
 import '../pages/intro/intro_page.dart';
 import '../resources/navigation/bottom_navi_bar.dart';
 
@@ -59,7 +61,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const BottomNaviBarPage());
       case AppRoute.dashboard:
         return MaterialPageRoute(builder: (_) => const DashboardsScreen());
-
+      case AppRoute.spaces:
+        return MaterialPageRoute(builder: (_) => const SpacesScreen() );
+      case AppRoute.myopenissue:
+        return MaterialPageRoute(builder: (_) => const MyOpenIssue());
 
         default:
           return _errorRoute();

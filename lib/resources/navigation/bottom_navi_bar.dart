@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../pages/home_screen/dashboard/dashboard.dart';
 import '../../pages/home_screen/notifications/notifications_page.dart';
+import '../../pages/home_screen/spaces/spaces_screen/spaces_screen.dart';
 import '../color/custom_color.dart';
 
 class BottomNaviBarPage extends StatefulWidget {
@@ -19,7 +20,7 @@ class _BottomNaviBarPageState extends State<BottomNaviBarPage> {
 
   final List<Widget> pages = [
     HomeScreen(),
-    Center(child: Text('Spaces')),
+    SpacesScreen(),
     Center(child: Text('All Work')),
     DashboardsScreen(),
     NotificationsScreen(),

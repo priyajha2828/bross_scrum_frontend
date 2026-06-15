@@ -10,6 +10,7 @@ class ActivityFeedRow extends StatelessWidget {
   final Color iconColor;
   final bool isTopRoundedOnly;
   final bool isBottomRoundedOnly;
+  final VoidCallback onTap;
 
   const ActivityFeedRow({
     super.key,
@@ -20,6 +21,7 @@ class ActivityFeedRow extends StatelessWidget {
     required this.iconColor,
     this.isTopRoundedOnly = false,
     this.isBottomRoundedOnly = false,
+    required this.onTap,
   });
 
   @override
@@ -38,49 +40,53 @@ class ActivityFeedRow extends StatelessWidget {
       );
     }
 
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: CustomColor.feedRowBg(context),
+    return Material(
+      color: CustomColor.feedRowBg(context),
+      borderRadius: borderRadius,
+      child: InkWell(
+        onTap: onTap,
         borderRadius: borderRadius,
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 40,
-            height: 40,
-            decoration: BoxDecoration(
-              color: iconBg,
-              borderRadius: BorderRadius.circular(8),
-            ),
-            child: Icon(icon, color: iconColor, size: 20),
+        child: Padding(
+          padding: const EdgeInsets.all(14),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: iconBg,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(icon, color: iconColor, size: 20),
+              ),
+              const SizedBox(width: 14),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 16,
+                        color: CustomColor.feedTextPrimary(context),
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                    const SizedBox(height: 2),
+                    Text(
+                      subtitle,
+                      style: TextStyle(
+                        color: CustomColor.feedTextSecondary(context),
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
           ),
-          const SizedBox(width: 14),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
-                    color: CustomColor.feedTextPrimary(context),
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  subtitle,
-                  style: TextStyle(
-                    color: CustomColor.feedTextSecondary(context),
-                    fontSize: 13,
-                  ),
-                ),
-              ],
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
