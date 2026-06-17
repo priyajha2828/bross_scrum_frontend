@@ -3,8 +3,7 @@ import 'package:BrossScrum/resources/color/custom_color.dart';
 import 'package:BrossScrum/resources/text_field/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../../resources/bottom/signin_bottom.dart';
+import '../../resources/bottom/custom_bottom.dart';
 import '../../routes/app_route.dart';
 
 class LoginPage extends StatelessWidget {
@@ -249,14 +248,14 @@ class LoginPage extends StatelessWidget {
                         constraints: const BoxConstraints(maxWidth: 400),
                         child: Column(
                           children: [
-                            loginpageButton(
+                            LoginPageButton(
                               label: 'Google',
                               iconData: Icons.g_mobiledata,
                               iconColor: Colors.red,
                               onPressed: () => provider.LoginWithGoogle(),
                             ),
                             const SizedBox(height: 12),
-                            loginpageButton(
+                            LoginPageButton(
                               label: 'Apple',
                               iconData: Icons.apple,
                               iconColor: isDark ? Colors.white : Colors.black,

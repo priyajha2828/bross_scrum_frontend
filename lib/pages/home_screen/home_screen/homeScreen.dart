@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/home_screen/home_screen_provider/home_screen_provider.dart';
 import '../../../resources/bottom/custom_bottom.dart';
-import '../../../resources/bottom/project_card.dart';
+import '../../../resources/card/custom_card.dart';
 import '../../../resources/color/custom_color.dart';
 import '../../../resources/text_field/text_field.dart';
 import '../../../routes/app_route.dart';
@@ -47,31 +47,23 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SafeArea(
           bottom: false,
           child: SingleChildScrollView(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16.0,
+              vertical: 12.0,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Header Module Block
                 _buildHeader(),
                 const SizedBox(height: 20),
-
-                // Search text field
                 _buildSearchBar(),
                 const SizedBox(height: 24),
-
-                // Overview Section
                 _buildOverviewSection(),
                 const SizedBox(height: 16),
-
-                // Horizontal Shortcut Cards
                 _buildHorizontalAppCards(),
                 const SizedBox(height: 15),
-
-                // Filter Toggle Setup (Viewed vs Activity)
                 _buildToggleFilter(provider),
                 const SizedBox(height: 20),
-
-                // Recent Activity List
                 _buildRecentActivityList(provider),
                 const SizedBox(height: 24),
               ],
@@ -88,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         CircleAvatar(
           radius: 18,
-          backgroundColor:Colors.cyan[700],
+          backgroundColor: Colors.cyan[700],
           child: ClipOval(
             child: TextButton(
               style: TextButton.styleFrom(
@@ -110,13 +102,116 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        IconButton(
+        PopupMenuButton<String>(
           icon: Icon(
             Icons.add,
             size: 28,
             color: CustomColor.textPrimary(context),
           ),
-          onPressed: () {},
+
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          onSelected: (value) {
+            switch (value) {
+              case 'create_work_item':
+                break;
+              case 'ai_create':
+                break;
+              case 'photo_library':
+                break;
+              case 'camera':
+                break;
+            }
+          },
+          itemBuilder: (BuildContext context) => [
+            PopupMenuItem<String>(
+              value: 'create_work_item',
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.assignment_outlined,
+                    color: CustomColor.textPrimary(context),
+                    size: 22,
+                  ),
+                  const SizedBox(width: 12),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, AppRoute.create);
+                    },
+                    child: Text(
+                      'Create work item',
+                      style: TextStyle(
+                        color: CustomColor.textPrimary(context),
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            const PopupMenuDivider(height: 1),
+            PopupMenuItem<String>(
+              value: 'ai_create',
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.auto_awesome,
+                    color: Colors.purple.shade400,
+                    size: 22,
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    'Create with AI',
+                    style: TextStyle(
+                      color: CustomColor.textPrimary(context),
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            PopupMenuItem<String>(
+              value: 'photo_library',
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.photo_library_outlined,
+                    color: CustomColor.textPrimary(context),
+                    size: 22,
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    'From photo library',
+                    style: TextStyle(
+                      color: CustomColor.textPrimary(context),
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            PopupMenuItem<String>(
+              value: 'camera',
+              child: Row(
+                children: [
+                  Icon(
+                    Icons.camera_alt_outlined,
+                    color: CustomColor.textPrimary(context),
+                    size: 22,
+                  ),
+                  const SizedBox(width: 12),
+                  Text(
+                    'Camera',
+                    style: TextStyle(
+                      color: CustomColor.textPrimary(context),
+                      fontSize: 15,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -132,7 +227,7 @@ class _HomeScreenState extends State<HomeScreen> {
             color: isDark ? Colors.black45 : Colors.black.withOpacity(0.04),
             blurRadius: 10,
             offset: const Offset(0, 4),
-          )
+          ),
         ],
       ),
       child: TextFromFieldWithPrefixSuffix(
@@ -154,9 +249,12 @@ class _HomeScreenState extends State<HomeScreen> {
           builder: (context, val, child) {
             return val.text.isNotEmpty
                 ? IconButton(
-              icon: Icon(Icons.clear, color: CustomColor.textMutedLabel(context)),
-              onPressed: () => _searchController.clear(),
-            )
+                    icon: Icon(
+                      Icons.clear,
+                      color: CustomColor.textMutedLabel(context),
+                    ),
+                    onPressed: () => _searchController.clear(),
+                  )
                 : const SizedBox.shrink();
           },
         ),
@@ -235,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Expanded(
             child: SpaceShortcutCard(
-              onTap: (){},
+              onTap: () {},
               title: 'app1',
               iconBgColor: CustomColor.appShortcutBlue,
               icon: Icons.album,
@@ -244,11 +342,10 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(width: 12),
           Expanded(
             child: SpaceShortcutCard(
-              onTap: (){},
+              onTap: () {},
               title: 'App 2',
               iconBgColor: CustomColor.appShortcutOrange,
               icon: Icons.dashboard_customize,
-
             ),
           ),
         ],
@@ -298,7 +395,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Text('Live Updates', style: subheadStyle),
           const SizedBox(height: 10),
           ActivityFeedRow(
-            onTap: (){},
+            onTap: () {},
             title: 'No recent tracking changes logs.',
             subtitle: 'Sync completed',
             icon: Icons.sync,
@@ -315,7 +412,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Text('Today', style: subheadStyle),
         const SizedBox(height: 10),
         ActivityFeedRow(
-          onTap: (){
+          onTap: () {
             Navigator.pushNamed(context, AppRoute.myopenissue);
           },
           title: 'My open issues',
@@ -328,7 +425,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Text('This month', style: subheadStyle),
         const SizedBox(height: 10),
         ActivityFeedRow(
-          onTap: (){},
+          onTap: () {},
           title: 'App 2',
           subtitle: 'Space • Viewed',
           icon: Icons.dashboard_customize,
@@ -343,7 +440,7 @@ class _HomeScreenState extends State<HomeScreen> {
           color: CustomColor.dividerColor(context),
         ),
         ActivityFeedRow(
-          onTap: (){},
+          onTap: () {},
           title: 'SCRUM board',
           subtitle: 'Space • Viewed',
           icon: Icons.album,

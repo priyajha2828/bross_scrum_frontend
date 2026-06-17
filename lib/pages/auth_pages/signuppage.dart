@@ -5,7 +5,6 @@ import 'package:BrossScrum/routes/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../resources/bottom/signin_bottom.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({super.key});

@@ -1,7 +1,90 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../../providers/home_screen/create(+)/create_screen_provider.dart';
 import '../color/custom_color.dart';
+import '../../providers/home_screen/spaces/space_provider.dart';
+import '../model/work_type_model.dart';
 
+// =========================================================================
+// १. SpaceListTile विजेट
+// =========================================================================
+class SpaceListTile extends StatelessWidget {
+  final SpaceModel space;
+  final VoidCallback? onStarTap;
+  final VoidCallback? onTap;
+
+  const SpaceListTile({
+    super.key,
+    required this.space,
+    this.onStarTap,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(16),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+        child: Row(
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: space.iconColor,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                space.icon,
+                color: CustomColor.shortcutIconDefault,
+                size: 22,
+              ),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    space.name,
+                    style: TextStyle(
+                      color: CustomColor.tileTextPrimary(context),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    space.subtitle,
+                    style: TextStyle(
+                      color: CustomColor.tileTextSecondary(context),
+                      fontSize: 13,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                space.isStarred ? Icons.star : Icons.star_border,
+                color: space.isStarred
+                    ? Colors.amber
+                    : CustomColor.tileIconDefault(context),
+              ),
+              onPressed: onStarTap,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// =========================================================================
+// २. CustomListTile विजेट
+// =========================================================================
 class CustomListTile extends StatelessWidget {
   const CustomListTile({
     required this.onTap,
@@ -217,7 +300,9 @@ class CustomListTile extends StatelessWidget {
   }
 }
 
-// --- छुट्टै सेपरेट ThemeTile विजेट ---
+// =========================================================================
+// ३. ThemeTile विजेट
+// =========================================================================
 class ThemeTile extends StatelessWidget {
   final String title;
   final ThemeMode value;
@@ -263,6 +348,68 @@ class ThemeTile extends StatelessWidget {
       ),
     );
   }
+}
 
 
+class WorkTypeTile extends StatelessWidget {
+  final WorkTypeOption option;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const WorkTypeTile({
+    super.key,
+    required this.option,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        color: isSelected
+            ? CustomColor.chipSelectedBg(context)
+            : Colors.transparent,
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        child: Row(
+          children: [
+            Container(
+              width: 40,
+              height: 40,
+              decoration: BoxDecoration(
+                color: option.iconBg,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(option.icon, color: option.iconColor, size: 22),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    option.label,
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: CustomColor.textPrimary(context),
+                    ),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    option.description,
+                    style: TextStyle(
+                      fontSize: 13,
+                      color: CustomColor.textMutedLabel(context),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
