@@ -20,7 +20,7 @@ class AccountScreen extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           onPressed: () {
-            Navigator.pushNamed(context, AppRoute.homescreen);
+            Navigator.pushNamed(context, AppRoute.bottonnavibar);
           },
           icon: Icon(Icons.arrow_back, color: CustomColor.arrowback(context)),
         ),

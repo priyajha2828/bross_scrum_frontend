@@ -19,5 +19,8 @@ class AppRoute {
   static const String dashboard = "/dashboard";
   static const String spaces = "/spaces";
   static const String myopenissue = "/myopenissue";
+  static const String appscreen = "/appscreen";
+  static const String create = "/create";
+
 
 }

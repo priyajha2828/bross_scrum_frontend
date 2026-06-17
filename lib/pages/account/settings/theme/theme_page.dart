@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../providers/account_screen_provider/settings/settings_provider/settings_provider.dart';
+import '../../../../resources/color/custom_color.dart';
 import '../../../../resources/tile/custom_tile.dart';
 
 class ThemePage extends StatelessWidget {
@@ -11,23 +10,20 @@ class ThemePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final settingsProvider = Provider.of<SettingsProvider>(context);
-    final theme = Theme.of(context);
 
     return Scaffold(
-      backgroundColor: theme.scaffoldBackgroundColor,
+      backgroundColor: CustomColor.bg_color(context),
       appBar: AppBar(
+        backgroundColor: CustomColor.appbar(context),
         elevation: 0,
         leading: IconButton(
-          icon: Icon(
-            Icons.arrow_back,
-            color: theme.iconTheme.color,
-          ),
+          icon: Icon(Icons.arrow_back, color: CustomColor.arrowback(context)),
           onPressed: () => Navigator.pop(context),
         ),
         title: Text(
           'Theme',
           style: TextStyle(
-            color: theme.textTheme.titleLarge?.color,
+            color: CustomColor.textPrimary(context),
             fontSize: 22,
             fontWeight: FontWeight.w500,
           ),
@@ -35,10 +31,9 @@ class ThemePage extends StatelessWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: Card(
-          color: theme.cardColor,
-          elevation: 0,
-          shape: RoundedRectangleBorder(
+        child: Container(
+          decoration: BoxDecoration(
+            color: CustomColor.card_bg(context),
             borderRadius: BorderRadius.circular(24),
           ),
           child: ClipRRect(
@@ -52,14 +47,14 @@ class ThemePage extends StatelessWidget {
                   currentMode: settingsProvider.themeMode,
                   onTap: () => settingsProvider.updateTheme(ThemeMode.light),
                 ),
-                Divider(color: theme.dividerColor, height: 1, thickness: 1),
+                Divider(height: 1, color: CustomColor.dividerColor(context)),
                 ThemeTile(
                   title: 'Dark',
                   value: ThemeMode.dark,
                   currentMode: settingsProvider.themeMode,
                   onTap: () => settingsProvider.updateTheme(ThemeMode.dark),
                 ),
-                Divider(color: theme.dividerColor, height: 1, thickness: 1),
+                Divider(height: 1, color: CustomColor.dividerColor(context)),
                 ThemeTile(
                   title: 'System default',
                   value: ThemeMode.system,
@@ -73,6 +68,4 @@ class ThemePage extends StatelessWidget {
       ),
     );
   }
-
-
 }

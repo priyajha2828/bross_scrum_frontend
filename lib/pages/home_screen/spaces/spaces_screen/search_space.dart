@@ -1,7 +1,7 @@
 import 'package:BrossScrum/providers/home_screen/spaces/space_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../../resources/card/space_setion_card.dart';
+import '../../../../resources/card/custom_card.dart';
 import '../../../../resources/color/custom_color.dart';
 
 class SearchSpacesScreen extends StatefulWidget {

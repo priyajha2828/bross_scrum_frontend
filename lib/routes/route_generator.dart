@@ -4,8 +4,9 @@ import 'package:BrossScrum/pages/account/notification_setting/do_not_disturb/do_
 import 'package:BrossScrum/pages/account/notification_setting/notification_setting_page/notification_setting.dart';
 import 'package:BrossScrum/pages/account/settings/theme/theme_page.dart';
 import 'package:BrossScrum/pages/auth_pages/loginpage.dart';
+import 'package:BrossScrum/pages/home_screen/app/app_screen.dart';
 import 'package:BrossScrum/pages/home_screen/home_screen/homeScreen.dart';
-import 'package:BrossScrum/pages/home_screen/my_open_issue/my_open_issue.dart';
+import 'package:BrossScrum/pages/home_screen/my_open_issue/my_open_issue_screen/my_open_issue.dart';
 import 'package:BrossScrum/routes/app_route.dart';
 import 'package:flutter/material.dart';
 
@@ -15,6 +16,7 @@ import '../pages/account/settings/settingsPage/settings.dart';
 import '../pages/auth_pages/otp_page.dart';
 import '../pages/auth_pages/recovery_page.dart';
 import '../pages/auth_pages/signuppage.dart';
+import '../pages/home_screen/create/create_screen.dart';
 import '../pages/home_screen/dashboard/dashboard.dart';
 import '../pages/home_screen/notifications/notifications_page.dart';
 import '../pages/home_screen/spaces/spaces_screen/spaces_screen.dart';
@@ -65,6 +67,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const SpacesScreen() );
       case AppRoute.myopenissue:
         return MaterialPageRoute(builder: (_) => const MyOpenIssue());
+      case AppRoute.appscreen:
+        return MaterialPageRoute(builder: (_) => const AppScreen());
+      case AppRoute.create:
+        return MaterialPageRoute(builder: (_)=> const CreateScreen());
 
         default:
           return _errorRoute();

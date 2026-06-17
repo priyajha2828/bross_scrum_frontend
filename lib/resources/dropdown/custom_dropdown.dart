@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import '../color/custom_color.dart';
 
+// =========================================================================
+// १. CustomTimeDropdown विजेट
+// =========================================================================
 class CustomTimeDropdown extends StatelessWidget {
   final String label;
   final String time;
@@ -18,6 +21,7 @@ class CustomTimeDropdown extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // माथिको तैरिने लेबल (Floating Label Effect)
         Transform.translate(
           offset: const Offset(12, 8),
           child: Container(
@@ -75,6 +79,9 @@ class CustomTimeDropdown extends StatelessWidget {
   }
 }
 
+// =========================================================================
+// २. DashboardDropdown विजेट
+// =========================================================================
 class DashboardDropdown extends StatelessWidget {
   final String selectedDashboard;
   final VoidCallback? onTap;

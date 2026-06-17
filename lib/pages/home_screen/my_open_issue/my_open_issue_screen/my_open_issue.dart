@@ -1,18 +1,30 @@
 import 'package:BrossScrum/resources/painter/custom_painter.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../../../../providers/home_screen/my_open_issue/my_open_issue.dart';
+import '../../../../resources/color/custom_color.dart';
+import '../../../../routes/app_route.dart';
 
-import '../../../resources/color/custom_color.dart';
 
-class MyOpenIssue extends StatefulWidget {
+class MyOpenIssue extends StatelessWidget {
   const MyOpenIssue({super.key});
 
   @override
-  State<MyOpenIssue> createState() => _MyOpenIssueState();
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+      create: (_) => MyOpenIssueProvider(),
+      child: const _MyOpenIssueBody(),
+    );
+  }
 }
 
-class _MyOpenIssueState extends State<MyOpenIssue> {
+class _MyOpenIssueBody extends StatelessWidget {
+  const _MyOpenIssueBody();
+
   @override
   Widget build(BuildContext context) {
+    final provider = Provider.of<MyOpenIssueProvider>(context);
+
     return Scaffold(
       backgroundColor: CustomColor.bg_color(context),
       appBar: AppBar(
@@ -31,16 +43,30 @@ class _MyOpenIssueState extends State<MyOpenIssue> {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
+          PopupMenuButton<String>(
             icon: Icon(
               Icons.more_vert,
               color: CustomColor.textMutedLabel(context),
             ),
+            onSelected: (value) {
+              if (value == 'toggle_star') {
+                provider.toggleStarFilter();
+              }
+            },
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem<String>(
+                value: 'toggle_star',
+                child: Text(
+                  provider.isStarred ? 'Unstar Filter' : 'Star Filter',
+                  style: TextStyle(
+                    color: CustomColor.textPrimary(context),
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
-
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -63,8 +89,8 @@ class _MyOpenIssueState extends State<MyOpenIssue> {
             ),
             const SizedBox(height: 10),
             Text(
-              textAlign: TextAlign.center,
               "when you're assigned new works items, they'll appear here",
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
                 color: CustomColor.textMutedLabel(context),
@@ -72,8 +98,10 @@ class _MyOpenIssueState extends State<MyOpenIssue> {
             ),
             const SizedBox(height: 10),
             IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.add, size: 30,color: CustomColor.actionBlueText(context)),
+              onPressed: () {
+                Navigator.pushNamed(context, AppRoute.create);
+              },
+              icon: Icon(Icons.add, size: 30, color: CustomColor.actionBlueText(context)),
             ),
           ],
         ),

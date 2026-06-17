@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../providers/account_screen_provider/notification_settings_provider/donotdisturb_provider/donotdisturb_provider.dart';
-import '../../../../resources/card/dnd_card.dart';
+import '../../../../resources/card/custom_card.dart';
 import '../../../../resources/tile/custom_tile.dart';
 
 class DoNotDisturbPage extends StatelessWidget {
