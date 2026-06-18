@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         CircleAvatar(
-          radius: 18,
+          radius: 20,
           backgroundColor: Colors.cyan[700],
           child: ClipOval(
             child: TextButton(
@@ -335,7 +335,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: SpaceShortcutCard(
               onTap: () {},
               title: 'app1',
-              iconBgColor: CustomColor.appShortcutBlue,
+              iconBgColor: CustomColor.appShortcut_lime(context),
               icon: Icons.album,
             ),
           ),
@@ -344,7 +344,7 @@ class _HomeScreenState extends State<HomeScreen> {
             child: SpaceShortcutCard(
               onTap: () {},
               title: 'App 2',
-              iconBgColor: CustomColor.appShortcutOrange,
+              iconBgColor: CustomColor.appShortcut_teal(context),
               icon: Icons.dashboard_customize,
             ),
           ),
@@ -429,7 +429,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: 'App 2',
           subtitle: 'Space • Viewed',
           icon: Icons.dashboard_customize,
-          iconBg: CustomColor.appShortcutOrange,
+          iconBg: CustomColor.appShortcut_teal(context),
           iconColor: Colors.white,
           isTopRoundedOnly: true,
         ),
@@ -444,7 +444,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: 'SCRUM board',
           subtitle: 'Space • Viewed',
           icon: Icons.album,
-          iconBg: CustomColor.appShortcutBlue,
+          iconBg: CustomColor.appShortcut_lime(context),
           iconColor: Colors.white,
           isBottomRoundedOnly: true,
         ),

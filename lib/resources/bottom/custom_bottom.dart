@@ -4,13 +4,11 @@ import '../color/custom_color.dart';
 import '../model/work_type_model.dart';
 import '../tile/custom_tile.dart';
 
+// ── App Selector Bottom Sheet ──────────────────────────────────────────────────
 class AppSelectorBottomSheet extends StatelessWidget {
   final CreateProvider provider;
 
-  const AppSelectorBottomSheet({
-    super.key,
-    required this.provider,
-  });
+  const AppSelectorBottomSheet({super.key, required this.provider});
 
   static void show(BuildContext context, CreateProvider provider) {
     showModalBottomSheet(
@@ -20,9 +18,7 @@ class AppSelectorBottomSheet extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (BuildContext bc) {
-        return SafeArea(
-          child: AppSelectorBottomSheet(provider: provider),
-        );
+        return SafeArea(child: AppSelectorBottomSheet(provider: provider));
       },
     );
   }
@@ -37,18 +33,22 @@ class AppSelectorBottomSheet extends StatelessWidget {
           width: 40,
           height: 4,
           decoration: BoxDecoration(
-            color: Colors.grey.shade400,
+            color: CustomColor.dividerColor(context),
             borderRadius: BorderRadius.circular(2),
           ),
         ),
-        const Padding(
-          padding: EdgeInsets.all(16.0),
+        Padding(
+          padding: const EdgeInsets.all(16),
           child: Text(
-            "Select App",
-            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            'Select App',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: CustomColor.textPrimary(context),
+            ),
           ),
         ),
-        const Divider(height: 1),
+        Divider(height: 1, color: CustomColor.dividerColor(context)),
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -56,7 +56,6 @@ class AppSelectorBottomSheet extends StatelessWidget {
           itemBuilder: (context, index) {
             final appItem = provider.appList[index];
             final isSelected = appItem == provider.selectedApp;
-
             return ListTile(
               title: Text(
                 appItem,
@@ -69,8 +68,7 @@ class AppSelectorBottomSheet extends StatelessWidget {
                 ),
               ),
               trailing: isSelected
-                  ? Icon(Icons.check_circle,
-                  color: CustomColor.actionBlueText(context))
+                  ? Icon(Icons.check_circle, color: CustomColor.actionBlueText(context))
                   : null,
               onTap: () {
                 provider.setApp(appItem);
@@ -85,6 +83,7 @@ class AppSelectorBottomSheet extends StatelessWidget {
   }
 }
 
+// ── Filter Toggle Button ───────────────────────────────────────────────────────
 class FilterToggleButton extends StatelessWidget {
   final String text;
   final bool isSelected;
@@ -111,7 +110,9 @@ class FilterToggleButton extends StatelessWidget {
         child: Text(
           text,
           style: TextStyle(
-            color: isSelected ? CustomColor.primarySelectedBlue : CustomColor.filterUnselectedText(context),
+            color: isSelected
+                ? CustomColor.primarySelectedBlue
+                : CustomColor.filterUnselectedText(context),
             fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
             fontSize: 15,
           ),
@@ -121,6 +122,7 @@ class FilterToggleButton extends StatelessWidget {
   }
 }
 
+// ── Work Type Bottom Sheet ─────────────────────────────────────────────────────
 class WorkTypeBottomSheet extends StatelessWidget {
   final WorkType selectedType;
   final List<WorkTypeOption> options;
@@ -180,20 +182,23 @@ class WorkTypeBottomSheet extends StatelessWidget {
             ),
           ),
         ),
-        ...options.map((option) => WorkTypeTile(
-          option: option,
-          isSelected: option.type == selectedType,
-          onTap: () {
-            onSelected(option.type);
-            Navigator.pop(context);
-          },
-        )),
+        ...options.map(
+              (option) => WorkTypeTile(
+            option: option,
+            isSelected: option.type == selectedType,
+            onTap: () {
+              onSelected(option.type);
+              Navigator.pop(context);
+            },
+          ),
+        ),
         const SizedBox(height: 16),
       ],
     );
   }
 }
 
+// ── Login Page Button ──────────────────────────────────────────────────────────
 class LoginPageButton extends StatelessWidget {
   final String label;
   final IconData iconData;
@@ -234,8 +239,176 @@ class LoginPageButton extends StatelessWidget {
                 color: CustomColor.tileTextPrimary(context),
               ),
             ),
-          )
+          ),
         ],
+      ),
+    );
+  }
+}
+
+// ── Filter Tile ────────────────────────────────────────────────────────────────
+class FilterTile extends StatelessWidget {
+  final String name;
+  final IconData icon;
+  final Color iconBg;
+  final Color iconColor;
+  final bool isStarred;
+  final VoidCallback onTap;
+  final VoidCallback onStarTap;
+
+  const FilterTile({
+    super.key,
+    required this.name,
+    required this.icon,
+    required this.iconBg,
+    required this.iconColor,
+    required this.isStarred,
+    required this.onTap,
+    required this.onStarTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        child: Row(
+          children: [
+            Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                color: iconBg,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(icon, color: iconColor, size: 20),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Text(
+                name,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: CustomColor.textPrimary(context),
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                isStarred ? Icons.star : Icons.star_border,
+                color: isStarred ? Colors.amber : CustomColor.tileIconDefault(context),
+                size: 22,
+              ),
+              onPressed: onStarTap,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// ── Filter Section Card ────────────────────────────────────────────────────────
+class FilterSectionCard extends StatelessWidget {
+  final String title;
+  final List<Map<String, dynamic>> filters;
+  final void Function(Map<String, dynamic>) onTap;
+  final void Function(Map<String, dynamic>) onStarTap;
+
+  const FilterSectionCard({
+    super.key,
+    required this.title,
+    required this.filters,
+    required this.onTap,
+    required this.onStarTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (filters.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(4, 16, 4, 8),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 13,
+              color: CustomColor.textMutedLabel(context),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: CustomColor.card_bg(context),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Column(
+            children: [
+              for (int i = 0; i < filters.length; i++) ...[
+                FilterTile(
+                  name: filters[i]['name'] as String,
+                  icon: filters[i]['icon'] as IconData,
+                  iconBg: filters[i]['iconBg'] as Color,
+                  iconColor: filters[i]['iconColor'] as Color,
+                  isStarred: filters[i]['isStarred'] as bool,
+                  onTap: () => onTap(filters[i]),
+                  onStarTap: () => onStarTap(filters[i]),
+                ),
+                if (i != filters.length - 1)
+                  Divider(
+                    height: 1,
+                    color: CustomColor.dividerColor(context),
+                    indent: 16,
+                    endIndent: 16,
+                  ),
+              ],
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// ── View Toggle Button ─────────────────────────────────────────────────────────
+class ViewToggleButton extends StatelessWidget {
+  final IconData icon;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const ViewToggleButton({
+    super.key,
+    required this.icon,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 42,
+        height: 42,
+        decoration: BoxDecoration(
+          color: isSelected
+              ? CustomColor.chipSelectedBg(context)
+              : CustomColor.card_bg(context),
+          borderRadius: BorderRadius.circular(21),
+        ),
+        child: Icon(
+          icon,
+          size: 20,
+          color: isSelected
+              ? CustomColor.chipSelectedText(context)
+              : CustomColor.textMutedLabel(context),
+        ),
       ),
     );
   }

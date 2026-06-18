@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import '../../providers/home_screen/dashboard/dashboard_provider.dart';
 import '../../providers/account_screen_provider/notification_settings_provider/donotdisturb_provider/donotdisturb_provider.dart';
+import '../../providers/home_screen/dashboard/dashboard_provider.dart';
 import '../../providers/home_screen/spaces/space_provider.dart';
 import '../color/custom_color.dart';
 import '../dropdown/custom_dropdown.dart';
 import '../dropdown/custom_time_dropdown.dart';
+import '../model/filter_model.dart';
 import '../tile/custom_tile.dart';
 
 
-// =========================================================================
-// १. DashboardDropdown विजेट
-// =========================================================================
 class DashboardDropdown extends StatelessWidget {
   final String selectedDashboard;
   final VoidCallback? onTap;
@@ -46,9 +44,6 @@ class DashboardDropdown extends StatelessWidget {
   }
 }
 
-// =========================================================================
-// २. AssignedToMeCard विजेट
-// =========================================================================
 class AssignedToMeCard extends StatelessWidget {
   final bool isRefreshing;
   final bool hasItems;
@@ -111,9 +106,6 @@ class AssignedToMeCard extends StatelessWidget {
   }
 }
 
-// =========================================================================
-// ३. ActivityFeedCard विजेट (र आन्तरिक _ActivityRow)
-// =========================================================================
 class ActivityFeedCard extends StatelessWidget {
   final List<ActivityItem> activities;
   final String dateLabel;
@@ -252,9 +244,6 @@ class _ActivityRow extends StatelessWidget {
   }
 }
 
-// =========================================================================
-// ४. MissingGadgetsCard (Feedback Card) विजेट
-// =========================================================================
 class MissingGadgetsCard extends StatelessWidget {
   final VoidCallback onSendFeedback;
 
@@ -306,9 +295,6 @@ class MissingGadgetsCard extends StatelessWidget {
   }
 }
 
-// =========================================================================
-// ५. DndScheduleCard विजेट
-// =========================================================================
 class DndScheduleCard extends StatelessWidget {
   final DndProvider dndProvider;
 
@@ -439,9 +425,6 @@ class DndScheduleCard extends StatelessWidget {
   }
 }
 
-// =========================================================================
-// ६. ActivityFeedRow विजेट
-// =========================================================================
 class ActivityFeedRow extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -532,9 +515,6 @@ class ActivityFeedRow extends StatelessWidget {
   }
 }
 
-// =========================================================================
-// ७. SpaceSectionCard विजेट
-// =========================================================================
 class SpaceSectionCard extends StatelessWidget {
   final List<SpaceModel> spaces;
   final void Function(SpaceModel)? onStarTap;
@@ -576,9 +556,6 @@ class SpaceSectionCard extends StatelessWidget {
   }
 }
 
-// =========================================================================
-// ८. SpaceShortcutCard विजेट
-// =========================================================================
 class SpaceShortcutCard extends StatelessWidget {
   final String title;
   final Color iconBgColor;
@@ -643,6 +620,67 @@ class SpaceShortcutCard extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class FilterSectionCard extends StatelessWidget {
+  final String title;
+  final List<FilterModel> filters;
+  final void Function(FilterModel) onTap;
+  final void Function(FilterModel) onStarTap;
+
+  const FilterSectionCard({
+    super.key,
+    required this.title,
+    required this.filters,
+    required this.onTap,
+    required this.onStarTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    if (filters.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 8),
+          child: Text(
+            title,
+            style: TextStyle(
+              fontSize: 13,
+              color: CustomColor.textMutedLabel(context),
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ),
+        Container(
+          decoration: BoxDecoration(
+            color: CustomColor.card_bg(context),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Column(
+            children: [
+              for (int i = 0; i < filters.length; i++) ...[
+                FilterTile(
+                  filter: filters[i],
+                  onTap: () => onTap(filters[i]),
+                  onStarTap: () => onStarTap(filters[i]),
+                ),
+                if (i != filters.length - 1)
+                  Divider(
+                    height: 1,
+                    color: CustomColor.dividerColor(context),
+                    indent: 16,
+                    endIndent: 16,
+                  ),
+              ],
+            ],
+          ),
+        ),
+      ],
     );
   }
 }

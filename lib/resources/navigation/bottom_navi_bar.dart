@@ -1,3 +1,4 @@
+import 'package:BrossScrum/pages/home_screen/all_work/all_work_screen/all_work_screen.dart';
 import 'package:BrossScrum/pages/home_screen/home_screen/homeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class _BottomNaviBarPageState extends State<BottomNaviBarPage> {
   final List<Widget> pages = [
     HomeScreen(),
     SpacesScreen(),
-    Center(child: Text('All Work')),
+    AllWorkScreen(),
     DashboardsScreen(),
     NotificationsScreen(),
   ];

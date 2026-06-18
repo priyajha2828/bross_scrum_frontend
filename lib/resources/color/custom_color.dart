@@ -88,9 +88,16 @@ class CustomColor {
   static Color logout_text(BuildContext context) =>
       isDark(context) ? const Color(0xFFEF4444) : const Color(0xFFDC2626);
 
-  static final Color profileAvatarPurple = Colors.deepPurple[700]!;
-  static final Color appShortcutBlue = Colors.blue[800]!;
-  static const Color appShortcutOrange = Colors.deepOrange;
+
+
+  static Color appShortcut_lime(BuildContext context) =>
+      isDark(context) ? const Color(0xFF827717) : const Color(0xFFCDDC39);
+
+  static Color appShortcut_teal(BuildContext context) =>
+      isDark(context) ? const Color(0xFF004D40) : const Color(0xFF00695C);
+
+
+
 
   // Card Backgrounds
   static Color card_bg(BuildContext context) =>
