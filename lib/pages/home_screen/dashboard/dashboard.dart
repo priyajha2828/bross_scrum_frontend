@@ -62,7 +62,7 @@ class DashboardsScreen extends StatelessWidget {
     return Row(
       children: [
         CircleAvatar(
-          radius: 18,
+          radius: 20,
           backgroundColor: Colors.cyan[700],
           child: TextButton(onPressed: (){
             Navigator.pushNamed(context, AppRoute.accountscreen);

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../resources/color/custom_color.dart';
+
 class SpaceModel {
   final String name;
   final String subtitle;
@@ -22,14 +24,14 @@ class SpacesProvider extends ChangeNotifier {
       name: 'App 2',
       subtitle: 'A2',
       icon: Icons.dashboard_outlined,
-      iconColor: Colors.deepOrange,
+      iconColor: Colors.teal.shade800,
       isStarred: true,
     ),
     SpaceModel(
       name: 'app1',
       subtitle: 'SCRUM',
       icon: Icons.album_outlined,
-      iconColor: Colors.deepOrange,
+      iconColor:Colors.lime ,
       isStarred: false,
     ),
   ];

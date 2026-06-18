@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../../providers/home_screen/create(+)/create_screen_provider.dart';
-import '../color/custom_color.dart';
 import '../../providers/home_screen/spaces/space_provider.dart';
+import '../color/custom_color.dart';
+import '../model/filter_model.dart';
 import '../model/work_type_model.dart';
 
-// =========================================================================
-// १. SpaceListTile विजेट
-// =========================================================================
 class SpaceListTile extends StatelessWidget {
   final SpaceModel space;
   final VoidCallback? onStarTap;
@@ -82,9 +80,6 @@ class SpaceListTile extends StatelessWidget {
   }
 }
 
-// =========================================================================
-// २. CustomListTile विजेट
-// =========================================================================
 class CustomListTile extends StatelessWidget {
   const CustomListTile({
     required this.onTap,
@@ -300,9 +295,6 @@ class CustomListTile extends StatelessWidget {
   }
 }
 
-// =========================================================================
-// ३. ThemeTile विजेट
-// =========================================================================
 class ThemeTile extends StatelessWidget {
   final String title;
   final ThemeMode value;
@@ -349,7 +341,6 @@ class ThemeTile extends StatelessWidget {
     );
   }
 }
-
 
 class WorkTypeTile extends StatelessWidget {
   final WorkTypeOption option;
@@ -406,6 +397,63 @@ class WorkTypeTile extends StatelessWidget {
                   ),
                 ],
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class FilterTile extends StatelessWidget {
+  final FilterModel filter;
+  final VoidCallback onTap;
+  final VoidCallback onStarTap;
+
+  const FilterTile({
+    super.key,
+    required this.filter,
+    required this.onTap,
+    required this.onStarTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        child: Row(
+          children: [
+            Container(
+              width: 38,
+              height: 38,
+              decoration: BoxDecoration(
+                color: filter.iconBg,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: Icon(filter.icon, color: filter.iconColor, size: 20),
+            ),
+            const SizedBox(width: 14),
+            Expanded(
+              child: Text(
+                filter.name,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: CustomColor.textPrimary(context),
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            ),
+            IconButton(
+              icon: Icon(
+                filter.isStarred ? Icons.star : Icons.star_border,
+                color: filter.isStarred
+                    ? Colors.amber
+                    : CustomColor.tileIconDefault(context),
+                size: 22,
+              ),
+              onPressed: onStarTap,
             ),
           ],
         ),

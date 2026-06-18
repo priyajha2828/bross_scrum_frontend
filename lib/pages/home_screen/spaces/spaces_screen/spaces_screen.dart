@@ -49,7 +49,9 @@ class SpacesScreen extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(Icons.add, color: CustomColor.textPrimary(context)),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.pushNamed(context, AppRoute.create);
+            },
           ),
         ],
       ),
