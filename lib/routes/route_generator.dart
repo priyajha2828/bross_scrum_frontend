@@ -6,6 +6,7 @@ import 'package:BrossScrum/pages/account/settings/theme/theme_page.dart';
 import 'package:BrossScrum/pages/auth_pages/loginpage.dart';
 import 'package:BrossScrum/pages/home_screen/all_work/search_work_screen/search_screen.dart';
 import 'package:BrossScrum/pages/home_screen/app/app_screen.dart';
+import 'package:BrossScrum/pages/home_screen/dashboard/scrum/scrum_screen.dart';
 import 'package:BrossScrum/pages/home_screen/home_screen/homeScreen.dart';
 import 'package:BrossScrum/pages/home_screen/my_open_issue/my_open_issue_screen/my_open_issue.dart';
 import 'package:BrossScrum/routes/app_route.dart';
@@ -19,8 +20,9 @@ import '../pages/auth_pages/recovery_page.dart';
 import '../pages/auth_pages/signuppage.dart';
 import '../pages/home_screen/all_work/filter_screen/filter_screen.dart';
 import '../pages/home_screen/create/create_screen.dart';
-import '../pages/home_screen/dashboard/dashboard.dart';
+import '../pages/home_screen/dashboard/dashboard_screen/dashboard.dart';
 import '../pages/home_screen/notifications/notifications_page.dart';
+import '../pages/home_screen/spaces/create_space screen/create_space_screen.dart';
 import '../pages/home_screen/spaces/spaces_screen/spaces_screen.dart';
 import '../pages/intro/intro_page.dart';
 import '../resources/navigation/bottom_navi_bar.dart';
@@ -77,6 +79,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const SearchWorkScreen());
       case AppRoute.filterscreen:
         return MaterialPageRoute(builder: (_) => const FiltersScreen());
+      case AppRoute.createspace:
+        return MaterialPageRoute(builder: (_) => const CreateSpaceScreen());
+      case AppRoute.scrumscreen:
+        return MaterialPageRoute(builder: (_) => const ScrumScreen());
         default:
           return _errorRoute();
     }

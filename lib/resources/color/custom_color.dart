@@ -88,16 +88,8 @@ class CustomColor {
   static Color logout_text(BuildContext context) =>
       isDark(context) ? const Color(0xFFEF4444) : const Color(0xFFDC2626);
 
-
-
-  static Color appShortcut_lime(BuildContext context) =>
-      isDark(context) ? const Color(0xFF827717) : const Color(0xFFCDDC39);
-
-  static Color appShortcut_teal(BuildContext context) =>
-      isDark(context) ? const Color(0xFF004D40) : const Color(0xFF00695C);
-
-
-
+  static Color box_decoration(BuildContext context) =>
+      isDark(context) ? const Color(0xFF3D2A50) : const Color(0xFFF3E8FF);
 
   // Card Backgrounds
   static Color card_bg(BuildContext context) =>
