@@ -23,5 +23,7 @@ class AppRoute {
   static const String create = "/create";
   static const String searchworkscreen = "/searchworkscreen";
  static const String filterscreen = "/filterscreen";
+ static const String createspace = "/createspace";
+ static const String scrumscreen = "/scrumscreen";
 
 }

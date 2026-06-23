@@ -3,7 +3,7 @@ import 'package:BrossScrum/pages/home_screen/home_screen/homeScreen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../pages/home_screen/dashboard/dashboard.dart';
+import '../../pages/home_screen/dashboard/dashboard_screen/dashboard.dart';
 import '../../pages/home_screen/notifications/notifications_page.dart';
 import '../../pages/home_screen/spaces/spaces_screen/spaces_screen.dart';
 import '../color/custom_color.dart';

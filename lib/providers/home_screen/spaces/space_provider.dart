@@ -24,14 +24,14 @@ class SpacesProvider extends ChangeNotifier {
       name: 'App 2',
       subtitle: 'A2',
       icon: Icons.dashboard_outlined,
-      iconColor: Colors.teal.shade800,
+      iconColor: Colors.amber.shade900,
       isStarred: true,
     ),
     SpaceModel(
       name: 'app1',
       subtitle: 'SCRUM',
       icon: Icons.album_outlined,
-      iconColor:Colors.lime ,
+      iconColor:Colors.purple.shade600 ,
       isStarred: false,
     ),
   ];
