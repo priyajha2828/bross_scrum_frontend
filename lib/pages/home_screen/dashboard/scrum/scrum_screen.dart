@@ -2,12 +2,9 @@ import 'package:BrossScrum/resources/color/custom_color.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../providers/home_screen/dashboard/scrum/scrum_provider.dart';
-import '../../../../resources/bottom/assignee_bottom_sheet.dart';
-import '../../../../resources/model/assignee_model.dart';
-import '../../../../resources/model/sprint_model.dart';
-import '../../../../resources/model/team_model.dart';
+import '../../../../resources/bottom/custom_bottom.dart';
+import '../../../../resources/bottomsheet/custom_bottomsheet.dart';
 import '../../../../resources/widget/scrum_widgets.dart';
 
 class ScrumScreen extends StatefulWidget {
@@ -50,21 +47,29 @@ class _ScrumScreenState extends State<ScrumScreen> {
         elevation: 0,
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              WatchersBottomSheet.show(context, onSelected: (updated)=> provider.updateWatchers(updated),
+              );
+            },
             icon: Icon(
               Icons.visibility_outlined,
               color: CustomColor.textPrimary(context),
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () => AttachmentBottomSheet.show(
+                context,
+              onChooseFile: (){},
+              onTakePhoto: (){},
+              onRecordVideo: (){},
+            ),
             icon: Icon(
               Icons.attach_file,
               color: CustomColor.textPrimary(context),
             ),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () => MoreOptionsMenuButton.show(context),
             icon: Icon(
               Icons.more_vert,
               color: CustomColor.textPrimary(context),

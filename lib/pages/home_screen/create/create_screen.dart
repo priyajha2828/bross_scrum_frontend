@@ -3,15 +3,9 @@ import 'package:provider/provider.dart';
 
 import '../../../providers/home_screen/create(+)/create_screen_provider.dart';
 import '../../../resources/bar/custom_bar.dart';
-import '../../../resources/bottom/assignee_bottom_sheet.dart';
-import '../../../resources/bottom/custom_bottom.dart';
+import '../../../resources/bottomsheet/custom_bottomsheet.dart';
 import '../../../resources/color/custom_color.dart';
 import '../../../resources/form_field/custom_form_field.dart';
-import '../../../resources/model/assignee_model.dart';
-import '../../../resources/model/parent_model.dart';
-import '../../../resources/model/report_model.dart';
-import '../../../resources/model/sprint_model.dart';
-import '../../../resources/model/team_model.dart';
 
 class CreateScreen extends StatelessWidget {
   const CreateScreen({super.key});

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../../providers/home_screen/home_screen_provider/home_screen_provider.dart';
-import '../../../resources/bottom/custom_bottom.dart';
-import '../../../resources/card/custom_card.dart';
-import '../../../resources/color/custom_color.dart';
-import '../../../resources/text_field/text_field.dart';
-import '../../../routes/app_route.dart';
+import '../../../../providers/home_screen/home_screen_provider/home_screen_provider.dart';
+import '../../../../resources/bottom/custom_bottom.dart';
+import '../../../../resources/card/custom_card.dart';
+import '../../../../resources/color/custom_color.dart';
+import '../../../../resources/text_field/text_field.dart';
+import '../../../../routes/app_route.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -333,7 +333,9 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Expanded(
             child: SpaceShortcutCard(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, AppRoute.appscreen);
+              },
               title: 'app1',
               iconBgColor: Colors.purple.shade600,
               icon: Icons.album,
@@ -342,7 +344,9 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(width: 12),
           Expanded(
             child: SpaceShortcutCard(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, AppRoute.appscreen);
+              },
               title: 'App 2',
               iconBgColor: Colors.amber.shade900,
               icon: Icons.dashboard_customize,
@@ -425,7 +429,9 @@ class _HomeScreenState extends State<HomeScreen> {
         Text('This month', style: subheadStyle),
         const SizedBox(height: 10),
         ActivityFeedRow(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, AppRoute.appscreen);
+          },
           title: 'App 2',
           subtitle: 'Space • Viewed',
           icon: Icons.dashboard_customize,
@@ -440,7 +446,9 @@ class _HomeScreenState extends State<HomeScreen> {
           color: CustomColor.dividerColor(context),
         ),
         ActivityFeedRow(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushNamed(context, AppRoute.appscreen);
+          },
           title: 'SCRUM board',
           subtitle: 'Space • Viewed',
           icon: Icons.album,

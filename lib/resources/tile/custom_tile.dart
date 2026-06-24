@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../../providers/home_screen/create(+)/create_screen_provider.dart';
 import '../../providers/home_screen/spaces/space_provider.dart';
 import '../color/custom_color.dart';
-import '../model/filter_model.dart';
-import '../model/work_type_model.dart';
+import '../model/custom_model.dart';
+
 
 class SpaceListTile extends StatelessWidget {
   final SpaceModel space;
@@ -404,6 +403,78 @@ class WorkTypeTile extends StatelessWidget {
     );
   }
 }
+class WatcherTile extends StatelessWidget {
+  final WatchersModel user;
+  final bool isSelected;
+  final VoidCallback onTap;
+
+  const WatcherTile({
+    required this.user,
+    required this.isSelected,
+    required this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+        decoration: BoxDecoration(
+          color: CustomColor.box_decoration(context),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+
+            CircleAvatar(
+              radius: 18,
+              backgroundColor: user.avatarColor,
+              child: Text(
+                user.initials,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 12,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(width: 12),
+
+            // ── Name ──
+            Expanded(
+              child: Text(
+                user.name,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.w500,
+                  color: CustomColor.textPrimary(context),
+                ),
+              ),
+            ),
+
+            // ── Blue checkbox when selected ──
+            if (isSelected)
+              Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  color: CustomColor.actionBlueText(context),
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                child: const Icon(
+                  Icons.check,
+                  color: Colors.white,
+                  size: 16,
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
 class FilterTile extends StatelessWidget {
   final FilterModel filter;
@@ -460,4 +531,5 @@ class FilterTile extends StatelessWidget {
       ),
     );
   }
+
 }

@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:BrossScrum/resources/model/assignee_model.dart';
-import 'package:BrossScrum/resources/model/parent_model.dart';
-import 'package:BrossScrum/resources/model/team_model.dart';
-import 'package:BrossScrum/resources/model/work_type_model.dart';
-import 'package:BrossScrum/resources/model/sprint_model.dart';
+import '../../../resources/model/custom_model.dart';
 
-import '../../../resources/model/report_model.dart'; // ← added
 
 class CreateProvider extends ChangeNotifier {
   WorkType _selectedWorkType = WorkType.epic;

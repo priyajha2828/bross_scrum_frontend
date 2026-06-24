@@ -1,3 +1,4 @@
+import 'package:BrossScrum/routes/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../providers/home_screen/dashboard/dashboard_screen/dashboard_provider.dart';
@@ -18,17 +19,23 @@ class DashboardsScreen extends StatelessWidget {
         backgroundColor: CustomColor.bg_color(context),
         elevation: 0,
         leading: Padding(
-          padding: const EdgeInsets.all(10),
+          padding: const EdgeInsets.all(8),
           child: CircleAvatar(
-            backgroundColor: Colors.cyan,
-            child: const Text(
+            backgroundColor: Colors.cyan[700],
+            child:  TextButton(
+              onPressed: (){
+              Navigator.pushNamed(context, AppRoute.accountscreen);
+            },
+              child: Text(
               'PJ',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 13,
               ),
-            ),
+            ),)
+
+
           ),
         ),
         title: Text(

@@ -5,9 +5,7 @@ import 'package:BrossScrum/pages/account/notification_setting/notification_setti
 import 'package:BrossScrum/pages/account/settings/theme/theme_page.dart';
 import 'package:BrossScrum/pages/auth_pages/loginpage.dart';
 import 'package:BrossScrum/pages/home_screen/all_work/search_work_screen/search_screen.dart';
-import 'package:BrossScrum/pages/home_screen/app/app_screen.dart';
 import 'package:BrossScrum/pages/home_screen/dashboard/scrum/scrum_screen.dart';
-import 'package:BrossScrum/pages/home_screen/home_screen/homeScreen.dart';
 import 'package:BrossScrum/pages/home_screen/my_open_issue/my_open_issue_screen/my_open_issue.dart';
 import 'package:BrossScrum/routes/app_route.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +19,8 @@ import '../pages/auth_pages/signuppage.dart';
 import '../pages/home_screen/all_work/filter_screen/filter_screen.dart';
 import '../pages/home_screen/create/create_screen.dart';
 import '../pages/home_screen/dashboard/dashboard_screen/dashboard.dart';
+import '../pages/home_screen/home/app/app_screen.dart';
+import '../pages/home_screen/home/home_screen/homeScreen.dart';
 import '../pages/home_screen/notifications/notifications_page.dart';
 import '../pages/home_screen/spaces/create_space screen/create_space_screen.dart';
 import '../pages/home_screen/spaces/spaces_screen/spaces_screen.dart';

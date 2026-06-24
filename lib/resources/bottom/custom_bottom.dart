@@ -1,87 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../providers/home_screen/create(+)/create_screen_provider.dart';
 import '../color/custom_color.dart';
-import '../model/work_type_model.dart';
-import '../tile/custom_tile.dart';
-
-// ── App Selector Bottom Sheet ──────────────────────────────────────────────────
-class AppSelectorBottomSheet extends StatelessWidget {
-  final CreateProvider provider;
-
-  const AppSelectorBottomSheet({super.key, required this.provider});
-
-  static void show(BuildContext context, CreateProvider provider) {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: CustomColor.card_bg(context),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (BuildContext bc) {
-        return SafeArea(child: AppSelectorBottomSheet(provider: provider));
-      },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const SizedBox(height: 12),
-        Container(
-          width: 40,
-          height: 4,
-          decoration: BoxDecoration(
-            color: CustomColor.dividerColor(context),
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.all(16),
-          child: Text(
-            'Select App',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: CustomColor.textPrimary(context),
-            ),
-          ),
-        ),
-        Divider(height: 1, color: CustomColor.dividerColor(context)),
-        ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: provider.appList.length,
-          itemBuilder: (context, index) {
-            final appItem = provider.appList[index];
-            final isSelected = appItem == provider.selectedApp;
-            return ListTile(
-              title: Text(
-                appItem,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
-                  color: isSelected
-                      ? CustomColor.actionBlueText(context)
-                      : CustomColor.textPrimary(context),
-                ),
-              ),
-              trailing: isSelected
-                  ? Icon(Icons.check_circle, color: CustomColor.actionBlueText(context))
-                  : null,
-              onTap: () {
-                provider.setApp(appItem);
-                Navigator.pop(context);
-              },
-            );
-          },
-        ),
-        const SizedBox(height: 16),
-      ],
-    );
-  }
-}
 
 // ── Filter Toggle Button ───────────────────────────────────────────────────────
 class FilterToggleButton extends StatelessWidget {
@@ -102,7 +20,9 @@ class FilterToggleButton extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: isSelected ? CustomColor.secondaryContainerBlue : Colors.transparent,
+          color: isSelected
+              ? CustomColor.secondaryContainerBlue
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(12),
         ),
         alignment: Alignment.center,
@@ -118,82 +38,6 @@ class FilterToggleButton extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-// ── Work Type Bottom Sheet ─────────────────────────────────────────────────────
-class WorkTypeBottomSheet extends StatelessWidget {
-  final WorkType selectedType;
-  final List<WorkTypeOption> options;
-  final ValueChanged<WorkType> onSelected;
-
-  const WorkTypeBottomSheet({
-    super.key,
-    required this.selectedType,
-    required this.options,
-    required this.onSelected,
-  });
-
-  static Future<void> show(
-      BuildContext context, {
-        required WorkType selectedType,
-        required List<WorkTypeOption> options,
-        required ValueChanged<WorkType> onSelected,
-      }) {
-    return showModalBottomSheet(
-      context: context,
-      backgroundColor: CustomColor.card_bg(context),
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-      ),
-      builder: (_) => WorkTypeBottomSheet(
-        selectedType: selectedType,
-        options: options,
-        onSelected: onSelected,
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        const SizedBox(height: 12),
-        Container(
-          width: 40,
-          height: 4,
-          decoration: BoxDecoration(
-            color: CustomColor.dividerColor(context),
-            borderRadius: BorderRadius.circular(2),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(20, 16, 20, 8),
-          child: Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'Work type',
-              style: TextStyle(
-                fontSize: 16,
-                color: CustomColor.textMutedLabel(context),
-              ),
-            ),
-          ),
-        ),
-        ...options.map(
-              (option) => WorkTypeTile(
-            option: option,
-            isSelected: option.type == selectedType,
-            onTap: () {
-              onSelected(option.type);
-              Navigator.pop(context);
-            },
-          ),
-        ),
-        const SizedBox(height: 16),
-      ],
     );
   }
 }
@@ -298,7 +142,9 @@ class FilterTile extends StatelessWidget {
             IconButton(
               icon: Icon(
                 isStarred ? Icons.star : Icons.star_border,
-                color: isStarred ? Colors.amber : CustomColor.tileIconDefault(context),
+                color: isStarred
+                    ? Colors.amber
+                    : CustomColor.tileIconDefault(context),
                 size: 22,
               ),
               onPressed: onStarTap,
@@ -412,6 +258,90 @@ class ViewToggleButton extends StatelessWidget {
       ),
     );
   }
+}
 
+class MoreOptionsMenuButton {
+  static void show(BuildContext context) {
+    showMenu(
+      context: context,
+      position: RelativeRect.fromLTRB(
+        MediaQuery.of(context).size.width,
+        kToolbarHeight,
+        0,
+        0,
+      ),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadiusGeometry.circular(12),
+      ),
+      color: CustomColor.card_bg(context),
+      items: [
+        _buildMenuItem(
+          context,
+          icon: Icons.link,
+          label: 'Copy Link',
+          onTap: () {},
+        ),
+        _buildMenuItem(
+          context,
+          icon: Icons.share_outlined,
+          label: 'Share',
+          onTap: () {},
+        ),
+        _buildMenuItem(
+          context,
+          icon: Icons.flag_outlined,
+          label: 'Flag',
+          onTap: () {},
+        ),
+        _buildMenuItem(
+          context,
+          icon: Icons.work_history_outlined,
+          label: 'Log Work',
+          onTap: () {},
+        ),
+        _buildMenuItem(
+          context,
+          icon: Icons.link_outlined,
+          label: 'Link work item',
+          onTap: () {},
+        ),
+        _buildMenuItem(
+          context,
+          icon: Icons.account_tree_outlined,
+          label: 'Add child work item',
+          onTap: () {},
+        ),
+        _buildMenuItem(
+          context,
+          icon: Icons.delete_outline,
+          label: 'Delete',
+          isDestructive: true,
+          onTap: () {},
+        ),
+      ],
+    );
+  }
 
+  static PopupMenuItem _buildMenuItem(
+    BuildContext context, {
+    required IconData icon,
+    required String label,
+    required VoidCallback onTap,
+    bool isDestructive = false,
+  }) {
+    final color = isDestructive
+        ? const Color(0xFFDC2626)
+        : CustomColor.textPrimary(context);
+    return PopupMenuItem(
+      onTap: onTap,
+      padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
+      child: Row(
+        children: [
+          Icon(icon, color: color, size: 22),
+          const SizedBox(width: 16),
+          Text(label, style: TextStyle(fontSize: 16, color: color)),
+        ],
+      ),
+    );
+  }
 }
