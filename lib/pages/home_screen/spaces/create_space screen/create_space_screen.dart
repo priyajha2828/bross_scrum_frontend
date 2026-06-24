@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../resources/bottomsheet/custom_bottomsheet.dart';
 import '../../../../resources/color/custom_color.dart';
-import '../../../../resources/model/space_template_model.dart';
-import '../../../../resources/widget/template_bottom_sheet.dart';
+import '../../../../resources/model/custom_model.dart';
 
 class CreateSpaceScreen extends StatefulWidget {
   const CreateSpaceScreen({super.key});

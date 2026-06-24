@@ -1,15 +1,13 @@
-import 'package:BrossScrum/resources/model/assignee_model.dart';
 
 import 'package:flutter/material.dart';
-
-import '../../../../resources/model/sprint_model.dart';
-import '../../../../resources/model/team_model.dart';
+import '../../../../resources/model/custom_model.dart';
 
 class ScrumProvider extends ChangeNotifier {
   final String issueKey;
   final String initialTitle;
   final TextEditingController labelsController = TextEditingController();
   final TextEditingController storyPointsController = TextEditingController();
+List<String> _watchers = ["Priya jha"];
 
   String _title;
   String _status = 'To Do';
@@ -57,6 +55,7 @@ class ScrumProvider extends ChangeNotifier {
   DateTime get createdAt => _createdAt;
   DateTime get updatedAt => _updatedAt;
   bool get commentsNewestFirst => _commentsNewestFirst;
+  List<String> get watchers => List.unmodifiable(_watchers);
 
   @override
   void dispose() {
@@ -94,7 +93,21 @@ class ScrumProvider extends ChangeNotifier {
     _storyPoints = val;
     _touch();
   }
+void updateWatchers(List<String> list){
+    _watchers = List<String>.from(list);
+    _touch();
+}
 
+void addWatcher(String name){
+    if(!_watchers.contains(name)){
+      _watchers.add(name);
+      _touch();
+    }
+}
+void removeWatcher(String name){
+    _watchers.remove(name);
+    _touch();
+}
   void addLabel(String label) {
     if (!_labels.contains(label)) { _labels.add(label); _touch(); }
   }

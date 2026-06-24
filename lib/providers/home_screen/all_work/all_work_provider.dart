@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../../../resources/model/filter_model.dart';
+import '../../../resources/model/custom_model.dart';
+
 
 class AllWorkProvider extends ChangeNotifier {
   // View toggle: true = list, false = grid

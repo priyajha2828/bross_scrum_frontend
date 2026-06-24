@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../color/custom_color.dart';
-import '../model/filter_search_model.dart';
+import '../model/custom_model.dart';
 import 'no_result_state.dart';
 
 
