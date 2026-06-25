@@ -188,4 +188,18 @@ class WorkTypeOption {
   ];
 }
 
+class BoardModel{
+  final String name;
+  final String? subtitle;
+  final Color iconBgColor;
+  final Widget icon;
+  final void Function(BuildContext context)? onTap;
 
+  const BoardModel({
+    required this.name,
+    this.subtitle,
+    required this.iconBgColor,
+    required this.icon,
+    this.onTap
+});
+}

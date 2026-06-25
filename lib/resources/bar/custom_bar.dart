@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
-// =========================================================================
-// AttachmentAction मोडल र CreateIssueAttachmentBar विजेट
-// =========================================================================
+import '../../providers/home_screen/app/SummaryPage/summary_page_provider.dart';
+import '../color/custom_color.dart';
+
+
 class AttachmentAction {
   final IconData icon;
   final String label;
@@ -61,6 +62,96 @@ class _AttachmentButton extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class PriorityBarChart extends StatelessWidget {
+  final Map<Priority, int> breakdown;
+  final int maxCount;
+
+  const PriorityBarChart({
+    super.key,
+    required this.breakdown,
+    required this.maxCount,
+
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    const chartH = 120.0;
+
+    return SizedBox(
+      height: chartH + 36,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+
+          SizedBox(
+            width: 20,
+            height: chartH,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text('$maxCount',
+                    style: TextStyle(color: CustomColor.textMutedLabel(context), fontSize: 11)),
+                Text('${maxCount ~/ 2}',
+                    style: TextStyle(color: CustomColor.textMutedLabel(context), fontSize: 11)),
+                Text('0',
+                    style: TextStyle(color: CustomColor.textMutedLabel(context), fontSize: 11)),
+              ],
+            ),
+          ),
+          const SizedBox(width: 8),
+
+          Expanded(
+            child: Stack(
+              children: [
+
+                Positioned.fill(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: List.generate(
+                      3,
+                          (_) => Container(height: 1, color: CustomColor.textPrimary(context)),
+                    ),
+                  ),
+                ),
+
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: Priority.values.map((p) {
+                    final count = breakdown[p] ?? 0;
+                    final barH = maxCount == 0
+                        ? 0.0
+                        : (count / maxCount) * chartH;
+
+                    return Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        if (barH > 0)
+                          Container(
+                            width: 28,
+                            height: barH,
+                            decoration: BoxDecoration(
+                              color: p.color.withOpacity(0.25),
+                              borderRadius: const BorderRadius.vertical(
+                                  top: Radius.circular(4)),
+                            ),
+                          ),
+                        const SizedBox(height: 6),
+                        Icon(p.icon, color: p.color, size: 22),
+                      ],
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

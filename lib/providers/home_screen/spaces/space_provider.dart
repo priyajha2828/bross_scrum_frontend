@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../resources/color/custom_color.dart';
+import '../../../routes/app_route.dart';
 
 class SpaceModel {
   final String name;
@@ -8,6 +9,7 @@ class SpaceModel {
   final IconData icon;
   final Color iconColor;
   bool isStarred;
+  final void Function(BuildContext context)? onTap;
 
   SpaceModel({
     required this.name,
@@ -15,6 +17,7 @@ class SpaceModel {
     required this.icon,
     required this.iconColor,
     this.isStarred = false,
+    this.onTap,
   });
 }
 
@@ -26,6 +29,9 @@ class SpacesProvider extends ChangeNotifier {
       icon: Icons.dashboard_outlined,
       iconColor: Colors.amber.shade900,
       isStarred: true,
+      onTap: (context){
+        Navigator.pushNamed(context, AppRoute.appscreen);
+      }
     ),
     SpaceModel(
       name: 'app1',
@@ -33,6 +39,9 @@ class SpacesProvider extends ChangeNotifier {
       icon: Icons.album_outlined,
       iconColor:Colors.purple.shade600 ,
       isStarred: false,
+      onTap: (context){
+        Navigator.pushNamed(context, AppRoute.appscreen);
+      }
     ),
   ];
 

@@ -8,6 +8,7 @@ import 'package:BrossScrum/providers/account_screen_provider/settings/manage_acc
 import 'package:BrossScrum/providers/account_screen_provider/settings/settings_provider/settings_provider.dart';
 import 'package:BrossScrum/providers/auth_provider/auth_provider.dart';
 import 'package:BrossScrum/providers/home_screen/all_work/all_work_provider.dart';
+import 'package:BrossScrum/providers/home_screen/app/SummaryPage/summary_page_provider.dart';
 import 'package:BrossScrum/providers/home_screen/create(+)/create_screen_provider.dart';
 import 'package:BrossScrum/providers/home_screen/dashboard/dashboard_screen/dashboard_provider.dart';
 import 'package:BrossScrum/providers/home_screen/dashboard/scrum/scrum_provider.dart';
@@ -41,6 +42,7 @@ void main() {
         ChangeNotifierProvider(create: (_) => CreateProvider()),
         ChangeNotifierProvider(create: (_) => AllWorkProvider()),
         ChangeNotifierProvider(create: (_) => ScrumProvider()),
+        ChangeNotifierProvider(create: (_)=> SummaryPageProvider()),
       ],
       child: const MyApp(),
     ),

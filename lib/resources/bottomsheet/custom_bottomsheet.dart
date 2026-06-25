@@ -1,9 +1,9 @@
+import 'package:BrossScrum/routes/app_route.dart';
 import 'package:flutter/material.dart';
 import '../../providers/home_screen/create(+)/create_screen_provider.dart';
 import '../color/custom_color.dart';
 import '../model/custom_model.dart';
 import '../tile/custom_tile.dart';
-
 
 class AssigneeBottomSheet extends StatefulWidget {
   final String? selectedAssignee;
@@ -16,10 +16,10 @@ class AssigneeBottomSheet extends StatefulWidget {
   });
 
   static Future<void> show(
-      BuildContext context, {
-        String? selectedAssignee,
-        required ValueChanged<AssigneeModel?> onSelected,
-      }) {
+    BuildContext context, {
+    String? selectedAssignee,
+    required ValueChanged<AssigneeModel?> onSelected,
+  }) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -43,9 +43,21 @@ class _AssigneeBottomSheetState extends State<AssigneeBottomSheet> {
   final FocusNode _focusNode = FocusNode();
 
   final List<AssigneeModel> _allAssignees = const [
-    AssigneeModel(name: 'Automatic', initials: 'A', avatarColor: Color(0xFF6366F1)),
-    AssigneeModel(name: 'Priya Jha', initials: 'PJ', avatarColor: Color(0xFF7C3AED)),
-    AssigneeModel(name: 'Rahul Sharma', initials: 'RS', avatarColor: Color(0xFF0891B2)),
+    AssigneeModel(
+      name: 'Automatic',
+      initials: 'A',
+      avatarColor: Color(0xFF6366F1),
+    ),
+    AssigneeModel(
+      name: 'Priya Jha',
+      initials: 'PJ',
+      avatarColor: Color(0xFF7C3AED),
+    ),
+    AssigneeModel(
+      name: 'Rahul Sharma',
+      initials: 'RS',
+      avatarColor: Color(0xFF0891B2),
+    ),
   ];
 
   List<AssigneeModel> _filtered = [];
@@ -55,7 +67,9 @@ class _AssigneeBottomSheetState extends State<AssigneeBottomSheet> {
     super.initState();
     _filtered = _allAssignees;
     _searchController.addListener(_onSearch);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _focusNode.requestFocus());
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _focusNode.requestFocus(),
+    );
   }
 
   void _onSearch() {
@@ -77,7 +91,9 @@ class _AssigneeBottomSheetState extends State<AssigneeBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -133,15 +149,15 @@ class _AssigneeBottomSheetState extends State<AssigneeBottomSheet> {
                     ),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
-                      icon: Icon(
-                        Icons.clear,
-                        color: CustomColor.textMutedLabel(context),
-                      ),
-                      onPressed: () {
-                        _searchController.clear();
-                        setState(() => _filtered = _allAssignees);
-                      },
-                    )
+                            icon: Icon(
+                              Icons.clear,
+                              color: CustomColor.textMutedLabel(context),
+                            ),
+                            onPressed: () {
+                              _searchController.clear();
+                              setState(() => _filtered = _allAssignees);
+                            },
+                          )
                         : null,
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(vertical: 14),
@@ -196,8 +212,10 @@ class _AssigneeBottomSheetState extends State<AssigneeBottomSheet> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: _filtered.length,
-                separatorBuilder: (_, __) =>
-                    Divider(height: 1, color: CustomColor.dividerColor(context)),
+                separatorBuilder: (_, __) => Divider(
+                  height: 1,
+                  color: CustomColor.dividerColor(context),
+                ),
                 itemBuilder: (context, index) {
                   final assignee = _filtered[index];
                   final isSelected = assignee.name == widget.selectedAssignee;
@@ -220,14 +238,16 @@ class _AssigneeBottomSheetState extends State<AssigneeBottomSheet> {
                       style: TextStyle(
                         color: CustomColor.textPrimary(context),
                         fontSize: 15,
-                        fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                        fontWeight: isSelected
+                            ? FontWeight.w600
+                            : FontWeight.normal,
                       ),
                     ),
                     trailing: isSelected
                         ? Icon(
-                      Icons.check_circle,
-                      color: CustomColor.actionBlueText(context),
-                    )
+                            Icons.check_circle,
+                            color: CustomColor.actionBlueText(context),
+                          )
                         : null,
                     onTap: () {
                       widget.onSelected(assignee);
@@ -243,6 +263,7 @@ class _AssigneeBottomSheetState extends State<AssigneeBottomSheet> {
     );
   }
 }
+
 class ParentBottomSheet extends StatefulWidget {
   final String? currentParent;
   final ValueChanged<ParentModel?> onSelected;
@@ -254,10 +275,10 @@ class ParentBottomSheet extends StatefulWidget {
   });
 
   static Future<void> show(
-      BuildContext context, {
-        String? currentParent,
-        required ValueChanged<ParentModel?> onSelected,
-      }) {
+    BuildContext context, {
+    String? currentParent,
+    required ValueChanged<ParentModel?> onSelected,
+  }) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -311,16 +332,20 @@ class _ParentBottomSheetState extends State<ParentBottomSheet> {
     super.initState();
     _filtered = _allParents;
     _searchController.addListener(_onSearch);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _focusNode.requestFocus());
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _focusNode.requestFocus(),
+    );
   }
 
   void _onSearch() {
     final query = _searchController.text.toLowerCase();
     setState(() {
       _filtered = _allParents
-          .where((p) =>
-      p.name.toLowerCase().contains(query) ||
-          p.type.toLowerCase().contains(query))
+          .where(
+            (p) =>
+                p.name.toLowerCase().contains(query) ||
+                p.type.toLowerCase().contains(query),
+          )
           .toList();
     });
   }
@@ -335,7 +360,9 @@ class _ParentBottomSheetState extends State<ParentBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -391,15 +418,15 @@ class _ParentBottomSheetState extends State<ParentBottomSheet> {
                     ),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
-                      icon: Icon(
-                        Icons.clear,
-                        color: CustomColor.textMutedLabel(context),
-                      ),
-                      onPressed: () {
-                        _searchController.clear();
-                        setState(() => _filtered = _allParents);
-                      },
-                    )
+                            icon: Icon(
+                              Icons.clear,
+                              color: CustomColor.textMutedLabel(context),
+                            ),
+                            onPressed: () {
+                              _searchController.clear();
+                              setState(() => _filtered = _allParents);
+                            },
+                          )
                         : null,
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(vertical: 14),
@@ -454,8 +481,10 @@ class _ParentBottomSheetState extends State<ParentBottomSheet> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: _filtered.length,
-                separatorBuilder: (_, __) =>
-                    Divider(height: 1, color: CustomColor.dividerColor(context)),
+                separatorBuilder: (_, __) => Divider(
+                  height: 1,
+                  color: CustomColor.dividerColor(context),
+                ),
                 itemBuilder: (context, index) {
                   final parent = _filtered[index];
                   final isSelected = parent.name == widget.currentParent;
@@ -468,14 +497,20 @@ class _ParentBottomSheetState extends State<ParentBottomSheet> {
                         color: parent.iconBg,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Icon(parent.icon, color: parent.iconColor, size: 20),
+                      child: Icon(
+                        parent.icon,
+                        color: parent.iconColor,
+                        size: 20,
+                      ),
                     ),
                     title: Text(
                       parent.name,
                       style: TextStyle(
                         color: CustomColor.textPrimary(context),
                         fontSize: 15,
-                        fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
+                        fontWeight: isSelected
+                            ? FontWeight.w600
+                            : FontWeight.normal,
                       ),
                     ),
                     subtitle: Text(
@@ -487,9 +522,9 @@ class _ParentBottomSheetState extends State<ParentBottomSheet> {
                     ),
                     trailing: isSelected
                         ? Icon(
-                      Icons.check_circle,
-                      color: CustomColor.actionBlueText(context),
-                    )
+                            Icons.check_circle,
+                            color: CustomColor.actionBlueText(context),
+                          )
                         : null,
                     onTap: () {
                       widget.onSelected(parent);
@@ -505,6 +540,7 @@ class _ParentBottomSheetState extends State<ParentBottomSheet> {
     );
   }
 }
+
 class SprintBottomSheet extends StatefulWidget {
   final String? currentSprint;
   final ValueChanged<SprintModel?> onSelected;
@@ -516,10 +552,10 @@ class SprintBottomSheet extends StatefulWidget {
   });
 
   static Future<void> show(
-      BuildContext context, {
-        String? currentSprint,
-        required ValueChanged<SprintModel?> onSelected,
-      }) {
+    BuildContext context, {
+    String? currentSprint,
+    required ValueChanged<SprintModel?> onSelected,
+  }) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -543,21 +579,13 @@ class _SprintBottomSheetState extends State<SprintBottomSheet> {
   final FocusNode _focusNode = FocusNode();
 
   final List<SprintModel> _allSprints = const [
-    SprintModel(
-      name: 'None',
-      subtitle: '',
-      type: 'none',
-    ),
+    SprintModel(name: 'None', subtitle: '', type: 'none'),
     SprintModel(
       name: 'Active Sprints',
       subtitle: 'SCRUM board',
       type: 'active',
     ),
-    SprintModel(
-      name: 'A# Sprint 1',
-      subtitle: 'A3 board',
-      type: 'future',
-    ),
+    SprintModel(name: 'A# Sprint 1', subtitle: 'A3 board', type: 'future'),
   ];
 
   List<SprintModel> _filtered = [];
@@ -567,17 +595,20 @@ class _SprintBottomSheetState extends State<SprintBottomSheet> {
     super.initState();
     _filtered = _allSprints;
     _searchController.addListener(_onSearch);
-    WidgetsBinding.instance.addPostFrameCallback((_) =>
-        _focusNode.requestFocus());
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _focusNode.requestFocus(),
+    );
   }
 
   void _onSearch() {
     final query = _searchController.text.toLowerCase();
     setState(() {
       _filtered = _allSprints
-          .where((s) =>
-      s.name.toLowerCase().contains(query) ||
-          s.subtitle.toLowerCase().contains(query))
+          .where(
+            (s) =>
+                s.name.toLowerCase().contains(query) ||
+                s.subtitle.toLowerCase().contains(query),
+          )
           .toList();
     });
   }
@@ -612,11 +643,7 @@ class _SprintBottomSheetState extends State<SprintBottomSheet> {
           color: const Color(0xFFDCFCE7),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: const Icon(
-          Icons.flash_on,
-          color: Color(0xFF16A34A),
-          size: 20,
-        ),
+        child: const Icon(Icons.flash_on, color: Color(0xFF16A34A), size: 20),
       );
     } else {
       return Container(
@@ -626,11 +653,7 @@ class _SprintBottomSheetState extends State<SprintBottomSheet> {
           color: const Color(0xFFDBEAFE),
           borderRadius: BorderRadius.circular(8),
         ),
-        child: const Icon(
-          Icons.schedule,
-          color: Color(0xFF2563EB),
-          size: 20,
-        ),
+        child: const Icon(Icons.schedule, color: Color(0xFF2563EB), size: 20),
       );
     }
   }
@@ -638,10 +661,9 @@ class _SprintBottomSheetState extends State<SprintBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery
-          .of(context)
-          .viewInsets
-          .bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -649,7 +671,7 @@ class _SprintBottomSheetState extends State<SprintBottomSheet> {
           children: [
             const SizedBox(height: 12),
 
-// Drag handle
+            // Drag handle
             Center(
               child: Container(
                 width: 40,
@@ -663,7 +685,7 @@ class _SprintBottomSheetState extends State<SprintBottomSheet> {
 
             const SizedBox(height: 16),
 
-// Title
+            // Title
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
@@ -678,7 +700,7 @@ class _SprintBottomSheetState extends State<SprintBottomSheet> {
 
             const SizedBox(height: 12),
 
-// Search bar
+            // Search bar
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Container(
@@ -705,15 +727,15 @@ class _SprintBottomSheetState extends State<SprintBottomSheet> {
                     ),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
-                      icon: Icon(
-                        Icons.clear,
-                        color: CustomColor.textMutedLabel(context),
-                      ),
-                      onPressed: () {
-                        _searchController.clear();
-                        setState(() => _filtered = _allSprints);
-                      },
-                    )
+                            icon: Icon(
+                              Icons.clear,
+                              color: CustomColor.textMutedLabel(context),
+                            ),
+                            onPressed: () {
+                              _searchController.clear();
+                              setState(() => _filtered = _allSprints);
+                            },
+                          )
                         : null,
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(vertical: 14),
@@ -726,7 +748,7 @@ class _SprintBottomSheetState extends State<SprintBottomSheet> {
 
             Divider(height: 1, color: CustomColor.dividerColor(context)),
 
-// Sprint list
+            // Sprint list
             if (_filtered.isEmpty)
               Padding(
                 padding: const EdgeInsets.all(24),
@@ -745,12 +767,14 @@ class _SprintBottomSheetState extends State<SprintBottomSheet> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: _filtered.length,
-                separatorBuilder: (_, __) =>
-                    Divider(
-                        height: 1, color: CustomColor.dividerColor(context)),
+                separatorBuilder: (_, __) => Divider(
+                  height: 1,
+                  color: CustomColor.dividerColor(context),
+                ),
                 itemBuilder: (context, index) {
                   final sprint = _filtered[index];
-                  final isSelected = sprint.name == widget.currentSprint ||
+                  final isSelected =
+                      sprint.name == widget.currentSprint ||
                       (sprint.type == 'none' &&
                           (widget.currentSprint == null ||
                               widget.currentSprint == 'None'));
@@ -762,28 +786,28 @@ class _SprintBottomSheetState extends State<SprintBottomSheet> {
                       style: TextStyle(
                         color: CustomColor.textPrimary(context),
                         fontSize: 15,
-                        fontWeight:
-                        isSelected ? FontWeight.w600 : FontWeight.normal,
+                        fontWeight: isSelected
+                            ? FontWeight.w600
+                            : FontWeight.normal,
                       ),
                     ),
                     subtitle: sprint.subtitle.isNotEmpty
                         ? Text(
-                      sprint.subtitle,
-                      style: TextStyle(
-                        color: CustomColor.textMutedLabel(context),
-                        fontSize: 12,
-                      ),
-                    )
+                            sprint.subtitle,
+                            style: TextStyle(
+                              color: CustomColor.textMutedLabel(context),
+                              fontSize: 12,
+                            ),
+                          )
                         : null,
                     trailing: isSelected
                         ? Icon(
-                      Icons.check_circle,
-                      color: CustomColor.actionBlueText(context),
-                    )
+                            Icons.check_circle,
+                            color: CustomColor.actionBlueText(context),
+                          )
                         : null,
                     onTap: () {
-                      widget.onSelected(
-                          sprint.type == 'none' ? null : sprint);
+                      widget.onSelected(sprint.type == 'none' ? null : sprint);
                       Navigator.pop(context);
                     },
                   );
@@ -809,10 +833,10 @@ class TeamBottomSheet extends StatefulWidget {
   });
 
   static Future<void> show(
-      BuildContext context, {
-        String? currentTeam,
-        required ValueChanged<TeamModel?> onSelected,
-      }) {
+    BuildContext context, {
+    String? currentTeam,
+    required ValueChanged<TeamModel?> onSelected,
+  }) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -820,10 +844,8 @@ class TeamBottomSheet extends StatefulWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (_) => TeamBottomSheet(
-        currentTeam: currentTeam,
-        onSelected: onSelected,
-      ),
+      builder: (_) =>
+          TeamBottomSheet(currentTeam: currentTeam, onSelected: onSelected),
     );
   }
 
@@ -837,14 +859,26 @@ class _TeamBottomSheetState extends State<TeamBottomSheet> {
 
   final List<TeamModel> _allTeams = const [
     TeamModel(
-        name: 'Design Team', initials: 'DT', avatarColor: Color(0xFF7C3AED)),
+      name: 'Design Team',
+      initials: 'DT',
+      avatarColor: Color(0xFF7C3AED),
+    ),
     TeamModel(
-        name: 'Backend Team', initials: 'BT', avatarColor: Color(0xFF0891B2)),
+      name: 'Backend Team',
+      initials: 'BT',
+      avatarColor: Color(0xFF0891B2),
+    ),
     TeamModel(
-        name: 'Frontend Team', initials: 'FT', avatarColor: Color(0xFF16A34A)),
+      name: 'Frontend Team',
+      initials: 'FT',
+      avatarColor: Color(0xFF16A34A),
+    ),
     TeamModel(name: 'QA Team', initials: 'QA', avatarColor: Color(0xFFD97706)),
     TeamModel(
-        name: 'DevOps Team', initials: 'DO', avatarColor: Color(0xFFDC2626)),
+      name: 'DevOps Team',
+      initials: 'DO',
+      avatarColor: Color(0xFFDC2626),
+    ),
   ];
 
   List<TeamModel> _filtered = [];
@@ -854,8 +888,9 @@ class _TeamBottomSheetState extends State<TeamBottomSheet> {
     super.initState();
     _filtered = _allTeams;
     _searchController.addListener(_onSearch);
-    WidgetsBinding.instance.addPostFrameCallback((_) =>
-        _focusNode.requestFocus());
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _focusNode.requestFocus(),
+    );
   }
 
   void _onSearch() {
@@ -877,10 +912,9 @@ class _TeamBottomSheetState extends State<TeamBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery
-          .of(context)
-          .viewInsets
-          .bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: SingleChildScrollView(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -888,7 +922,7 @@ class _TeamBottomSheetState extends State<TeamBottomSheet> {
           children: [
             const SizedBox(height: 12),
 
-// Drag handle
+            // Drag handle
             Center(
               child: Container(
                 width: 40,
@@ -902,7 +936,7 @@ class _TeamBottomSheetState extends State<TeamBottomSheet> {
 
             const SizedBox(height: 16),
 
-// Title
+            // Title
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Text(
@@ -917,7 +951,7 @@ class _TeamBottomSheetState extends State<TeamBottomSheet> {
 
             const SizedBox(height: 12),
 
-// Search bar
+            // Search bar
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Container(
@@ -944,15 +978,15 @@ class _TeamBottomSheetState extends State<TeamBottomSheet> {
                     ),
                     suffixIcon: _searchController.text.isNotEmpty
                         ? IconButton(
-                      icon: Icon(
-                        Icons.clear,
-                        color: CustomColor.textMutedLabel(context),
-                      ),
-                      onPressed: () {
-                        _searchController.clear();
-                        setState(() => _filtered = _allTeams);
-                      },
-                    )
+                            icon: Icon(
+                              Icons.clear,
+                              color: CustomColor.textMutedLabel(context),
+                            ),
+                            onPressed: () {
+                              _searchController.clear();
+                              setState(() => _filtered = _allTeams);
+                            },
+                          )
                         : null,
                     border: InputBorder.none,
                     contentPadding: const EdgeInsets.symmetric(vertical: 14),
@@ -965,7 +999,7 @@ class _TeamBottomSheetState extends State<TeamBottomSheet> {
 
             Divider(height: 1, color: CustomColor.dividerColor(context)),
 
-// None option (default)
+            // None option (default)
             ListTile(
               leading: Container(
                 width: 38,
@@ -987,12 +1021,12 @@ class _TeamBottomSheetState extends State<TeamBottomSheet> {
                   fontSize: 15,
                 ),
               ),
-              trailing: widget.currentTeam == null ||
-                  widget.currentTeam == 'None'
+              trailing:
+                  widget.currentTeam == null || widget.currentTeam == 'None'
                   ? Icon(
-                Icons.check_circle,
-                color: CustomColor.actionBlueText(context),
-              )
+                      Icons.check_circle,
+                      color: CustomColor.actionBlueText(context),
+                    )
                   : null,
               onTap: () {
                 widget.onSelected(null);
@@ -1002,7 +1036,7 @@ class _TeamBottomSheetState extends State<TeamBottomSheet> {
 
             Divider(height: 1, color: CustomColor.dividerColor(context)),
 
-// Teams list
+            // Teams list
             if (_filtered.isEmpty)
               Padding(
                 padding: const EdgeInsets.all(24),
@@ -1021,9 +1055,10 @@ class _TeamBottomSheetState extends State<TeamBottomSheet> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: _filtered.length,
-                separatorBuilder: (_, __) =>
-                    Divider(
-                        height: 1, color: CustomColor.dividerColor(context)),
+                separatorBuilder: (_, __) => Divider(
+                  height: 1,
+                  color: CustomColor.dividerColor(context),
+                ),
                 itemBuilder: (context, index) {
                   final team = _filtered[index];
                   final isSelected = team.name == widget.currentTeam;
@@ -1046,15 +1081,16 @@ class _TeamBottomSheetState extends State<TeamBottomSheet> {
                       style: TextStyle(
                         color: CustomColor.textPrimary(context),
                         fontSize: 15,
-                        fontWeight:
-                        isSelected ? FontWeight.w600 : FontWeight.normal,
+                        fontWeight: isSelected
+                            ? FontWeight.w600
+                            : FontWeight.normal,
                       ),
                     ),
                     trailing: isSelected
                         ? Icon(
-                      Icons.check_circle,
-                      color: CustomColor.actionBlueText(context),
-                    )
+                            Icons.check_circle,
+                            color: CustomColor.actionBlueText(context),
+                          )
                         : null,
                     onTap: () {
                       widget.onSelected(team);
@@ -1071,6 +1107,7 @@ class _TeamBottomSheetState extends State<TeamBottomSheet> {
     );
   }
 }
+
 class ReportBottomSheet extends StatefulWidget {
   final String? selectedReports;
   final ValueChanged<ReportModel?> onSelected;
@@ -1082,10 +1119,10 @@ class ReportBottomSheet extends StatefulWidget {
   });
 
   static Future<void> show(
-      BuildContext context, {
-        String? selectedReports,
-        required ValueChanged<ReportModel?> onSelected,
-      }) {
+    BuildContext context, {
+    String? selectedReports,
+    required ValueChanged<ReportModel?> onSelected,
+  }) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -1109,10 +1146,21 @@ class _ReportBottomSheetState extends State<ReportBottomSheet> {
   final FocusNode _focusNode = FocusNode();
 
   final List<ReportModel> _allReports = const [
-    ReportModel(name: 'Automatic', initials: 'A', avatarColor: Color(0xFF6366F1)),
-    ReportModel(name: 'Report1', initials: 'PJ', avatarColor: Color(0xFF7C3AED)),
-    ReportModel(name: 'Report2', initials: 'RS', avatarColor: Color(0xFF0891B2)),
-
+    ReportModel(
+      name: 'Automatic',
+      initials: 'A',
+      avatarColor: Color(0xFF6366F1),
+    ),
+    ReportModel(
+      name: 'Report1',
+      initials: 'PJ',
+      avatarColor: Color(0xFF7C3AED),
+    ),
+    ReportModel(
+      name: 'Report2',
+      initials: 'RS',
+      avatarColor: Color(0xFF0891B2),
+    ),
   ];
 
   List<ReportModel> _filtered = [];
@@ -1122,7 +1170,9 @@ class _ReportBottomSheetState extends State<ReportBottomSheet> {
     super.initState();
     _filtered = _allReports;
     _searchController.addListener(_onSearch);
-    WidgetsBinding.instance.addPostFrameCallback((_) => _focusNode.requestFocus());
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) => _focusNode.requestFocus(),
+    );
   }
 
   void _onSearch() {
@@ -1144,7 +1194,9 @@ class _ReportBottomSheetState extends State<ReportBottomSheet> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding: EdgeInsets.only(
+        bottom: MediaQuery.of(context).viewInsets.bottom,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -1207,15 +1259,15 @@ class _ReportBottomSheetState extends State<ReportBottomSheet> {
                   ),
                   suffixIcon: _searchController.text.isNotEmpty
                       ? IconButton(
-                    icon: Icon(
-                      Icons.clear,
-                      color: CustomColor.textMutedLabel(context),
-                    ),
-                    onPressed: () {
-                      _searchController.clear();
-                      setState(() => _filtered = _allReports);
-                    },
-                  )
+                          icon: Icon(
+                            Icons.clear,
+                            color: CustomColor.textMutedLabel(context),
+                          ),
+                          onPressed: () {
+                            _searchController.clear();
+                            setState(() => _filtered = _allReports);
+                          },
+                        )
                       : null,
                   border: InputBorder.none,
                   contentPadding: const EdgeInsets.symmetric(vertical: 14),
@@ -1265,60 +1317,63 @@ class _ReportBottomSheetState extends State<ReportBottomSheet> {
             ),
             child: _filtered.isEmpty
                 ? Padding(
-              padding: const EdgeInsets.all(24),
-              child: Text(
-                'No assignee found',
-                style: TextStyle(
-                  color: CustomColor.textMutedLabel(context),
-                  fontSize: 14,
-                ),
-              ),
-            )
-                : ListView.separated(
-              shrinkWrap: true,
-              itemCount: _filtered.length,
-              separatorBuilder: (_, __) =>
-                  Divider(height: 1, color: CustomColor.dividerColor(context)),
-              itemBuilder: (context, index) {
-                final assignee = _filtered[index];
-                final isSelected = assignee.name == widget.selectedReports;
-
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundColor: assignee.avatarColor,
-                    radius: 19,
+                    padding: const EdgeInsets.all(24),
                     child: Text(
-                      assignee.initials,
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
+                      'No assignee found',
+                      style: TextStyle(
+                        color: CustomColor.textMutedLabel(context),
+                        fontSize: 14,
                       ),
                     ),
-                  ),
-                  title: Text(
-                    assignee.name,
-                    style: TextStyle(
-                      color: CustomColor.textPrimary(context),
-                      fontSize: 15,
-                      fontWeight: isSelected
-                          ? FontWeight.w600
-                          : FontWeight.normal,
-                    ),
-                  ),
-                  trailing: isSelected
-                      ? Icon(
-                    Icons.check_circle,
-                    color: CustomColor.actionBlueText(context),
                   )
-                      : null,
-                  onTap: () {
-                    widget.onSelected(assignee);
-                    Navigator.pop(context);
-                  },
-                );
-              },
-            ),
+                : ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: _filtered.length,
+                    separatorBuilder: (_, __) => Divider(
+                      height: 1,
+                      color: CustomColor.dividerColor(context),
+                    ),
+                    itemBuilder: (context, index) {
+                      final assignee = _filtered[index];
+                      final isSelected =
+                          assignee.name == widget.selectedReports;
+
+                      return ListTile(
+                        leading: CircleAvatar(
+                          backgroundColor: assignee.avatarColor,
+                          radius: 19,
+                          child: Text(
+                            assignee.initials,
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        title: Text(
+                          assignee.name,
+                          style: TextStyle(
+                            color: CustomColor.textPrimary(context),
+                            fontSize: 15,
+                            fontWeight: isSelected
+                                ? FontWeight.w600
+                                : FontWeight.normal,
+                          ),
+                        ),
+                        trailing: isSelected
+                            ? Icon(
+                                Icons.check_circle,
+                                color: CustomColor.actionBlueText(context),
+                              )
+                            : null,
+                        onTap: () {
+                          widget.onSelected(assignee);
+                          Navigator.pop(context);
+                        },
+                      );
+                    },
+                  ),
           ),
 
           const SizedBox(height: 16),
@@ -1327,9 +1382,10 @@ class _ReportBottomSheetState extends State<ReportBottomSheet> {
     );
   }
 }
+
 class WatchersBottomSheet extends StatefulWidget {
   final List<String> selectedWatchers;
-  final ValueChanged<List<String>>onSelected;
+  final ValueChanged<List<String>> onSelected;
 
   const WatchersBottomSheet({
     super.key,
@@ -1338,17 +1394,16 @@ class WatchersBottomSheet extends StatefulWidget {
   });
 
   static Future<void> show(
-      BuildContext context,{
-        List<String> selectedWatchers = const [],
-        required ValueChanged<List<String>> onSelected,
-      }
-      ){
+    BuildContext context, {
+    List<String> selectedWatchers = const [],
+    required ValueChanged<List<String>> onSelected,
+  }) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       backgroundColor: CustomColor.card_bg(context),
       shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(20))
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
       builder: (_) => WatchersBottomSheet(
         selectedWatchers: selectedWatchers,
@@ -1364,21 +1419,21 @@ class WatchersBottomSheet extends StatefulWidget {
 class _WatchersBottomSheetState extends State<WatchersBottomSheet> {
   final TextEditingController _searchController = TextEditingController();
 
-  final List<WatchersModel> _allUsers = const[
+  final List<WatchersModel> _allUsers = const [
     WatchersModel(
       name: 'Priya jha',
       initials: 'PJ',
-      avatarColor:Color(0xFF5B21B6),
+      avatarColor: Color(0xFF5B21B6),
     ),
     WatchersModel(
       name: 'Jyoti Mandal',
       initials: 'JM',
-      avatarColor:Color(0xFF0052CC),
+      avatarColor: Color(0xFF0052CC),
     ),
     WatchersModel(
       name: 'Prasuna ',
       initials: 'P',
-      avatarColor:Color(0xFF00875A),
+      avatarColor: Color(0xFF00875A),
     ),
   ];
 
@@ -1390,7 +1445,8 @@ class _WatchersBottomSheetState extends State<WatchersBottomSheet> {
     super.initState();
     _selected = List<String>.from(widget.selectedWatchers);
     _searchController.addListener(
-          () => setState(() => _query = _searchController.text.trim().toLowerCase()),
+      () =>
+          setState(() => _query = _searchController.text.trim().toLowerCase()),
     );
   }
 
@@ -1411,8 +1467,9 @@ class _WatchersBottomSheetState extends State<WatchersBottomSheet> {
   }
 
   List<WatchersModel> get _otherUsers {
-    final unselected =
-    _allUsers.where((u) => !_selected.contains(u.name)).toList();
+    final unselected = _allUsers
+        .where((u) => !_selected.contains(u.name))
+        .toList();
     if (_query.isEmpty) return unselected;
     return unselected
         .where((u) => u.name.toLowerCase().contains(_query))
@@ -1435,7 +1492,6 @@ class _WatchersBottomSheetState extends State<WatchersBottomSheet> {
     widget.onSelected(_selected);
     Navigator.pop(context);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -1516,101 +1572,102 @@ class _WatchersBottomSheetState extends State<WatchersBottomSheet> {
             ),
           ),
           const SizedBox(height: 20),
-          ConstrainedBox(constraints: BoxConstraints(
-            maxHeight:  MediaQuery.of(context).size.height * 0.52,
-          ),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (_filteredSelected.isNotEmpty) ...[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Selected',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: CustomColor.textMutedLabel(context),
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: _clearAll,
-                              child: Text(
-                                'Clear',
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w600,
-                                  color: CustomColor.actionBlueText(context),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      ..._filteredSelected.map(
-                            (u) => WatcherTile(
-                          user: u,
-                          isSelected: true,
-                          onTap: () => _toggle(u),
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                    ],
-
-                    if (_otherUsers.isNotEmpty) ...[
-                      if (_filteredSelected.isNotEmpty)
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Text(
-                            'Other items',
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxHeight: MediaQuery.of(context).size.height * 0.52,
+            ),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (_filteredSelected.isNotEmpty) ...[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Selected',
                             style: TextStyle(
                               fontSize: 13,
                               color: CustomColor.textMutedLabel(context),
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                        ),
-                      const SizedBox(height: 10),
-                      ..._otherUsers.map(
-                            (u) => WatcherTile(
-                          user: u,
-                          isSelected: false,
-                          onTap: () => _toggle(u),
-                        ),
-                      ),
-                    ],
-
-                    // ── Empty state ──
-                    if (_filteredSelected.isEmpty && _otherUsers.isEmpty)
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 32),
-                        child: Center(
-                          child: Text(
-                            'No users found',
-                            style: TextStyle(
-                              fontSize: 15,
-                              color: CustomColor.textMutedLabel(context),
+                          GestureDetector(
+                            onTap: _clearAll,
+                            child: Text(
+                              'Clear',
+                              style: TextStyle(
+                                fontSize: 13,
+                                fontWeight: FontWeight.w600,
+                                color: CustomColor.actionBlueText(context),
+                              ),
                             ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    ..._filteredSelected.map(
+                      (u) => WatcherTile(
+                        user: u,
+                        isSelected: true,
+                        onTap: () => _toggle(u),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                  ],
+
+                  if (_otherUsers.isNotEmpty) ...[
+                    if (_filteredSelected.isNotEmpty)
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Text(
+                          'Other items',
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: CustomColor.textMutedLabel(context),
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
-
-                    const SizedBox(height: 24),
+                    const SizedBox(height: 10),
+                    ..._otherUsers.map(
+                      (u) => WatcherTile(
+                        user: u,
+                        isSelected: false,
+                        onTap: () => _toggle(u),
+                      ),
+                    ),
                   ],
-                ),
 
-              )
+                  // ── Empty state ──
+                  if (_filteredSelected.isEmpty && _otherUsers.isEmpty)
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 32),
+                      child: Center(
+                        child: Text(
+                          'No users found',
+                          style: TextStyle(
+                            fontSize: 15,
+                            color: CustomColor.textMutedLabel(context),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                  const SizedBox(height: 24),
+                ],
+              ),
+            ),
           ),
         ],
       ),
     );
   }
 }
+
 class TemplateBottomSheet extends StatelessWidget {
   final List<SpaceTemplateModel> templates;
   final String selectedTemplateId;
@@ -1623,7 +1680,8 @@ class TemplateBottomSheet extends StatelessWidget {
     required this.onSelected,
   });
 
-  static void show(BuildContext context, {
+  static void show(
+    BuildContext context, {
     required List<SpaceTemplateModel> templates,
     required String selectedTemplateId,
     required ValueChanged<SpaceTemplateModel> onSelected,
@@ -1635,12 +1693,11 @@ class TemplateBottomSheet extends StatelessWidget {
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
       ),
-      builder: (_) =>
-          TemplateBottomSheet(
-            templates: templates,
-            selectedTemplateId: selectedTemplateId,
-            onSelected: onSelected,
-          ),
+      builder: (_) => TemplateBottomSheet(
+        templates: templates,
+        selectedTemplateId: selectedTemplateId,
+        onSelected: onSelected,
+      ),
     );
   }
 
@@ -1648,17 +1705,14 @@ class TemplateBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(
-        maxHeight: MediaQuery
-            .of(context)
-            .size
-            .height * 0.85,
+        maxHeight: MediaQuery.of(context).size.height * 0.85,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 14),
-// Pull Indicator Bar
+          // Pull Indicator Bar
           Center(
             child: Container(
               width: 36,
@@ -1670,7 +1724,7 @@ class TemplateBottomSheet extends StatelessWidget {
             ),
           ),
 
-// Header Section
+          // Header Section
           Padding(
             padding: const EdgeInsets.fromLTRB(24, 20, 24, 16),
             child: Text(
@@ -1685,16 +1739,18 @@ class TemplateBottomSheet extends StatelessWidget {
 
           const Divider(height: 1, thickness: 1, color: Color(0xFFEEEEEE)),
 
-// Templates Scrolling Option Rows
+          // Templates Scrolling Option Rows
           Flexible(
             child: ListView.separated(
               shrinkWrap: true,
               itemCount: templates.length,
-              separatorBuilder: (_, __) =>
-              const Padding(
+              separatorBuilder: (_, __) => const Padding(
                 padding: EdgeInsets.only(left: 88.0),
                 child: Divider(
-                    height: 1, thickness: 0.8, color: Color(0xFFF5F5F5)),
+                  height: 1,
+                  thickness: 0.8,
+                  color: Color(0xFFF5F5F5),
+                ),
               ),
               itemBuilder: (context, index) {
                 final item = templates[index];
@@ -1707,11 +1763,13 @@ class TemplateBottomSheet extends StatelessWidget {
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 24.0, vertical: 16.0),
+                      horizontal: 24.0,
+                      vertical: 16.0,
+                    ),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-// Dynamic Template Representation Asset Avatar
+                        // Dynamic Template Representation Asset Avatar
                         Container(
                           width: 44,
                           height: 44,
@@ -1720,11 +1778,14 @@ class TemplateBottomSheet extends StatelessWidget {
                             borderRadius: BorderRadius.circular(6),
                           ),
                           child: Icon(
-                              item.icon, color: item.iconColor, size: 24),
+                            item.icon,
+                            color: item.iconColor,
+                            size: 24,
+                          ),
                         ),
                         const SizedBox(width: 20),
 
-// Text Description Grouping Block
+                        // Text Description Grouping Block
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -1747,7 +1808,7 @@ class TemplateBottomSheet extends StatelessWidget {
                                 ),
                               ),
                               const SizedBox(height: 12),
-// Sub-Action Inline Info Redirect Anchor
+                              // Sub-Action Inline Info Redirect Anchor
                               GestureDetector(
                                 onTap: () {}, // Action route placeholder
                                 child: const Text(
@@ -1765,12 +1826,15 @@ class TemplateBottomSheet extends StatelessWidget {
                         ),
                         const SizedBox(width: 12),
 
-// Selection Affirmation Checkbox Widget Indicator
+                        // Selection Affirmation Checkbox Widget Indicator
                         if (isSelected)
                           const Padding(
                             padding: EdgeInsets.only(top: 2.0),
                             child: Icon(
-                                Icons.check, color: Colors.blue, size: 22),
+                              Icons.check,
+                              color: Colors.blue,
+                              size: 22,
+                            ),
                           ),
                       ],
                     ),
@@ -1785,6 +1849,7 @@ class TemplateBottomSheet extends StatelessWidget {
     );
   }
 }
+
 class SearchTypeBottomSheet extends StatelessWidget {
   final SearchType selected;
   final ValueChanged<SearchType> onSelected;
@@ -1796,17 +1861,18 @@ class SearchTypeBottomSheet extends StatelessWidget {
   });
 
   static Future<void> show(
-      BuildContext context, {
-        required SearchType selected,
-        required ValueChanged<SearchType> onSelected,
-      }) {
+    BuildContext context, {
+    required SearchType selected,
+    required ValueChanged<SearchType> onSelected,
+  }) {
     return showModalBottomSheet(
       context: context,
       backgroundColor: CustomColor.card_bg(context),
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
-      builder: (_) => SearchTypeBottomSheet(selected: selected, onSelected: onSelected),
+      builder: (_) =>
+          SearchTypeBottomSheet(selected: selected, onSelected: onSelected),
     );
   }
 
@@ -1835,10 +1901,7 @@ class SearchTypeBottomSheet extends StatelessWidget {
                 color: CustomColor.textPrimary(context),
               ),
             ),
-            if (badge != null) ...[
-              const SizedBox(width: 8),
-              badge,
-            ],
+            if (badge != null) ...[const SizedBox(width: 8), badge],
             const Spacer(),
             Radio<bool>(
               value: true,
@@ -1929,6 +1992,7 @@ class SearchTypeBottomSheet extends StatelessWidget {
     );
   }
 }
+
 class OrderByBottomSheet extends StatelessWidget {
   final String selectedOption;
   final List<String> options;
@@ -1944,12 +2008,12 @@ class OrderByBottomSheet extends StatelessWidget {
   });
 
   static Future<void> show(
-      BuildContext context, {
-        required String selectedOption,
-        required List<String> options,
-        required ValueChanged<String> onSelected,
-        required VoidCallback onReset,
-      }) {
+    BuildContext context, {
+    required String selectedOption,
+    required List<String> options,
+    required ValueChanged<String> onSelected,
+    required VoidCallback onReset,
+  }) {
     return showModalBottomSheet(
       context: context,
       backgroundColor: CustomColor.card_bg(context),
@@ -2014,14 +2078,20 @@ class OrderByBottomSheet extends StatelessWidget {
             ),
           ),
           ...options.map((option) {
-            final isSelected = option.toLowerCase() == selectedOption.toLowerCase();
+            final isSelected =
+                option.toLowerCase() == selectedOption.toLowerCase();
             return ListTile(
-              contentPadding: const EdgeInsets.symmetric(horizontal: 24, vertical: 0),
+              contentPadding: const EdgeInsets.symmetric(
+                horizontal: 24,
+                vertical: 0,
+              ),
               title: Text(
                 option,
                 style: TextStyle(
                   fontSize: 16,
-                  color: isSelected ? Colors.blue : CustomColor.textPrimary(context),
+                  color: isSelected
+                      ? Colors.blue
+                      : CustomColor.textPrimary(context),
                   fontWeight: isSelected ? FontWeight.w500 : FontWeight.normal,
                 ),
               ),
@@ -2039,6 +2109,7 @@ class OrderByBottomSheet extends StatelessWidget {
     );
   }
 }
+
 // ── Work Type Bottom Sheet ─────────────────────────────────────────────────────
 class WorkTypeBottomSheet extends StatelessWidget {
   final WorkType selectedType;
@@ -2053,11 +2124,11 @@ class WorkTypeBottomSheet extends StatelessWidget {
   });
 
   static Future<void> show(
-      BuildContext context, {
-        required WorkType selectedType,
-        required List<WorkTypeOption> options,
-        required ValueChanged<WorkType> onSelected,
-      }) {
+    BuildContext context, {
+    required WorkType selectedType,
+    required List<WorkTypeOption> options,
+    required ValueChanged<WorkType> onSelected,
+  }) {
     return showModalBottomSheet(
       context: context,
       backgroundColor: CustomColor.card_bg(context),
@@ -2100,7 +2171,7 @@ class WorkTypeBottomSheet extends StatelessWidget {
           ),
         ),
         ...options.map(
-              (option) => WorkTypeTile(
+          (option) => WorkTypeTile(
             option: option,
             isSelected: option.type == selectedType,
             onTap: () {
@@ -2114,6 +2185,7 @@ class WorkTypeBottomSheet extends StatelessWidget {
     );
   }
 }
+
 // ── App Selector Bottom Sheet ──────────────────────────────────────────────────
 class AppSelectorBottomSheet extends StatelessWidget {
   final CreateProvider provider;
@@ -2178,7 +2250,10 @@ class AppSelectorBottomSheet extends StatelessWidget {
                 ),
               ),
               trailing: isSelected
-                  ? Icon(Icons.check_circle, color: CustomColor.actionBlueText(context))
+                  ? Icon(
+                      Icons.check_circle,
+                      color: CustomColor.actionBlueText(context),
+                    )
                   : null,
               onTap: () {
                 provider.setApp(appItem);
@@ -2193,14 +2268,13 @@ class AppSelectorBottomSheet extends StatelessWidget {
   }
 }
 
-
 class AttachmentBottomSheet {
   static void show(
-      BuildContext context, {
-        required VoidCallback onChooseFile,
-        required VoidCallback onTakePhoto,
-        required VoidCallback onRecordVideo,
-      }) {
+    BuildContext context, {
+    required VoidCallback onChooseFile,
+    required VoidCallback onTakePhoto,
+    required VoidCallback onRecordVideo,
+  }) {
     final options = [
       {
         'icon': Icons.attach_file,
@@ -2252,17 +2326,21 @@ class AttachmentBottomSheet {
             ),
             const SizedBox(height: 20),
             ...options.map(
-                  (o) => Padding(
+              (o) => Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: InkWell(
                   onTap: () {
                     Navigator.pop(context); // Bottom sheet close garchha
-                    (o['onTap'] as VoidCallback)(); // Tyo option ko page open garchha
+                    (o['onTap']
+                        as VoidCallback)(); // Tyo option ko page open garchha
                   },
                   borderRadius: BorderRadius.circular(12),
                   child: Container(
                     width: double.infinity,
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 18,
+                    ),
                     decoration: BoxDecoration(
                       color: CustomColor.chipUnselectedBg(context),
                       borderRadius: BorderRadius.circular(12),
@@ -2303,6 +2381,198 @@ class AttachmentBottomSheet {
   }
 }
 
+void ShowBoardPickerBottomSheet(
+  BuildContext context, {
+  required String spaceName,
+}) {
+  showModalBottomSheet(
+    context: context,
+    builder: (_) => BoardPickerBottomSheet(spaceName: spaceName),
+    isScrollControlled: true,
+    backgroundColor: CustomColor.bg_color(context),
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+    ),
+  );
+}
 
+class BoardPickerBottomSheet extends StatefulWidget {
+  final String spaceName;
 
+  const BoardPickerBottomSheet({super.key, required this.spaceName});
 
+  @override
+  State<BoardPickerBottomSheet> createState() => _BoardPickerBottomSheetState();
+}
+
+class _BoardPickerBottomSheetState extends State<BoardPickerBottomSheet> {
+  final TextEditingController _searchController = TextEditingController();
+  String _query = '';
+
+  final List<BoardModel> _boardsInSpace = [
+    BoardModel(
+      name: 'SCRUM board',
+      iconBgColor: Colors.orange.shade700,
+      icon: const Icon(
+        Icons.manage_search_rounded,
+        color: Colors.white,
+        size: 22,
+      ),
+      onTap: (context) {
+        Navigator.pushNamed(context, AppRoute.appscreen);
+      },
+    ),
+  ];
+  final List<BoardModel> _otherRecentBoards = [
+    BoardModel(
+      name: 'A3 board',
+      subtitle: 'App 3',
+      iconBgColor: Colors.blue.shade600,
+      icon: const Icon(Icons.edit_note_rounded, color: Colors.white, size: 22),
+      onTap: (context) {
+        Navigator.pushNamed(context, AppRoute.appscreen);
+      },
+    ),
+  ];
+
+  List<BoardModel> get _filteredInSpace => _boardsInSpace
+      .where((b) => b.name.toLowerCase().contains(_query.toLowerCase()))
+      .toList();
+
+  List<BoardModel> get _filteredOther => _otherRecentBoards
+      .where((b) => b.name.toLowerCase().contains(_query.toLowerCase()))
+      .toList();
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bottomPadding = MediaQuery.of(context).viewInsets.bottom;
+    return Padding(
+      padding: EdgeInsets.only(bottom: bottomPadding),
+      child: DraggableScrollableSheet(
+        expand: false,
+        initialChildSize: 0.5,
+        minChildSize: 0.35,
+        maxChildSize: 0.9,
+        builder: (_, scrollController) {
+          return Column(
+            children: [
+              const SizedBox(height: 8),
+              Center(
+                child: Container(
+                  width: 36,
+                  height: 4,
+                  decoration: BoxDecoration(
+                    color: CustomColor.dividerColor(context),
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: TextField(
+                  controller: _searchController,
+                  autofocus: false,
+                  onChanged: (v) => setState(() => _query = v),
+                  style: TextStyle(
+                    color: CustomColor.textPrimary(context),
+                    fontSize: 16,
+                  ),
+                  decoration: InputDecoration(
+                    hintText: 'Search for a board',
+                    hintStyle: TextStyle(
+                      color: CustomColor.textMutedLabel(context),
+                      fontSize: 16,
+                    ),
+                    border: const UnderlineInputBorder(),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: CustomColor.dividerColor(context),
+                      ),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(
+                        color: CustomColor.textPrimary(context),
+                      ),
+                    ),
+                    contentPadding: const EdgeInsets.only(bottom: 8),
+                    isDense: true,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              Expanded(
+                child: ListView(
+                  controller: scrollController,
+                  padding: const EdgeInsets.only(bottom: 24),
+                  children: [
+                    if (_filteredInSpace.isNotEmpty) ...[
+                      _SectionHeader(label: 'Boards in ${widget.spaceName}'),
+                      ..._filteredInSpace.map(
+                        (b) => BoardTile(
+                          board: b,
+                          onTap: () => b.onTap?.call(context),
+                        ),
+                      ),
+                    ],
+
+                    if (_filteredOther.isNotEmpty) ...[
+                      _SectionHeader(label: 'Other recent boards'),
+                      ..._filteredOther.map(
+                        (b) => BoardTile(
+                          board: b,
+                          onTap: () => b.onTap?.call(context),
+                        ),
+                      ),
+                    ],
+
+                    if (_filteredInSpace.isEmpty && _filteredOther.isEmpty)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 32),
+                        child: Center(
+                          child: Text(
+                            'No boards found',
+                            style: TextStyle(
+                              color: CustomColor.textMutedLabel(context),
+                              fontSize: 14,
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _SectionHeader extends StatelessWidget {
+  final String label;
+  const _SectionHeader({required this.label});
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 20, 16, 6),
+      child: Text(
+        label,
+        style: TextStyle(
+          color: CustomColor.textMutedLabel(context),
+          fontSize: 13,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
+    );
+  }
+}

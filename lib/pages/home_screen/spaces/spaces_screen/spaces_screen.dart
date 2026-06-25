@@ -86,6 +86,7 @@ class SpacesScreen extends StatelessWidget {
               SpaceSectionCard(
                 spaces: provider.starredSpaces,
                 onStarTap: provider.toggleStar,
+                onTap: (space) => space.onTap?.call(context),
               ),
               const SizedBox(height: 20),
             ],
@@ -104,6 +105,7 @@ class SpacesScreen extends StatelessWidget {
             SpaceSectionCard(
               spaces: provider.recentlyViewed,
               onStarTap: provider.toggleStar,
+              onTap: (space) => space.onTap?.call(context) ,
             ),
             const SizedBox(height: 20),
             Padding(
@@ -121,6 +123,7 @@ class SpacesScreen extends StatelessWidget {
             SpaceSectionCard(
               spaces: provider.allSpaces,
               onStarTap: provider.toggleStar,
+              onTap: (space)=> space.onTap?.call(context),
             ),
             const SizedBox(height: 24),
           ],
