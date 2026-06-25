@@ -533,3 +533,59 @@ class FilterTile extends StatelessWidget {
   }
 
 }
+class BoardTile extends StatelessWidget {
+  final BoardModel board;
+  final VoidCallback onTap;
+
+  const BoardTile({required this.board, required this.onTap});
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        child: Row(
+          children: [
+            Container(
+              width: 44,
+              height: 44,
+              decoration: BoxDecoration(
+                color: board.iconBgColor,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: board.icon,
+            ),
+            const SizedBox(width: 14),
+
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    board.name,
+                    style: TextStyle(
+                      color: CustomColor.textPrimary(context),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                  if (board.subtitle != null) ...[
+                    const SizedBox(height: 2),
+                    Text(
+                      board.subtitle!,
+                      style: TextStyle(
+                        color: CustomColor.textMutedLabel(context),
+                        fontSize: 13,
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}

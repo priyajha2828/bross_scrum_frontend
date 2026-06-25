@@ -19,7 +19,7 @@ import '../pages/auth_pages/signuppage.dart';
 import '../pages/home_screen/all_work/filter_screen/filter_screen.dart';
 import '../pages/home_screen/create/create_screen.dart';
 import '../pages/home_screen/dashboard/dashboard_screen/dashboard.dart';
-import '../pages/home_screen/home/app/app_screen.dart';
+import '../pages/home_screen/home/app/app_screen/app_screen.dart';
 import '../pages/home_screen/home/home_screen/homeScreen.dart';
 import '../pages/home_screen/notifications/notifications_page.dart';
 import '../pages/home_screen/spaces/create_space screen/create_space_screen.dart';
