@@ -1,4 +1,5 @@
 
+import 'package:BrossScrum/pages/home_screen/home/app/board/board_screen.dart';
 import 'package:BrossScrum/pages/home_screen/home/app/summary/summary_page_screen.dart';
 import 'package:BrossScrum/resources/color/custom_color.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +76,7 @@ class AppScreen extends StatelessWidget {
             Expanded(
                 child: TabBarView(children: [
                   SummaryPageScreen(),
-                  Center(child: Text("Board"),),
+                  BoardPageScreen(),
                   Center(child: Text("Calender")),
                   Center(child: Text("backlog")),
                   Center(child: Text("Setting"),),
