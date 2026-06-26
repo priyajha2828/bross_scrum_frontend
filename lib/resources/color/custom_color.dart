@@ -201,4 +201,10 @@ class CustomColor {
 
   static Color toast_text(BuildContext context) =>
       isDark(context) ? const Color(0xFFF9FAFB) : Colors.white;
+
+  static Color board(BuildContext context) =>
+      isDark(context) ? const Color(0xFF1F2937) : const Color(0xFFE8EAED);
 }
+
+
+
