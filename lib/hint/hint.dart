@@ -1,292 +1,395 @@
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import 'package:BrossScrum/resources/color/custom_color.dart';
-// import 'board_provider.dart';
-// import 'board_widgets.dart';
-//
-// class BoardPageScreen extends StatefulWidget {
-//   const BoardPageScreen({super.key});
-//
-//   @override
-//   State<BoardPageScreen> createState() => _BoardPageScreenState();
-// }
-//
-// class _BoardPageScreenState extends State<BoardPageScreen> {
-//   @override
-//   void initState() {
-//     super.initState();
-//     WidgetsBinding.instance.addPostFrameCallback((_) {
-//       context.read<BoardProvider>().refresh();
-//     });
-//   }
-//
-//   void _showAddColumnDialog() {
-//     final controller = TextEditingController();
-//     showDialog(
-//       context: context,
-//       builder: (_) => AlertDialog(
-//         backgroundColor: CustomColor.card_bg(context),
-//         title: Text(
-//           'New column',
-//           style: TextStyle(color: CustomColor.textPrimary(context)),
-//         ),
-//         content: TextField(
-//           controller: controller,
-//           autofocus: true,
-//           style: TextStyle(color: CustomColor.textPrimary(context)),
-//           decoration: InputDecoration(
-//             hintText: 'Column name',
-//             hintStyle:
-//             TextStyle(color: CustomColor.textMutedLabel(context)),
-//             enabledBorder: UnderlineInputBorder(
-//               borderSide:
-//               BorderSide(color: CustomColor.dividerColor(context)),
-//             ),
-//             focusedBorder: const UnderlineInputBorder(
-//               borderSide: BorderSide(color: Color(0xFF2563EB)),
-//             ),
-//           ),
-//         ),
-//         actions: [
-//           TextButton(
-//             onPressed: () => Navigator.pop(context),
-//             child: Text('Cancel',
-//                 style:
-//                 TextStyle(color: CustomColor.textMutedLabel(context))),
-//           ),
-//           TextButton(
-//             onPressed: () {
-//               if (controller.text.trim().isNotEmpty) {
-//                 context
-//                     .read<BoardProvider>()
-//                     .addColumn(controller.text.trim());
-//                 Navigator.pop(context);
-//               }
-//             },
-//             child: const Text('Add',
-//                 style: TextStyle(color: Color(0xFF2563EB))),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
 
+// import 'package:flutter/material.dart';
+// import 'package:BrossScrum/resources/color/custom_color.dart';
+// import 'calendar_provider.dart';
+//
+// // ─────────────────────────────────────────────────────────────────────────────
+// // 1. Filter chips row  (Status / Assignee / Priority / Type)
+// // ─────────────────────────────────────────────────────────────────────────────
+//
+// class CalendarFilterRow extends StatelessWidget {
+//   final List<CalendarFilter> filters;
+//   final void Function(int) onToggle;
+//
+//   const CalendarFilterRow({
+//     super.key,
+//     required this.filters,
+//     required this.onToggle,
+//   });
+//
 //   @override
 //   Widget build(BuildContext context) {
-//     final provider = context.watch<BoardProvider>();
-//
-//     if (provider.isLoading) {
-//       return const Center(child: CircularProgressIndicator());
-//     }
-//
 //     return SingleChildScrollView(
 //       scrollDirection: Axis.horizontal,
-//       padding: const EdgeInsets.all(16),
+//       padding: const EdgeInsets.symmetric(horizontal: 16),
 //       child: Row(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           // ── Board columns ────────────────────────────────────────
-//           ...provider.columns.map(
-//                 (col) => BoardColumnCard(
-//               column: col,
-//               onMenuTap: () {
-//                 // TODO: show column menu
-//               },
+//         children: List.generate(filters.length, (i) {
+//           final f = filters[i];
+//           return Padding(
+//             padding: const EdgeInsets.only(right: 10),
+//             child: GestureDetector(
+//               onTap: () => onToggle(i),
+//               child: Container(
+//                 padding:
+//                 const EdgeInsets.symmetric(horizontal: 14, vertical: 9),
+//                 decoration: BoxDecoration(
+//                   color: CustomColor.card_bg(context),
+//                   borderRadius: BorderRadius.circular(20),
+//                   border: Border.all(
+//                     color: f.isSelected
+//                         ? const Color(0xFF2563EB)
+//                         : CustomColor.dividerColor(context),
+//                   ),
+//                 ),
+//                 child: Row(
+//                   mainAxisSize: MainAxisSize.min,
+//                   children: [
+//                     Text(
+//                       f.label,
+//                       style: TextStyle(
+//                         color: f.isSelected
+//                             ? const Color(0xFF2563EB)
+//                             : CustomColor.textPrimary(context),
+//                         fontSize: 14,
+//                         fontWeight: FontWeight.w500,
+//                       ),
+//                     ),
+//                     const SizedBox(width: 4),
+//                     Icon(
+//                       Icons.keyboard_arrow_down_rounded,
+//                       size: 18,
+//                       color: f.isSelected
+//                           ? const Color(0xFF2563EB)
+//                           : CustomColor.textMutedLabel(context),
+//                     ),
+//                   ],
+//                 ),
+//               ),
 //             ),
-//           ),
-//
-//           // ── Add column button ────────────────────────────────────
-//           AddColumnButton(onTap: _showAddColumnDialog),
-//         ],
+//           );
+//         }),
 //       ),
 //     );
 //   }
 // }
 //
-// //provider
-// import 'package:flutter/material.dart';
-//
-// // ── Task model ─────────────────────────────────────────────────────────────────
-//
-// class BoardTask {
-//   final String id;
-//   final String title;
-//   final String? subtitle;
-//
-//   const BoardTask({
-//     required this.id,
-//     required this.title,
-//     this.subtitle,
-//   });
-// }
-//
-// // ── Column model ───────────────────────────────────────────────────────────────
-//
-// class BoardColumn {
-//   final String id;
-//   final String title;
-//   final List<BoardTask> tasks;
-//
-//   BoardColumn({
-//     required this.id,
-//     required this.title,
-//     required this.tasks,
-//   });
-//
-//   int get taskCount => tasks.length;
-// }
-//
-// // ── BoardProvider ──────────────────────────────────────────────────────────────
-//
-// class BoardProvider extends ChangeNotifier {
-//   bool _isLoading = false;
-//   bool get isLoading => _isLoading;
-//
-//   List<BoardColumn> _columns = [
-//     BoardColumn(id: 'todo',        title: 'TO DO',       tasks: []),
-//     BoardColumn(id: 'in_progress', title: 'IN PROGRESS', tasks: []),
-//     BoardColumn(id: 'done',        title: 'DONE',        tasks: []),
-//   ];
-//
-//   List<BoardColumn> get columns => _columns;
-//
-//   Future<void> refresh() async {
-//     _isLoading = true;
-//     notifyListeners();
-//
-//     // TODO: replace with real API call
-//     await Future.delayed(const Duration(milliseconds: 400));
-//
-//     _isLoading = false;
-//     notifyListeners();
-//   }
-//
-//   void addColumn(String title) {
-//     _columns = [
-//       ..._columns,
-//       BoardColumn(
-//         id: DateTime.now().millisecondsSinceEpoch.toString(),
-//         title: title.toUpperCase(),
-//         tasks: [],
-//       ),
-//     ];
-//     notifyListeners();
-//   }
-// }
-//
-// //widgets
-//
-// import 'package:flutter/material.dart';
-// import 'package:BrossScrum/resources/color/custom_color.dart';
-// import 'board_provider.dart';
-//
 // // ─────────────────────────────────────────────────────────────────────────────
-// // 1. Board column card  (TO DO / IN PROGRESS / DONE …)
+// // 2. Calendar card  (month header + day grid)
 // // ─────────────────────────────────────────────────────────────────────────────
 //
-// class BoardColumnCard extends StatelessWidget {
-//   final BoardColumn column;
-//   final VoidCallback? onMenuTap;
+// class CalendarCard extends StatelessWidget {
+//   final CalendarProvider provider;
 //
-//   const BoardColumnCard({
-//     super.key,
-//     required this.column,
-//     this.onMenuTap,
-//   });
+//   const CalendarCard({super.key, required this.provider});
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     final bool isEmpty = column.tasks.isEmpty;
-//
 //     return Container(
-//       width: MediaQuery.of(context).size.width - 32,
-//       margin: const EdgeInsets.only(right: 12),
+//       margin: const EdgeInsets.symmetric(horizontal: 16),
+//       padding: const EdgeInsets.all(16),
 //       decoration: BoxDecoration(
-//         color: CustomColor.isDark(context)
-//             ? const Color(0xFF1F2937)
-//             : const Color(0xFFE8EAED),
+//         color: CustomColor.card_bg(context),
 //         borderRadius: BorderRadius.circular(16),
 //       ),
 //       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
 //         children: [
-//           // ── Column header ─────────────────────────────────────────
-//           Padding(
-//             padding:
-//             const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
-//             child: Row(
-//               children: [
-//                 Text(
-//                   '${column.title}  ${column.taskCount}',
-//                   style: TextStyle(
-//                     color: CustomColor.textMutedLabel(context),
-//                     fontSize: 13,
-//                     fontWeight: FontWeight.w600,
-//                     letterSpacing: 0.4,
-//                   ),
-//                 ),
-//                 const Spacer(),
-//                 GestureDetector(
-//                   onTap: onMenuTap,
-//                   child: Icon(
-//                     Icons.more_vert,
-//                     color: CustomColor.textMutedLabel(context),
-//                     size: 20,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//
-//           // ── Tasks or empty state ──────────────────────────────────
-//           if (isEmpty && column.id == 'todo')
-//             _EmptyBoardState(context: context)
-//           else if (isEmpty)
-//             const SizedBox(height: 300) // empty column placeholder
-//           else
-//             ListView.builder(
-//               shrinkWrap: true,
-//               physics: const NeverScrollableScrollPhysics(),
-//               padding:
-//               const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
-//               itemCount: column.tasks.length,
-//               itemBuilder: (_, i) =>
-//                   _TaskCard(task: column.tasks[i]),
-//             ),
+//           _CalendarHeader(provider: provider),
+//           const SizedBox(height: 12),
+//           _WeekdayRow(),
+//           const SizedBox(height: 4),
+//           _DayGrid(provider: provider),
 //         ],
 //       ),
 //     );
 //   }
 // }
 //
-// // ─────────────────────────────────────────────────────────────────────────────
-// // 2. Empty state  (only shown on TO DO column)
-// // ─────────────────────────────────────────────────────────────────────────────
+// // ── Month header ───────────────────────────────────────────────────────────────
 //
-// class _EmptyBoardState extends StatelessWidget {
-//   final BuildContext context;
-//   const _EmptyBoardState({required this.context});
+// class _CalendarHeader extends StatelessWidget {
+//   final CalendarProvider provider;
+//   const _CalendarHeader({required this.provider});
 //
 //   @override
-//   Widget build(BuildContext ctx) {
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: [
+//         // Month + year dropdown
+//         GestureDetector(
+//           onTap: () {}, // TODO: month picker
+//           child: Row(
+//             children: [
+//               Text(
+//                 provider.focusedMonthLabel,
+//                 style: TextStyle(
+//                   color: CustomColor.textPrimary(context),
+//                   fontSize: 15,
+//                   fontWeight: FontWeight.w500,
+//                 ),
+//               ),
+//               const SizedBox(width: 4),
+//               Icon(Icons.arrow_drop_down,
+//                   color: CustomColor.textMutedLabel(context), size: 20),
+//             ],
+//           ),
+//         ),
+//         const Spacer(),
+//         // Today button
+//         GestureDetector(
+//           onTap: provider.goToToday,
+//           child: const Text(
+//             'Today',
+//             style: TextStyle(
+//               color: Color(0xFF2563EB),
+//               fontSize: 14,
+//               fontWeight: FontWeight.w500,
+//             ),
+//           ),
+//         ),
+//         const SizedBox(width: 16),
+//         // Prev
+//         GestureDetector(
+//           onTap: provider.previousMonth,
+//           child: Icon(Icons.chevron_left,
+//               color: CustomColor.textPrimary(context), size: 22),
+//         ),
+//         const SizedBox(width: 8),
+//         // Next
+//         GestureDetector(
+//           onTap: provider.nextMonth,
+//           child: Icon(Icons.chevron_right,
+//               color: CustomColor.textPrimary(context), size: 22),
+//         ),
+//       ],
+//     );
+//   }
+// }
+//
+// // ── Weekday row ────────────────────────────────────────────────────────────────
+//
+// class _WeekdayRow extends StatelessWidget {
+//   static const _days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: _days
+//           .map(
+//             (d) => Expanded(
+//           child: Center(
+//             child: Text(
+//               d,
+//               style: TextStyle(
+//                 color: CustomColor.textMutedLabel(context),
+//                 fontSize: 13,
+//                 fontWeight: FontWeight.w500,
+//               ),
+//             ),
+//           ),
+//         ),
+//       )
+//           .toList(),
+//     );
+//   }
+// }
+//
+// // ── Day grid ───────────────────────────────────────────────────────────────────
+//
+// class _DayGrid extends StatelessWidget {
+//   final CalendarProvider provider;
+//   const _DayGrid({required this.provider});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     final month = provider.focusedMonth;
+//     final today = DateTime.now();
+//     final selected = provider.selectedDay;
+//
+//     // First day of month
+//     final firstDay = DateTime(month.year, month.month, 1);
+//     // Weekday offset (0=Sun … 6=Sat)
+//     final startOffset = firstDay.weekday % 7;
+//     // Days in month
+//     final daysInMonth = DateTime(month.year, month.month + 1, 0).day;
+//     // Days in previous month
+//     final daysInPrevMonth = DateTime(month.year, month.month, 0).day;
+//
+//     // Build flat list of day cells
+//     final cells = <_DayCell>[];
+//
+//     // Prev month trailing days
+//     for (int i = startOffset - 1; i >= 0; i--) {
+//       cells.add(_DayCell(
+//         day: daysInPrevMonth - i,
+//         isCurrentMonth: false,
+//         date: DateTime(month.year, month.month - 1, daysInPrevMonth - i),
+//       ));
+//     }
+
+//     // Current month days
+//     for (int d = 1; d <= daysInMonth; d++) {
+//       cells.add(_DayCell(
+//         day: d,
+//         isCurrentMonth: true,
+//         date: DateTime(month.year, month.month, d),
+//       ));
+//     }
+//
+//     // Next month leading days — fill to complete grid rows
+//     final remaining = (7 - (cells.length % 7)) % 7;
+//     for (int d = 1; d <= remaining; d++) {
+//       cells.add(_DayCell(
+//         day: d,
+//         isCurrentMonth: false,
+//         date: DateTime(month.year, month.month + 1, d),
+//       ));
+//     }
+//
+//     // Build rows of 7
+//     final rows = <Widget>[];
+//     for (int i = 0; i < cells.length; i += 7) {
+//       final week = cells.sublist(i, i + 7);
+//       rows.add(
+//         Row(
+//           children: week.map((cell) {
+//             final isToday = cell.date.year == today.year &&
+//                 cell.date.month == today.month &&
+//                 cell.date.day == today.day;
+//             final isSelected = cell.date.year == selected.year &&
+//                 cell.date.month == selected.month &&
+//                 cell.date.day == selected.day;
+//             final hasEvent = provider.hasEvents(cell.date);
+//
+//             return Expanded(
+//               child: GestureDetector(
+//                 onTap: () => provider.selectDay(cell.date),
+//                 child: Container(
+//                   height: 44,
+//                   alignment: Alignment.center,
+//                   child: Stack(
+//                     alignment: Alignment.center,
+//                     children: [
+//                       // Selected / today circle
+//                       if (isSelected)
+//                         Container(
+//                           width: 36,
+//                           height: 36,
+//                           decoration: const BoxDecoration(
+//                             color: Color(0xFF2563EB),
+//                             shape: BoxShape.circle,
+//                           ),
+//                         )
+//                       else if (isToday)
+//                         Container(
+//                           width: 36,
+//                           height: 36,
+//                           decoration: BoxDecoration(
+//                             shape: BoxShape.circle,
+//                             border: Border.all(
+//                               color: CustomColor.textMutedLabel(context),
+//                               width: 1.5,
+//                             ),
+//                           ),
+//                         ),
+//                       // Day number
+//                       Text(
+//                         '${cell.day}',
+//                         style: TextStyle(
+//                           color: isSelected
+//                               ? Colors.white
+//                               : cell.isCurrentMonth
+//                               ? CustomColor.textPrimary(context)
+//                               : CustomColor.textMutedLabel(context),
+//                           fontSize: 14,
+//                           fontWeight: isSelected || isToday
+//                               ? FontWeight.w600
+//                               : FontWeight.w400,
+//                         ),
+//                       ),
+//                       // Event dot
+//                       if (hasEvent && !isSelected)
+//                         Positioned(
+//                           bottom: 4,
+//                           child: Container(
+//                             width: 5,
+//                             height: 5,
+//                             decoration: const BoxDecoration(
+//                               color: Color(0xFF2563EB),
+//                               shape: BoxShape.circle,
+//                             ),
+//                           ),
+//                         ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             );
+//           }).toList(),
+//         ),
+//       );
+//     }
+//
+//     return Column(children: rows);
+//   }
+// }
+//
+// class _DayCell {
+//   final int day;
+//   final bool isCurrentMonth;
+//   final DateTime date;
+//   const _DayCell(
+//       {required this.day,
+//         required this.isCurrentMonth,
+//         required this.date});
+// }
+
+// // ─────────────────────────────────────────────────────────────────────────────
+// // 3. Nothing scheduled card
+// // ─────────────────────────────────────────────────────────────────────────────
+//
+// class NothingScheduledCard extends StatelessWidget {
+//   const NothingScheduledCard({super.key});
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       width: double.infinity,
+//       margin: const EdgeInsets.symmetric(horizontal: 16),
+//       padding: const EdgeInsets.symmetric(vertical: 36, horizontal: 24),
+//       decoration: BoxDecoration(
+//         color: CustomColor.card_bg(context),
+//         borderRadius: BorderRadius.circular(16),
+//       ),
 //       child: Column(
 //         children: [
-//           // Jira-style stacked bar illustration
-//           _JiraIllustration(),
-//           const SizedBox(height: 28),
+//           // Grey circle with blue checkmark
+//           Container(
+//             width: 80,
+//             height: 80,
+//             decoration: BoxDecoration(
+//               color: CustomColor.isDark(context)
+//                   ? const Color(0xFF374151)
+//                   : const Color(0xFFE5E7EB),
+//               shape: BoxShape.circle,
+//             ),
+//             child: const Icon(
+//               Icons.check,
+//               color: Color(0xFF2563EB),
+//               size: 42,
+//             ),
+//           ),
+//           const SizedBox(height: 20),
 //           Text(
-//             'No work yet!',
+//             'Nothing scheduled yet',
 //             style: TextStyle(
 //               color: CustomColor.textPrimary(context),
-//               fontSize: 18,
+//               fontSize: 17,
 //               fontWeight: FontWeight.w600,
 //             ),
 //           ),
-//           const SizedBox(height: 10),
+//           const SizedBox(height: 8),
 //           Text(
-//             "Your team's work will appear here when you start a sprint from the backlog.",
+//             "There aren't any work items due on this date",
 //             textAlign: TextAlign.center,
 //             style: TextStyle(
 //               color: CustomColor.textMutedLabel(context),
@@ -294,25 +397,6 @@
 //               height: 1.5,
 //             ),
 //           ),
-//           const SizedBox(height: 24),
-//           // View backlog button
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Icon(Icons.list_alt_rounded,
-//                   color: CustomColor.actionBlueText(context), size: 20),
-//               const SizedBox(width: 8),
-//               Text(
-//                 'View backlog',
-//                 style: TextStyle(
-//                   color: CustomColor.actionBlueText(context),
-//                   fontSize: 15,
-//                   fontWeight: FontWeight.w500,
-//                 ),
-//               ),
-//             ],
-//           ),
-//           const SizedBox(height: 16),
 //         ],
 //       ),
 //     );
@@ -320,193 +404,87 @@
 // }
 //
 // // ─────────────────────────────────────────────────────────────────────────────
-// // 3. Jira-style illustration  (blue + orange bars)
+// // 4. Event card  (shown when events exist on selected day)
 // // ─────────────────────────────────────────────────────────────────────────────
 //
-// class _JiraIllustration extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     const blue   = Color(0xFF2C6ECB);
-//     const orange = Color(0xFFFF8B00);
-//     const dark   = Color(0xFF2C4A7C);
-//
-//     return SizedBox(
-//       width: 160,
-//       height: 140,
-//       child: Stack(
-//         alignment: Alignment.center,
-//         children: [
-//           // vertical dark line
-//           Positioned(
-//             left: 78,
-//             top: 10,
-//             bottom: 10,
-//             child: Container(width: 3, color: dark),
-//           ),
-//           // orange triangle (top)
-//           Positioned(
-//             top: 10,
-//             left: 65,
-//             child: CustomPaint(
-//               size: const Size(30, 20),
-//               painter: _TrianglePainter(color: orange),
-//             ),
-//           ),
-//           // blue bar 1 (widest)
-//           Positioned(
-//             top: 30,
-//             left: 10,
-//             child: Container(
-//               width: 140,
-//               height: 28,
-//               decoration: BoxDecoration(
-//                 color: blue,
-//                 borderRadius: BorderRadius.circular(3),
-//               ),
-//             ),
-//           ),
-//           // blue bar 2 (medium)
-//           Positioned(
-//             top: 68,
-//             left: 40,
-//             child: Container(
-//               width: 90,
-//               height: 24,
-//               decoration: BoxDecoration(
-//                 color: blue,
-//                 borderRadius: BorderRadius.circular(3),
-//               ),
-//             ),
-//           ),
-//           // orange bar (middle)
-//           Positioned(
-//             top: 78,
-//             left: 20,
-//             child: Container(
-//               width: 130,
-//               height: 20,
-//               decoration: BoxDecoration(
-//                 color: orange,
-//                 borderRadius: BorderRadius.circular(3),
-//               ),
-//             ),
-//           ),
-//           // blue bar 3 (narrow)
-//           Positioned(
-//             top: 104,
-//             left: 30,
-//             child: Container(
-//               width: 80,
-//               height: 24,
-//               decoration: BoxDecoration(
-//                 color: blue,
-//                 borderRadius: BorderRadius.circular(3),
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-//
-// class _TrianglePainter extends CustomPainter {
-//   final Color color;
-//   const _TrianglePainter({required this.color});
-//
-//   @override
-//   void paint(Canvas canvas, Size size) {
-//     final paint = Paint()..color = color;
-//     final path = Path()
-//       ..moveTo(size.width / 2, size.height)
-//       ..lineTo(0, 0)
-//       ..lineTo(size.width, 0)
-//       ..close();
-//     canvas.drawPath(path, paint);
-//   }
-//
-//   @override
-//   bool shouldRepaint(_TrianglePainter old) => old.color != color;
-// }
-//
-// // ─────────────────────────────────────────────────────────────────────────────
-// // 4. Task card
-// // ─────────────────────────────────────────────────────────────────────────────
-//
-// class _TaskCard extends StatelessWidget {
-//   final BoardTask task;
-//   const _TaskCard({required this.task});
+// class CalendarEventCard extends StatelessWidget {
+//   final CalendarEvent event;
+//   const CalendarEventCard({super.key, required this.event});
 //
 //   @override
 //   Widget build(BuildContext context) {
 //     return Container(
-//       margin: const EdgeInsets.only(bottom: 8),
-//       padding: const EdgeInsets.all(12),
+//       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+//       padding: const EdgeInsets.all(14),
 //       decoration: BoxDecoration(
 //         color: CustomColor.card_bg(context),
-//         borderRadius: BorderRadius.circular(10),
+//         borderRadius: BorderRadius.circular(12),
 //       ),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
+//       child: Row(
 //         children: [
-//           Text(
-//             task.title,
-//             style: TextStyle(
-//               color: CustomColor.textPrimary(context),
-//               fontSize: 14,
-//               fontWeight: FontWeight.w500,
+//           Container(
+//             width: 4,
+//             height: 40,
+//             decoration: BoxDecoration(
+//               color: const Color(0xFF2563EB),
+//               borderRadius: BorderRadius.circular(2),
 //             ),
 //           ),
-//           if (task.subtitle != null) ...[
-//             const SizedBox(height: 4),
-//             Text(
-//               task.subtitle!,
+//           const SizedBox(width: 12),
+//           Expanded(
+//             child: Text(
+//               event.title,
 //               style: TextStyle(
-//                 color: CustomColor.textMutedLabel(context),
-//                 fontSize: 12,
+//                 color: CustomColor.textPrimary(context),
+//                 fontSize: 14,
+//                 fontWeight: FontWeight.w500,
 //               ),
 //             ),
-//           ],
+//           ),
 //         ],
 //       ),
 //     );
 //   }
 // }
 //
-// // ─────────────────────────────────────────────────────────────────────────────
-// // 5. Add column button
-// // ─────────────────────────────────────────────────────────────────────────────
+// import 'package:flutter/material.dart';
+// import 'package:provider/provider.dart';
+// import 'calendar_provider.dart';
+// import 'calendar_widgets.dart';
 //
-// class AddColumnButton extends StatelessWidget {
-//   final VoidCallback onTap;
-//   const AddColumnButton({super.key, required this.onTap});
+// class CalendarPageScreen extends StatelessWidget {
+//   const CalendarPageScreen({super.key});
 //
 //   @override
 //   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: onTap,
-//       child: Container(
-//         width: MediaQuery.of(context).size.width - 32,
-//         margin: const EdgeInsets.only(right: 12),
-//         padding: const EdgeInsets.symmetric(vertical: 16),
-//         decoration: BoxDecoration(
-//           color: CustomColor.card_bg(context),
-//           borderRadius: BorderRadius.circular(16),
-//           border: Border.all(
-//             color: CustomColor.dividerColor(context),
+//     final provider = context.watch<CalendarProvider>();
+//     final events = provider.eventsForSelectedDay;
+//
+//     return SingleChildScrollView(
+//       padding: const EdgeInsets.symmetric(vertical: 16),
+//       child: Column(
+//         children: [
+//           // ── Filter chips ──────────────────────────────────────────
+//           CalendarFilterRow(
+//             filters: provider.filters,
+//             onToggle: provider.toggleFilter,
 //           ),
-//         ),
-//         child: Center(
-//           child: Text(
-//             'Add column',
-//             style: TextStyle(
-//               color: CustomColor.actionBlueText(context),
-//               fontSize: 15,
-//               fontWeight: FontWeight.w500,
-//             ),
-//           ),
-//         ),
+//           const SizedBox(height: 16),
+//
+//           // ── Calendar card ──────────────────────────────────────────
+//           CalendarCard(provider: provider),
+//           const SizedBox(height: 16),
+//
+//           // ── Events or empty state ──────────────────────────────────
+//           if (events.isEmpty)
+//             const NothingScheduledCard()
+//           else
+//             ...events.map((e) => CalendarEventCard(event: e)),
+//
+//           const SizedBox(height: 24),
+//         ],
 //       ),
 //     );
 //   }
 // }
+//
