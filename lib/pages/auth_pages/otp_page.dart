@@ -92,7 +92,7 @@ class OtpPage extends StatelessWidget {
                                     : "your email address",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  color: CustomColor.bross_scrum,
+                                  color: CustomColor.bross_scrum(context),
                                   fontSize: 16,
                                 ),
                               ),
@@ -152,7 +152,7 @@ class OtpPage extends StatelessWidget {
                               ElevatedButton(
                                 onPressed: provider.isLoading
                                     ? null
-                                    : () => provider.verifyOtp(context),
+                                    : () => provider.verifyOtp(),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF0052CC),
                                   foregroundColor: Colors.white,
@@ -221,7 +221,7 @@ class OtpPage extends StatelessWidget {
                                     child: Text(
                                       "Back to Login",
                                       style: TextStyle(
-                                        color: CustomColor.bross_scrum,
+                                        color: CustomColor.bross_scrum(context),
                                         fontSize: 12,
                                         fontWeight: FontWeight.bold,
                                       ),

@@ -18,6 +18,8 @@ import 'package:BrossScrum/providers/home_screen/home_screen_provider/home_scree
 import 'package:BrossScrum/providers/home_screen/notifications/notification_provider.dart';
 import 'package:BrossScrum/providers/home_screen/spaces/space_provider.dart';
 import 'package:BrossScrum/providers/intro/intro_provider.dart';
+import 'package:BrossScrum/providers/organization_provider/create_organization_provider.dart';
+import 'package:BrossScrum/providers/organization_provider/organization_provider.dart';
 import 'package:BrossScrum/providers/splash_provider/splash_screen_provider.dart';
 import 'package:BrossScrum/routes/route_generator.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +49,8 @@ void main() {
         ChangeNotifierProvider(create: (_)=> SummaryPageProvider()),
         ChangeNotifierProvider(create: (_)=> BoardProvider()),
         ChangeNotifierProvider(create: (_) => CalenderProvider()),
+        ChangeNotifierProvider(create: (_)=> OrganizationProvider()),
+        ChangeNotifierProvider(create: (_) => CreateOrganizationProvider())
       ],
       child: const MyApp(),
     ),

@@ -7,6 +7,7 @@ import 'package:BrossScrum/pages/auth_pages/loginpage.dart';
 import 'package:BrossScrum/pages/home_screen/all_work/search_work_screen/search_screen.dart';
 import 'package:BrossScrum/pages/home_screen/dashboard/scrum/scrum_screen.dart';
 import 'package:BrossScrum/pages/home_screen/my_open_issue/my_open_issue_screen/my_open_issue.dart';
+import 'package:BrossScrum/pages/organization_page/organization_screen/organization_screen.dart';
 import 'package:BrossScrum/routes/app_route.dart';
 import 'package:flutter/material.dart';
 
@@ -25,6 +26,7 @@ import '../pages/home_screen/notifications/notifications_page.dart';
 import '../pages/home_screen/spaces/create_space screen/create_space_screen.dart';
 import '../pages/home_screen/spaces/spaces_screen/spaces_screen.dart';
 import '../pages/intro/intro_page.dart';
+import '../pages/organization_page/create_organization/create_organization.dart';
 import '../resources/navigation/bottom_navi_bar.dart';
 
 
@@ -83,6 +85,10 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => const CreateSpaceScreen());
       case AppRoute.scrumscreen:
         return MaterialPageRoute(builder: (_) => const ScrumScreen());
+      case AppRoute.orgscreen:
+        return MaterialPageRoute(builder: (_) => OrganizationsScreen());
+      case AppRoute.createorgscreen:
+        return MaterialPageRoute(builder: (_)=> CreateOrganizationScreen());
         default:
           return _errorRoute();
     }

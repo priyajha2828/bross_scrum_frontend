@@ -4,6 +4,8 @@ import 'package:BrossScrum/routes/app_route.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../resources/text_field/text_field.dart';
+
 class RecoveryPage extends StatelessWidget {
   const RecoveryPage({super.key});
 
@@ -80,25 +82,27 @@ class RecoveryPage extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 12,
                                     fontWeight: FontWeight.bold,
-                                    color: CustomColor.bross_scrum,
+                                    color: CustomColor.bross_scrum(context),
                                   ),
                                 ),
                               ),
                               const SizedBox(height: 8),
-                              TextField(
+                              TextFromFieldWithPrefixSuffix(
                                 controller: provider.recoveryEmailController,
+                                hintText: "Enter your email",
+                                hintTextColor: CustomColor.textMutedLabel(context),
+                                fillColor: CustomColor.card_bg(context),
+                                borderRadius: 4,
+                                applyPrefix: false,
                                 keyboardType: TextInputType.emailAddress,
-                                decoration: InputDecoration(
-                                  contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(color: Color(0xFF0052CC), width: 1.5),
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: const BorderSide(color: Color(0xFF0052CC), width: 2.0),
-                                    borderRadius: BorderRadius.circular(3),
-                                  ),
-                                ),
+                                enabledBorderColor: provider.emailError == null
+                                    ? const Color(0xFF0052CC)
+                                    : Colors.red.shade800,
+                                focusedBorderColor: provider.emailError == null
+                                    ? const Color(0xFF0052CC)
+                                    : Colors.red.shade800,
+                                errorBorderColor: Colors.red,
+                                validator: (value) => null,
                               ),
                               const SizedBox(height: 24),
                               ElevatedButton(
@@ -134,7 +138,7 @@ class RecoveryPage extends StatelessWidget {
                                   child: Text(
                                     "Back to log in",
                                     style: TextStyle(
-                                        color:CustomColor.bross_scrum,
+                                        color:CustomColor.bross_scrum(context),
                                         fontWeight: FontWeight.w600
                                     ),
                                   ),

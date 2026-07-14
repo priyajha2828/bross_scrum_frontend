@@ -134,6 +134,272 @@ class SignUpPage extends StatelessWidget {
                                   ],
                                 ),
                               ],
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Full Name ",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: CustomColor.tileTextPrimary(context),
+                                    ),
+                                  ),
+                                  const Text(
+                                    "*",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+
+                              TextFromFieldWithPrefixSuffix(
+                                controller: provider.fullNameController,
+                                hintText: "Enter your full name",
+                                borderRadius: 4.0,
+                                applyPrefix: false,
+                                keyboardType: TextInputType.name,
+                                enabledBorderColor: provider.fullNameError == null
+                                    ? const Color(0xFF0052CC)
+                                    : Colors.red.shade800,
+                                focusedBorderColor: provider.fullNameError == null
+                                    ? const Color(0xFF0052CC)
+                                    : Colors.red.shade800,
+                                errorBorderColor: Colors.red,
+                                validator: (value) => null,
+                              ),
+
+                              if (provider.fullNameError != null) ...[
+                                const SizedBox(height: 6),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.warning,
+                                      color: Colors.red,
+                                      size: 14,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Expanded(
+                                      child: Text(
+                                        provider.fullNameError!,
+                                        style: const TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Username ",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: CustomColor.tileTextPrimary(context),
+                                    ),
+                                  ),
+                                  const Text(
+                                    "*",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+
+                              TextFromFieldWithPrefixSuffix(
+                                controller: provider.usernameController,
+                                hintText: "Enter your username",
+                                borderRadius: 4.0,
+                                applyPrefix: false,
+                                keyboardType: TextInputType.text,
+                                enabledBorderColor: provider.usernameError == null
+                                    ? const Color(0xFF0052CC)
+                                    : Colors.red.shade800,
+                                focusedBorderColor: provider.usernameError == null
+                                    ? const Color(0xFF0052CC)
+                                    : Colors.red.shade800,
+                                errorBorderColor: Colors.red,
+                                validator: (value) => null,
+                              ),
+
+                              if (provider.usernameError != null) ...[
+                                const SizedBox(height: 6),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.warning,
+                                      color: Colors.red,
+                                      size: 14,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Expanded(
+                                      child: Text(
+                                        provider.usernameError!,
+                                        style: const TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Password ",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: CustomColor.tileTextPrimary(context),
+                                    ),
+                                  ),
+                                  const Text(
+                                    "*",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+
+                              TextFromFieldWithPrefixSuffix(
+                                controller: provider.passwordController,
+                                hintText: "Enter your password",
+                                borderRadius: 4.0,
+                                applyPrefix: false,
+                                obscure: provider.obscurePassword,
+                                applySuffixIcon: true,
+                                suffixIcon: IconButton(
+                                  onPressed: provider.togglePassword,
+                                  icon: Icon(
+                                    provider.obscurePassword
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                keyboardType: TextInputType.visiblePassword,
+                                enabledBorderColor: provider.passwordError == null
+                                    ? const Color(0xFF0052CC)
+                                    : Colors.red.shade800,
+                                focusedBorderColor: provider.passwordError == null
+                                    ? const Color(0xFF0052CC)
+                                    : Colors.red.shade800,
+                                errorBorderColor: Colors.red,
+                                validator: (value) => null,
+                              ),
+
+                              if (provider.passwordError != null) ...[
+                                const SizedBox(height: 6),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.warning,
+                                      color: Colors.red,
+                                      size: 14,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Expanded(
+                                      child: Text(
+                                        provider.passwordError!,
+                                        style: const TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  Text(
+                                    "Confirm Password ",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: CustomColor.tileTextPrimary(context),
+                                    ),
+                                  ),
+                                  const Text(
+                                    "*",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 8),
+
+                              TextFromFieldWithPrefixSuffix(
+                                controller: provider.confirmPasswordController,
+                                hintText: "Confirm your password",
+                                borderRadius: 4.0,
+                                applyPrefix: false,
+                                obscure: provider.obscurePassword,
+                                applySuffixIcon: true,
+                                suffixIcon: IconButton(
+                                  onPressed: provider.togglePassword,
+                                  icon: Icon(
+                                    provider.obscurePassword
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                keyboardType: TextInputType.visiblePassword,
+                                enabledBorderColor: provider.confirmPasswordError == null
+                                    ? const Color(0xFF0052CC)
+                                    : Colors.red.shade800,
+                                focusedBorderColor: provider.confirmPasswordError == null
+                                    ? const Color(0xFF0052CC)
+                                    : Colors.red.shade800,
+                                errorBorderColor: Colors.red,
+                                validator: (value) => null,
+                              ),
+
+                              if (provider.confirmPasswordError != null) ...[
+                                const SizedBox(height: 6),
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.warning,
+                                      color: Colors.red,
+                                      size: 14,
+                                    ),
+                                    const SizedBox(width: 6),
+                                    Expanded(
+                                      child: Text(
+                                        provider.confirmPasswordError!,
+                                        style: const TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                               const SizedBox(height: 16),
                               InkWell(
                                 onTap: () => provider.toggleRememberMe(null),
@@ -166,7 +432,7 @@ class SignUpPage extends StatelessWidget {
                                     const SizedBox(width: 6),
                                     Icon(
                                       Icons.info,
-                                      color: CustomColor.bross_scrum,
+                                      color: CustomColor.bross_scrum(context),
                                       size: 18,
                                     ),
                                   ],
@@ -176,7 +442,21 @@ class SignUpPage extends StatelessWidget {
                               ElevatedButton(
                                 onPressed: provider.isLoading
                                     ? null
-                                    : () => provider.login(),
+                                    : () async {
+                                  bool success = await provider.signup();
+                                  if (!context.mounted) return;
+
+                                  if (success) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text("User signup successful")),
+                                    );
+                                    Navigator.pushReplacementNamed(context, '/login');
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(provider.errorMessage ?? "Signup failed")),
+                                    );
+                                  }
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF0052CC),
                                   foregroundColor: Colors.white,
@@ -204,20 +484,13 @@ class SignUpPage extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              TextButton(
-                                  onPressed: (){
-                                    Navigator.pushNamed(context, AppRoute.login);
-                                  },
-                                  child:Center(
-                                    child: Text(
-                                      "Back to Login",
-                                          style:TextStyle(
-                                     color: CustomColor.bross_scrum,
-                                            fontWeight: FontWeight.w500
-                                                )
-
-                                    ),
+                              Text(
+                                  "Back to Login",
+                                  style:TextStyle(
+                                      color: CustomColor.bross_scrum(context),
+                                      fontWeight: FontWeight.w500
                                   )
+
                               ),
                             ],
                           ),

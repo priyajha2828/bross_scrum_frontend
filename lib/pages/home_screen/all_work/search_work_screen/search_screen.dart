@@ -295,7 +295,7 @@ class _SearchWorkScreenState extends State<SearchWorkScreen> {
 
           Divider(height: 1, color: CustomColor.dividerColor(context)),
 
-          // Dynamic Result list items matching image context
+          
           Expanded(
             child: _controller.text.isEmpty
                 ? const Center(child: Text("Start typing to view results"))
