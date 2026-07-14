@@ -113,7 +113,7 @@ class LoginPage extends StatelessWidget {
                                 errorBorderColor: Colors.red,
                                 validator: (value) => null,
                               ),
-                              if (provider.emailError != null) ...[
+                              if (provider.emailError  != null) ...[
                                 const SizedBox(height: 6),
                                 Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -127,6 +127,103 @@ class LoginPage extends StatelessWidget {
                                     Expanded(
                                       child: Text(
                                         provider.emailError!,
+                                        style: const TextStyle(
+                                          color: Colors.red,
+                                          fontSize: 13,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                              Row(
+                                children: [
+                                  Text(
+                                    "Password ",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: CustomColor.tileTextPrimary(context),
+                                    ),
+                                  ),
+                                  const Text(
+                                    "*",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.red,
+                                    ),
+                                  ),
+                                ],
+                              ),
+
+                              const SizedBox(height: 8),
+
+                              TextFromFieldWithPrefixSuffix(
+                                controller: provider.passwordController,
+                                hintText: "Enter your password",
+                                hintTextColor: CustomColor.textMutedLabel(context),
+                                fillColor: CustomColor.card_bg(context),
+                                borderRadius: 4.0,
+
+                                applyPrefix: false,
+
+                                obscure: provider.obscurePassword,
+
+                                applySuffixIcon: true,
+
+                                suffixIcon: IconButton(
+                                  onPressed: () {
+                                    provider.togglePassword();
+                                  },
+                                  icon: Icon(
+                                    provider.obscurePassword
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                    color: Colors.grey,
+                                  ),
+                                ),
+
+                                keyboardType: TextInputType.visiblePassword,
+
+                                enabledBorderColor: provider.passwordError == null
+                                    ? const Color(0xFF0052CC)
+                                    : Colors.red.shade800,
+
+                                focusedBorderColor: provider.passwordError == null
+                                    ? const Color(0xFF0052CC)
+                                    : Colors.red.shade800,
+
+                                errorBorderColor: Colors.red,
+
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return "Password is required";
+                                  }
+
+                                  if (value.length < 6) {
+                                    return "Minimum 6 characters";
+                                  }
+
+                                  return null;
+                                },
+                              ),
+
+                              if (provider.passwordError != null) ...[
+                                const SizedBox(height: 6),
+
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Icon(
+                                      Icons.warning,
+                                      color: Colors.red,
+                                      size: 14,
+                                    ),
+                                    const SizedBox(width: 6),
+
+                                    Expanded(
+                                      child: Text(
+                                        provider.passwordError!,
                                         style: const TextStyle(
                                           color: Colors.red,
                                           fontSize: 13,
@@ -169,7 +266,7 @@ class LoginPage extends StatelessWidget {
                                     const SizedBox(width: 6),
                                     Icon(
                                       Icons.info,
-                                      color: CustomColor.bross_scrum,
+                                      color: CustomColor.bross_scrum(context),
                                       size: 18,
                                     ),
                                   ],
@@ -180,9 +277,18 @@ class LoginPage extends StatelessWidget {
                                 onPressed: provider.isLoading
                                     ? null
                                     : () async {
-                                  bool loginSuccess = await provider.login();
-                                  if (loginSuccess && context.mounted) {
-                                    Navigator.pushNamed(context, AppRoute.otp);
+                                  bool success = await provider.login();
+                                  if (!context.mounted) return;
+
+                                  if (success) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text("User login  successful")),
+                                    );
+                                    Navigator.pushReplacementNamed(context, '/orgscreen');
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(provider.errorMessage ?? "login  failed")),
+                                    );
                                   }
                                 },
                                 style: ElevatedButton.styleFrom(
@@ -230,7 +336,7 @@ class LoginPage extends StatelessWidget {
                           child: Text(
                             'Or continue with:',
                             style: TextStyle(
-                              color: CustomColor.bross_scrum,
+                              color: CustomColor.bross_scrum(context),
                               fontWeight: FontWeight.w600,
                               fontSize: 14,
                             ),
@@ -252,14 +358,14 @@ class LoginPage extends StatelessWidget {
                               label: 'Google',
                               iconData: Icons.g_mobiledata,
                               iconColor: Colors.red,
-                              onPressed: () => provider.LoginWithGoogle(),
+                               onPressed: () {},
                             ),
                             const SizedBox(height: 12),
                             LoginPageButton(
                               label: 'Apple',
                               iconData: Icons.apple,
                               iconColor: isDark ? Colors.white : Colors.black,
-                              onPressed: () => provider.LoginWithApple(),
+                               onPressed: () {},
                             ),
                           ],
                         ),
@@ -283,7 +389,7 @@ class LoginPage extends StatelessWidget {
                                 child: Text(
                                   "Can't log in",
                                   style: TextStyle(
-                                    color: CustomColor.bross_scrum,
+                                    color: CustomColor.bross_scrum(context),
                                     fontWeight: FontWeight.w500,
                                   ),
                                 )
@@ -295,7 +401,7 @@ class LoginPage extends StatelessWidget {
                                 child: Text(
                                   "Sign up",
                                   style: TextStyle(
-                                    color: CustomColor.bross_scrum,
+                                    color: CustomColor.bross_scrum(context),
                                     fontWeight: FontWeight.w500,
                                   ),
                                 )
@@ -307,7 +413,19 @@ class LoginPage extends StatelessWidget {
                               child: Text(
                                 "Skip Login",
                                 style: TextStyle(
-                                  color: CustomColor.bross_scrum,
+                                  color: CustomColor.bross_scrum(context),
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: (){
+                                Navigator.pushNamed(context, AppRoute.orgscreen);
+                              },
+                              child: Text(
+                                "org screen",
+                                style: TextStyle(
+                                  color: CustomColor.bross_scrum(context),
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),

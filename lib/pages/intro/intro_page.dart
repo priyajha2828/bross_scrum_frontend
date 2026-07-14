@@ -101,7 +101,7 @@ class IntroPage extends StatelessWidget {
                                     provider.introData[index]["text"]!,
                                     textAlign: TextAlign.center,
                                     style:  TextStyle(
-                                      color: CustomColor.bross_scrum,
+                                      color: CustomColor.bross_scrum(context),
                                       fontSize: 17,
                                       fontWeight: FontWeight.w600,
                                       height: 1.4,
@@ -155,7 +155,7 @@ class IntroPage extends StatelessWidget {
                               child: Container(
                                 width: 200,
                                 height: 32,
-                                color: Colors.blue.shade50,
+                                color: Colors.blueGrey,
                                 child: Center(
                                   child: const Text(
                                     "Login",

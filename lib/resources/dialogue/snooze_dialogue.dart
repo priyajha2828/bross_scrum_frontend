@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../../providers/home_screen/notifications/notification_provider.dart';
+import '../../providers/home_screen/notifications/notification_provider.dart';
 import '../../../resources/color/custom_color.dart';
 
 class SnoozeDialog extends StatelessWidget {

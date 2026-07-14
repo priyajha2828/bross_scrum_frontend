@@ -17,7 +17,7 @@ class CustomColor {
   static Color logincontainer(BuildContext context) =>
       isDark(context) ? const Color(0x33000000) : const Color(0xB3FFFFFF);
 
-  static const Color introbg = Color(0xFF0052CC); // Constant brand color
+  static const Color introbg = Color(0xFF0052CC);
 
   static Color appbar(BuildContext context) =>
       isDark(context) ? const Color(0xFF111827) : const Color(0xFFF3F4F6);
@@ -66,9 +66,9 @@ class CustomColor {
       isDark(context) ? const Color(0xFFD1D5DB) : const Color(0xFF4B5563);
 
   // Buttons, Toggles & Brand
-  static const Color primarySelectedBlue = Color(0xFF0C3D91); // Constant brand color
-  static const Color secondaryContainerBlue = Color(0xFFD3E2FF); // Constant brand color
-  static const Color toggleBackgroundGrey = Color(0xFFE2E4E9); // Constant brand color
+  static const Color primarySelectedBlue = Color(0xFF0C3D91);
+  static const Color secondaryContainerBlue = Color(0xFFD3E2FF);
+  static const Color toggleBackgroundGrey = Color(0xFFE2E4E9);
 
   static Color switchActiveTrack(BuildContext context) =>
       isDark(context) ? const Color(0xFF3B82F6) : const Color(0xFF2563EB);
@@ -80,7 +80,8 @@ class CustomColor {
       isDark(context) ? const Color(0xFF9CA3AF) : const Color(0xFF4B5563);
 
   // Miscellaneous
-  static const Color bross_scrum = Color(0xFF004D40); // Constant brand color
+  static Color bross_scrum(BuildContext context) =>
+      isDark(context) ? const Color(0xFF4B5563) : const Color(0xFF004D40);
 
   static Color arrowback(BuildContext context) =>
       isDark(context) ? const Color(0xFFF9FAFB) : const Color(0xFF374151);
@@ -111,7 +112,7 @@ class CustomColor {
   static Color actionBlueText(BuildContext context) =>
       isDark(context) ? const Color(0xFF60A5FA) : const Color(0xFF0052CC);
 
-  // Filter Chips (Dynamic Layout Elements)
+  // Filter Chips
   static Color chipSelectedBg(BuildContext context) =>
       isDark(context) ? const Color(0xFF3B82F6).withOpacity(0.3) : const Color(0xFFD3E2FF);
 
@@ -204,7 +205,138 @@ class CustomColor {
 
   static Color board(BuildContext context) =>
       isDark(context) ? const Color(0xFF1F2937) : const Color(0xFFE8EAED);
+
+  // ────────────────────────────────────────────────────────────────
+  // Organizations Screen Colors
+  // (merged in from organization_colors.dart — only new names that
+  // didn't already exist above; shared concepts like titles/subtitles/
+  // card backgrounds reuse the members already defined higher up)
+  // ────────────────────────────────────────────────────────────────
+
+  // "Active" status badge
+  static Color activeBadgeBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF1E3A5F) : const Color(0xFFDCE7FF);
+
+  static Color activeBadgeText(BuildContext context) =>
+      isDark(context) ? const Color(0xFF93C5FD) : const Color(0xFF1D4ED8);
+
+  // Organization card frame
+  static Color orgCardBorder(BuildContext context) =>
+      isDark(context) ? const Color(0xFF2D3748) : const Color(0xFFEDEFF2);
+
+  static Color orgCardShadow(BuildContext context) =>
+      isDark(context) ? const Color(0x00000000) : const Color(0x14000000);
+
+  // Avatar stack ("+21")
+  static Color avatarStackBorder(BuildContext context) =>
+      isDark(context) ? const Color(0xFF1F2937) : Colors.white;
+
+  static Color avatarExtraBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF111827) : const Color(0xFF1F2937);
+
+  static Color avatarExtraText(BuildContext context) => Colors.white;
+
+  // Invite Others card (dashed border)
+  static Color inviteCardBorder(BuildContext context) =>
+      isDark(context) ? const Color(0xFF4B5563) : const Color(0xFFCBD5E1);
+
+  static Color inviteIconBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF1E3A5F) : const Color(0xFFDCE7FF);
+
+  static Color inviteIconColor(BuildContext context) =>
+      isDark(context) ? const Color(0xFF60A5FA) : const Color(0xFF2563EB);
+
+  static Color inviteLinkBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF1E2A3A) : const Color(0xFFEFF4FF);
+
+  static Color inviteLinkText(BuildContext context) =>
+      isDark(context) ? const Color(0xFF93C5FD) : const Color(0xFF2563EB);
+
+  static Color copyButtonBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFFF9FAFB) : const Color(0xFF111827);
+
+  static Color copyButtonText(BuildContext context) =>
+      isDark(context) ? const Color(0xFF111827) : Colors.white;
+
+  // Floating action button
+  static Color fabBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF3B82F6) : const Color(0xFF2563EB);
+
+  static Color fabIcon(BuildContext context) => Colors.white;
+
+  // Secondary "add organization" ghost button
+  static Color addOrgGhostBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF1F2937) : const Color(0xFFF3F4F6);
+
+  static Color addOrgGhostIcon(BuildContext context) => textMutedLabel(context);
+
+   //Logo picker
+  static Color logoPickerBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF374151) : const Color(0xFFF4F5F7);
+
+  static Color logoPickerBorder(BuildContext context) =>
+      isDark(context) ? const Color(0xFF4B5563) : const Color(0xFFD1D5DB);
+
+  static Color logoPickerIcon(BuildContext context) => textMutedLabel(context);
+
+  // Slug availability feedback
+  static Color slugAvailableText(BuildContext context) =>
+      isDark(context) ? const Color(0xFF4ADE80) : const Color(0xFF15803D);
+
+  static Color slugTakenText(BuildContext context) =>
+      isDark(context) ? const Color(0xFFF87171) : const Color(0xFFDC2626);
+
+  static Color slugCheckingText(BuildContext context) => smalltext(context);
+
+  static Color slugPrefixText(BuildContext context) => textMutedLabel(context);
+
+  // Plan tier selector cards
+  static Color planCardSelectedBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF1E3A5F) : const Color(0xFFEFF4FF);
+
+  static Color planCardSelectedBorder(BuildContext context) =>
+      isDark(context) ? const Color(0xFF3B82F6) : const Color(0xFF2563EB);
+
+  static Color planCardUnselectedBg(BuildContext context) => card_bg(context);
+
+  static Color planCardUnselectedBorder(BuildContext context) =>
+      isDark(context) ? const Color(0xFF374151) : const Color(0xFFE5E7EB);
+
+  static Color planCardTitle(BuildContext context) => textPrimary(context);
+
+  static Color planCardTagline(BuildContext context) => smalltext(context);
+
+  static Color planCardPrice(BuildContext context) =>
+      isDark(context) ? const Color(0xFF60A5FA) : const Color(0xFF2563EB);
+
+  static Color planCardFeatureText(BuildContext context) =>
+      textMutedLabel(context);
+
+  static Color planCardCheckIcon(BuildContext context) =>
+      isDark(context) ? const Color(0xFF4ADE80) : const Color(0xFF16A34A);
+
+  static Color planBadgePopularBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF78350F) : const Color(0xFFFEF3C7);
+
+  static Color planBadgePopularText(BuildContext context) =>
+      isDark(context) ? const Color(0xFFFCD34D) : const Color(0xFFB45309);
+
+  // Form-level error banner
+  static Color formErrorBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF3F1D1D) : const Color(0xFFFEE2E2);
+
+  static Color formErrorText(BuildContext context) =>
+      isDark(context) ? const Color(0xFFFCA5A5) : const Color(0xFFB91C1C);
+
+  // Primary CTA button
+  static Color primaryButtonBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF3B82F6) : const Color(0xFF2563EB);
+
+  static Color primaryButtonDisabledBg(BuildContext context) =>
+      isDark(context) ? const Color(0xFF374151) : const Color(0xFFE5E7EB);
+
+  static Color primaryButtonText(BuildContext context) => Colors.white;
+
+  static Color primaryButtonDisabledText(BuildContext context) =>
+      textMutedLabel(context);
 }
-
-
-
