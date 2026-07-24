@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
 import '../../services/auth_service.dart';
 import '../../services/dio_client.dart';
 
@@ -124,11 +124,17 @@ class AuthProvider extends ChangeNotifier {
       );
       print("Login Provider");
       debugPrint(response.toString());
+      debugPrint("Response Data: ");
+      debugPrint(response.data.runtimeType.toString());
+
+      print("Response: ${response.data}");
+      print("Success: ${response.data["success"]}");
+      print("Keys: ${response.data.keys}");
 
       if (response.data["success"] == true) {
         final accessToken =
-            response.data["accessToken"] ?? response.data["token"];
-        final refreshToken = response.data["refreshToken"];
+            response.data["data"]["accessToken"] ?? response.data["data"]["token"];
+        final refreshToken = response.data["data"]["refreshToken"];
 
         DioClient.setToken(accessToken);
 
@@ -235,6 +241,7 @@ class AuthProvider extends ChangeNotifier {
         username: username,
         email: email,
         password: password,
+        confirmPassword: confirmPassword,
       );
 
       _isLoading = false;
@@ -317,6 +324,89 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  //google login
+  Future<bool> googleLogin() async {
+    clearError();
+
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final GoogleSignInAccount user =
+      await GoogleSignIn.instance.authenticate();
+      debugPrint('User: ');
+      debugPrint(user.toString());
+
+
+      final GoogleSignInAuthentication authentication =
+      await user.authentication;
+      debugPrint("Authentication: ");
+      debugPrint(authentication.toString());
+
+      final String? idToken = authentication.idToken;
+      debugPrint("Id token: ");
+      debugPrint(idToken.toString());
+      if (idToken == null) {
+        debugPrint("unable to get google token");
+        _serverError = "Unable to get Google ID Token";
+        _isLoading = false;
+        notifyListeners();
+        return false;
+      }
+
+      final response = await _authService.googleLogin(idToken);
+
+      if (response.data["success"] == true) {
+        debugPrint("tokenacess");
+        debugPrint(response.data.toString());
+
+        final accessToken = response.data["data"]["accessToken"];
+
+       debugPrint("refreshtoken");
+       debugPrint(response.data.toString());
+        final refreshToken = response.data["data"]["refreshToken"];
+
+        DioClient.setToken(accessToken);
+
+        final pref =
+        await SharedPreferences.getInstance();
+
+        await pref.setString(
+          "token",
+          accessToken,
+        );
+
+        if (refreshToken != null) {
+          await pref.setString(
+            "refreshToken",
+            refreshToken,
+          );
+        }
+
+        _isLoading = false;
+        notifyListeners();
+
+        return true;
+      }
+
+      _serverError =
+          response.data["message"] ??
+              "Google Login Failed";
+    } on GoogleSignInException catch (e) {
+      _serverError = e.description ?? e.code.name;
+    } on DioException catch (e) {
+      _serverError =
+          e.response?.data["message"] ??
+              "Unable to connect to server";
+    } catch (e) {
+      _serverError = e.toString();
+    }
+
+    _isLoading = false;
+    notifyListeners();
+
+    return false;
+  }
 
     //recovery pGE
 Future<bool> sendRecoveryLink() async {
@@ -379,6 +469,7 @@ Future<bool> sendRecoveryLink() async {
 
     clear();
   }
+
 
   //---------------------------------------
   // Clear Controllers

@@ -23,9 +23,17 @@ import 'package:BrossScrum/providers/organization_provider/organization_provider
 import 'package:BrossScrum/providers/splash_provider/splash_screen_provider.dart';
 import 'package:BrossScrum/routes/route_generator.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await GoogleSignIn.instance.initialize(
+    serverClientId:
+    "741782268558-6j4k7icgjusklrrfcpje99v5qjevukv5.apps.googleusercontent.com",
+  );
+
   runApp(
     MultiProvider(
       providers: [
@@ -46,17 +54,16 @@ void main() {
         ChangeNotifierProvider(create: (_) => CreateProvider()),
         ChangeNotifierProvider(create: (_) => AllWorkProvider()),
         ChangeNotifierProvider(create: (_) => ScrumProvider()),
-        ChangeNotifierProvider(create: (_)=> SummaryPageProvider()),
-        ChangeNotifierProvider(create: (_)=> BoardProvider()),
+        ChangeNotifierProvider(create: (_) => SummaryPageProvider()),
+        ChangeNotifierProvider(create: (_) => BoardProvider()),
         ChangeNotifierProvider(create: (_) => CalenderProvider()),
-        ChangeNotifierProvider(create: (_)=> OrganizationProvider()),
-        ChangeNotifierProvider(create: (_) => CreateOrganizationProvider())
+        ChangeNotifierProvider(create: (_) => OrganizationProvider()),
+        ChangeNotifierProvider(create: (_) => CreateOrganizationProvider()),
       ],
       child: const MyApp(),
     ),
   );
 }
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 

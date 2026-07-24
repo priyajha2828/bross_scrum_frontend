@@ -8,15 +8,24 @@ import '../../../resources/color/custom_color.dart';
 import '../../../routes/app_route.dart';
 import '../create_organization/create_organization.dart';
 
-
-class OrganizationsScreen extends StatelessWidget {
+class OrganizationsScreen extends StatefulWidget {
   const OrganizationsScreen({super.key});
 
-  void _openCreateOrganization(BuildContext context) {
-    Navigator.of(context).push(
-      MaterialPageRoute(builder: (_) => const CreateOrganizationScreen()),
-    );
+  @override
+  State<OrganizationsScreen> createState() => _OrganizationsScreenState();
+}
+
+class _OrganizationsScreenState extends State<OrganizationsScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Future.microtask(() {
+      context.read<OrganizationProvider>().loadOrganizations();
+    });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +36,7 @@ class OrganizationsScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: CustomColor.appbar(context),
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.menu, color: CustomColor.tileIcon(context)),
-          onPressed: () => Scaffold.of(context).openDrawer(),
-        ),
+
         title: Text(
           'Organizations',
           style: TextStyle(
@@ -38,23 +44,17 @@ class OrganizationsScreen extends StatelessWidget {
             fontWeight: FontWeight.w700,
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: CircleAvatar(
-              radius: 18,
-              backgroundImage: const NetworkImage(
-                  'https://i.pravatar.cc/100?img=47'),
-              backgroundColor: CustomColor.tileIconContainerBg(context),
-            ),
-          ),
-        ],
+
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: CustomColor.fabBg(context),
-        onPressed: () {Navigator.pushNamed(context, AppRoute.createorgscreen);
+        onPressed: () {
+          Navigator.pushNamed(context, AppRoute.createorgscreen);
         },
-        child: Icon(Icons.add, color: CustomColor.fabIcon(context)),
+        child: Icon(
+          Icons.add,
+          color: CustomColor.fabIcon(context),
+        ),
       ),
       body: SafeArea(
         child: ListView(
@@ -77,6 +77,7 @@ class OrganizationsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
+
             for (final org in provider.organizations) ...[
               OrganizationCard(
                 organization: org,
@@ -84,15 +85,18 @@ class OrganizationsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 16),
             ],
+
             InviteOthersCard(
               inviteLink: provider.inviteLink,
               isCopying: provider.isCopying,
               onCopy: () => provider.copyInviteLink(context),
             ),
+
             const SizedBox(height: 24),
+
             Center(
               child: InkWell(
-                onTap: () => _openCreateOrganization(context),
+                onTap: () {},
                 borderRadius: BorderRadius.circular(30),
                 child: Container(
                   width: 56,
@@ -101,8 +105,10 @@ class OrganizationsScreen extends StatelessWidget {
                     color: CustomColor.addOrgGhostBg(context),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(Icons.add_business_outlined,
-                      color: CustomColor.addOrgGhostIcon(context)),
+                  child: Icon(
+                    Icons.add_business_outlined,
+                    color: CustomColor.addOrgGhostIcon(context),
+                  ),
                 ),
               ),
             ),

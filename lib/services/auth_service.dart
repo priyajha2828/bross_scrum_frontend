@@ -27,6 +27,7 @@ class AuthService {
     required String username,
     required String email,
     required String password,
+    required String confirmPassword,
   }) async {
     final response = await DioClient.dio.post(
       ApiConstant.signup,
@@ -35,7 +36,7 @@ class AuthService {
         "username": username,
         "email": email,
         "password": password,
-      },
+        "confirmPassword": confirmPassword,},
     );
     debugPrint("APierror");
     debugPrint(response.toString());
@@ -77,6 +78,17 @@ class AuthService {
   Future<Response> logout() async {
     return await DioClient.dio.post(
       ApiConstant.logout,
+    );
+  }
+
+
+//signinwithgoogle
+  Future<Response> googleLogin(String idToken) async {
+    return await DioClient.dio.post(
+        ApiConstant.googlesignin,
+        data: {
+          "idToken": idToken,
+        }
     );
   }
 }
