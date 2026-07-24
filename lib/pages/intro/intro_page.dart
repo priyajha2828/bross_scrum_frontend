@@ -155,7 +155,6 @@ class IntroPage extends StatelessWidget {
                               child: Container(
                                 width: 200,
                                 height: 32,
-                                color: Colors.blueGrey,
                                 child: Center(
                                   child: const Text(
                                     "Login",

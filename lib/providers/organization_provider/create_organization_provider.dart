@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:BrossScrum/services/org_service.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -84,7 +85,7 @@ enum SlugStatus { idle, checking, available, taken, invalid }
 
 class CreateOrganizationProvider extends ChangeNotifier {
   CreateOrganizationProvider({OrganizationRepository? repository})
-      : _repository = repository ?? MockOrganizationRepository();
+      : _repository = repository ?? OrganizationApiRepository();
 
   final OrganizationRepository _repository;
 
@@ -220,6 +221,9 @@ class CreateOrganizationProvider extends ChangeNotifier {
       return org;
     } catch (e) {
       isSubmitting = false;
+      debugPrint("exception on submitting");
+      debugPrint(e.toString());
+
       submitError = e is OrganizationSlugTakenException
           ? 'That slug was just taken — try another.'
           : 'Something went wrong. Please try again.';

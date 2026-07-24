@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import '../../resources/color/custom_color.dart';
+import '../../services/org_service.dart';
 
-
-/// Simple data model for a single organization entry.
 class OrganizationSummary {
   final String id;
   final String name;
@@ -22,41 +22,63 @@ class OrganizationSummary {
     required this.avatarUrls,
     this.extraMembersCount = 0,
   });
+
+  factory OrganizationSummary.fromJson(Map<String, dynamic> json) {
+    return OrganizationSummary(
+      id: json["id"],
+      name: json["name"],
+      memberCount: json["memberCount"] ?? 0,
+      status: json["status"] ?? "Active",
+      imageUrl: json["logoUrl"] ?? "",
+      avatarUrls: (json["avatarUrls"] as List?)
+          ?.map((e) => e.toString())
+          .toList() ??
+          [],
+      extraMembersCount: json["extraMembersCount"] ?? 0,
+    );
+  }
 }
 
-/// Holds the list of organizations for the current user plus the
-/// invite-link logic used by the "Invite Others" card.
 class OrganizationProvider extends ChangeNotifier {
-  final List<OrganizationSummary> _organizations = [
-    const OrganizationSummary(
-      id: 'kinetic-team',
-      name: 'Kinetic Team',
-      memberCount: 24,
-      status: 'Active',
-      imageUrl:
-      'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80',
-      avatarUrls: [
-        'https://i.pravatar.cc/100?img=1',
-        'https://i.pravatar.cc/100?img=2',
-        'https://i.pravatar.cc/100?img=3',
-      ],
-      extraMembersCount: 21,
-    ),
-  ];
+  final OrganizationApiRepository _service = OrganizationApiRepository();
 
-  List<OrganizationSummary> get organizations => List.unmodifiable(_organizations);
+  final List<OrganizationSummary> _organizations = [];
 
-  final String inviteLink = 'kinetic.app/join/xy7f2k';
+  List<OrganizationSummary> get organizations =>
+      List.unmodifiable(_organizations);
+
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  final String inviteLink = "/join/xy7f2k";
 
   bool _isCopying = false;
   bool get isCopying => _isCopying;
 
-  /// Copies the invite link to the clipboard and shows a confirmation snackbar.
+  Future<void> loadOrganizations() async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+
+      final organizations = await _service.getOrganizations();
+
+      _organizations
+        ..clear()
+        ..addAll(organizations);
+    } catch (e) {
+      debugPrint("Load Organizations Error: $e");
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
   Future<void> copyInviteLink(BuildContext context) async {
     _isCopying = true;
     notifyListeners();
 
-    await Clipboard.setData(ClipboardData(text: inviteLink));
+    await Clipboard.setData(
+      ClipboardData(text: inviteLink),
+    );
 
     _isCopying = false;
     notifyListeners();
@@ -64,21 +86,12 @@ class OrganizationProvider extends ChangeNotifier {
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text('Invite link copied to clipboard'),
+          content: const Text("Invite link copied to clipboard"),
           backgroundColor: CustomColor.copyButtonBg(context),
-          behavior: SnackBarBehavior.floating,
-          duration: const Duration(seconds: 2),
         ),
       );
     }
   }
 
-  /// Placeholder for the FAB action - hook up navigation/creation flow here.
-  void addOrganization() {
-    // e.g. Navigator.pushNamed(context, '/create-organization');
-  }
-
-  void viewDetails(String organizationId) {
-    // e.g. Navigator.pushNamed(context, '/organization/$organizationId');
-  }
+  void viewDetails(String id) {}
 }

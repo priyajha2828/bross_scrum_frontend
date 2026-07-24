@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../providers/organization_provider/create_organization_provider.dart';
+import '../../../providers/organization_provider/organization_provider.dart';
 import '../../../resources/color/custom_color.dart';
 import '../../../resources/org/org_namefield.dart';
-import '../../../resources/org/org_slugfield.dart';
 import '../../../resources/org/plan_tier_selector.dart';
 import 'org_logo_picker.dart';
 
@@ -35,10 +35,16 @@ class _CreateOrganizationViewState extends State<_CreateOrganizationView> {
     if (!provider.canSubmit) return;
 
     final org = await provider.submit();
+    debugPrint("Organization:$org");
+
     if (!mounted) return;
+    debugPrint("loading organizations");
 
     if (org != null) {
-      Navigator.of(context).pop(org);
+      await context.read<OrganizationProvider>().loadOrganizations();
+      debugPrint("navigating back");
+
+      Navigator.pop(context);
     }
   }
 
@@ -78,12 +84,12 @@ class _CreateOrganizationViewState extends State<_CreateOrganizationView> {
                 controller: provider.nameController,
                 onChanged: provider.onNameChanged,
               ),
-              const SizedBox(height: 18),
-              OrgSlugField(
-                controller: provider.slugController,
-                onChanged: provider.onSlugChanged,
-                status: provider.slugStatus,
-              ),
+              // const SizedBox(height: 18),
+              // OrgSlugField(
+              //   controller: provider.slugController,
+              //   onChanged: provider.onSlugChanged,
+              //   status: provider.slugStatus,
+              // ),
               const SizedBox(height: 22),
               PlanTierSelector(
                 selected: provider.selectedPlan,

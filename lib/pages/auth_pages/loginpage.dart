@@ -358,7 +358,12 @@ class LoginPage extends StatelessWidget {
                               label: 'Google',
                               iconData: Icons.g_mobiledata,
                               iconColor: Colors.red,
-                               onPressed: () {},
+                               onPressed: () async{
+                                final success = await context.read<AuthProvider>().googleLogin();
+                                if(success && context.mounted){
+                                  Navigator.pushNamed(context, AppRoute.orgscreen);
+                                }
+                               },
                             ),
                             const SizedBox(height: 12),
                             LoginPageButton(
