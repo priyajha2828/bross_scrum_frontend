@@ -91,4 +91,19 @@ class AuthService {
         }
     );
   }
+
+
+//resetpassword
+  Future<Response> resetPassword({
+    required String newPassword,
+    required String token,
+  }) async {
+    return await DioClient.dio.post(
+      ApiConstant.resetPassword,
+      data: {
+        "token":token,
+        "password": newPassword,
+      },
+    );
+  }
 }

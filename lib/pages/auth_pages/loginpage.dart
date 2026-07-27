@@ -37,13 +37,13 @@ class LoginPage extends StatelessWidget {
                     ),
                     child: Center(
                       child: ConstrainedBox(
-                        constraints: const BoxConstraints(maxWidth: 400),
-                        child: Container(
-                          padding: const EdgeInsets.all(28),
-                          decoration: BoxDecoration(
-                            color: CustomColor.logincontainer(context),
-                            borderRadius: BorderRadius.circular(28),
-                          ),
+                        constraints: const BoxConstraints(maxWidth: 800),
+                        // child: Container(
+                        //   padding: const EdgeInsets.all(28),
+                        //   decoration: BoxDecoration(
+                        //     color: CustomColor.logincontainer(context),
+                        //     borderRadius: BorderRadius.circular(28),
+                        //   ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +72,7 @@ class LoginPage extends StatelessWidget {
                                   style: TextStyle(
                                     fontSize: 18,
                                     fontWeight: FontWeight.bold,
-                                    color: CustomColor.tileTextPrimary(context),
+                                    color: CustomColor.bross_scrum(context),
                                   ),
                                 ),
                               ),
@@ -321,7 +321,7 @@ class LoginPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
+                        // ),
                       ),
                     ),
                   ),
@@ -352,27 +352,52 @@ class LoginPage extends StatelessWidget {
                     child: Center(
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(maxWidth: 400),
-                        child: Column(
-                          children: [
-                            LoginPageButton(
-                              label: 'Google',
-                              iconData: Icons.g_mobiledata,
-                              iconColor: Colors.red,
-                               onPressed: () async{
-                                final success = await context.read<AuthProvider>().googleLogin();
-                                if(success && context.mounted){
-                                  Navigator.pushNamed(context, AppRoute.orgscreen);
-                                }
-                               },
+                        child: SizedBox(
+                          width: 200,
+                          height: 50,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              final success =
+                              await context.read<AuthProvider>().googleLogin();
+
+                              if (success && context.mounted) {
+                                Navigator.pushNamed(context, AppRoute.orgscreen);
+                              }
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: CustomColor.bg_color(context),
+                              foregroundColor: Colors.black,
+                              elevation: 0,
+                              side: BorderSide(
+                                color: Colors.grey.shade300,
+                                width: 1.5,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(4),
+                              ),
                             ),
-                            const SizedBox(height: 12),
-                            LoginPageButton(
-                              label: 'Apple',
-                              iconData: Icons.apple,
-                              iconColor: isDark ? Colors.white : Colors.black,
-                               onPressed: () {},
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Icon(
+                                    Icons.g_mobiledata,
+                                    color: Colors.red,
+                                    size: 28,
+                                  ),
+                                ),
+                                Text(
+                                  'Google',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 14,
+                                    color: CustomColor.tileTextPrimary(context),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
                     ),

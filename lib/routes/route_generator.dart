@@ -16,6 +16,7 @@ import '../pages/account/settings/manage_account/manage_account_page.dart';
 import '../pages/account/settings/settingsPage/settings.dart';
 import '../pages/auth_pages/otp_page.dart';
 import '../pages/auth_pages/recovery_page.dart';
+import '../pages/auth_pages/reset_password_page.dart';
 import '../pages/auth_pages/signuppage.dart';
 import '../pages/home_screen/all_work/filter_screen/filter_screen.dart';
 import '../pages/home_screen/create/create_screen.dart';
@@ -89,6 +90,8 @@ class RouteGenerator {
         return MaterialPageRoute(builder: (_) => OrganizationsScreen());
       case AppRoute.createorgscreen:
         return MaterialPageRoute(builder: (_)=> CreateOrganizationScreen());
+      case AppRoute.resetpasswordscreen:
+        return MaterialPageRoute(builder: (_)=> ResetPasswordPage());
         default:
           return _errorRoute();
     }

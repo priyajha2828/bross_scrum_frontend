@@ -27,5 +27,6 @@ class AppRoute {
  static const String scrumscreen = "/scrumscreen";
  static const String orgscreen = "/orgscreen";
   static const String createorgscreen ="/createorgscreen";
+  static const String resetpasswordscreen = "/resetpaswwordscreen";
 
 }

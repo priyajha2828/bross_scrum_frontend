@@ -35,12 +35,12 @@ class OtpPage extends StatelessWidget {
                     child: Center(
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(maxWidth: 400),
-                        child: Container(
-                          padding: const EdgeInsets.all(28),
-                          decoration: BoxDecoration(
-                            color: CustomColor.logincontainer(context),
-                            borderRadius: BorderRadius.circular(28),
-                          ),
+                        // child: Container(
+                        //   padding: const EdgeInsets.all(28),
+                        //   decoration: BoxDecoration(
+                        //     color: CustomColor.logincontainer(context),
+                        //     borderRadius: BorderRadius.circular(28),
+                        //   ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -87,8 +87,8 @@ class OtpPage extends StatelessWidget {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                provider.emailController.text.isNotEmpty
-                                    ? provider.emailController.text
+                                provider.recoveryEmailController.text.isNotEmpty
+                                    ? provider.recoveryEmailController.text
                                     : "your email address",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
@@ -152,7 +152,16 @@ class OtpPage extends StatelessWidget {
                               ElevatedButton(
                                 onPressed: provider.isLoading
                                     ? null
-                                    : () => provider.verifyOtp(),
+                                    : () async {
+                                  final success = await provider.verifyOtp();
+
+                                  if (success && context.mounted) {
+                                    Navigator.pushNamed(
+                                      context,
+                                      AppRoute.resetpasswordscreen,
+                                    );
+                                  }
+                                },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xFF0052CC),
                                   foregroundColor: Colors.white,
@@ -174,14 +183,7 @@ class OtpPage extends StatelessWidget {
                                           strokeWidth: 2,
                                         ),
                                       )
-                                    : TextButton(
-                                        onPressed: () {
-                                          Navigator.pushNamed(
-                                            context,
-                                            AppRoute.homescreen,
-                                          );
-                                        },
-                                        child: Text(
+                                    : Text(
                                           'Verify',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
@@ -189,7 +191,7 @@ class OtpPage extends StatelessWidget {
                                             color: Colors.white,
                                           ),
                                         ),
-                                      ),
+
                               ),
                               const SizedBox(height: 24),
                               Row(
@@ -231,7 +233,7 @@ class OtpPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
+                        // ),
                       ),
                     ),
                   ),
