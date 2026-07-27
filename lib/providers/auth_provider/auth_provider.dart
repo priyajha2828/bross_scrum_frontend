@@ -1,3 +1,4 @@
+// auth_provider.dart
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -6,7 +7,6 @@ import '../../services/auth_service.dart';
 import '../../services/dio_client.dart';
 
 class AuthProvider extends ChangeNotifier {
-
   final AuthService _authService = AuthService();
 
   bool _isLoading = false;
@@ -17,7 +17,6 @@ class AuthProvider extends ChangeNotifier {
 
   bool _rememberMe = false;
   bool get rememberMe => _rememberMe;
-
 
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
@@ -40,35 +39,111 @@ class AuthProvider extends ChangeNotifier {
   String? _serverError;
   String? get serverError => _serverError;
 
+  String? _resetToken;
+  String? get resetToken => _resetToken;
+
+
   //---------------------------------------
   // Controllers
   //---------------------------------------
 
   final TextEditingController emailController = TextEditingController();
-
   final TextEditingController passwordController = TextEditingController();
-
-  final TextEditingController fullNameController =
-  TextEditingController();
-
-  final TextEditingController usernameController =
-  TextEditingController();
-
+  final TextEditingController fullNameController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController confirmPasswordController =
   TextEditingController();
 
   final TextEditingController _recoveryEmailController =
   TextEditingController();
-
   TextEditingController get recoveryEmailController =>
       _recoveryEmailController;
 
-
   final List<TextEditingController> _otpControllers =
   List.generate(6, (_) => TextEditingController());
+  List<TextEditingController> get otpControllers => _otpControllers;
 
-  List<TextEditingController> get otpControllers =>
-      _otpControllers;
+  //---------------------------------------
+  // Reset Password (merged from ResetPasswordProvider)
+  //---------------------------------------
+
+  final resetPasswordFormKey = GlobalKey<FormState>();
+
+  final TextEditingController resetPasswordController =
+  TextEditingController();
+  final TextEditingController resetConfirmController =
+  TextEditingController();
+
+  bool _hideResetPassword = true;
+  bool get hideResetPassword => _hideResetPassword;
+
+  bool _hideResetConfirm = true;
+  bool get hideResetConfirm => _hideResetConfirm;
+
+  double _resetStrength = 0.0;
+  double get resetStrength => _resetStrength;
+
+  String _resetPasswordMessage = "Password must be at least 8 characters";
+  String get resetPasswordMessage => _resetPasswordMessage;
+
+  Color _resetStrengthColor = Colors.red;
+  Color get resetStrengthColor => _resetStrengthColor;
+
+  void toggleResetPassword() {
+    _hideResetPassword = !_hideResetPassword;
+    notifyListeners();
+  }
+
+  void toggleResetConfirm() {
+    _hideResetConfirm = !_hideResetConfirm;
+    notifyListeners();
+  }
+
+  void checkResetPasswordStrength(String value) {
+    if (value.isEmpty) {
+      _resetStrength = 0;
+      _resetStrengthColor = Colors.red;
+      _resetPasswordMessage = "Password must be at least 8 characters";
+    } else if (value.length < 8) {
+      _resetStrength = .25;
+      _resetStrengthColor = Colors.red;
+      _resetPasswordMessage = "Too short - minimum 8 characters";
+    } else if (value.length < 10) {
+      _resetStrength = .50;
+      _resetStrengthColor = Colors.orange;
+      _resetPasswordMessage = "Weak password";
+    } else if (value.length < 12) {
+      _resetStrength = .75;
+      _resetStrengthColor = Colors.amber;
+      _resetPasswordMessage = "Good password";
+    } else {
+      _resetStrength = 1;
+      _resetStrengthColor = Colors.green;
+      _resetPasswordMessage = "Strong password";
+    }
+    notifyListeners();
+  }
+
+  String? resetPasswordValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Password is required";
+    }
+    if (value.length < 8) {
+      return "Minimum 8 characters required";
+    }
+    return null;
+  }
+
+  String? resetConfirmValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return "Confirm password is required";
+    }
+    if (value != resetPasswordController.text) {
+      return "Passwords do not match";
+    }
+    return null;
+  }
+
 
   //---------------------------------------
 
@@ -77,11 +152,10 @@ class AuthProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleRememberMe(bool? value){
-    _rememberMe=value??!_rememberMe;
+  void toggleRememberMe(bool? value) {
+    _rememberMe = value ?? !_rememberMe;
     notifyListeners();
   }
-
 
   //---------------------------------------
   // LOGIN
@@ -94,7 +168,6 @@ class AuthProvider extends ChangeNotifier {
     final email = emailController.text.trim();
     final password = passwordController.text;
 
-    // Email Validation
     if (email.isEmpty) {
       _emailError = "Email is required";
       hasError = true;
@@ -103,7 +176,6 @@ class AuthProvider extends ChangeNotifier {
       hasError = true;
     }
 
-    // Password Validation
     if (password.isEmpty) {
       _passwordError = "Password is required";
       hasError = true;
@@ -122,18 +194,10 @@ class AuthProvider extends ChangeNotifier {
         email: email,
         password: password,
       );
-      print("Login Provider");
-      debugPrint(response.toString());
-      debugPrint("Response Data: ");
-      debugPrint(response.data.runtimeType.toString());
-
-      print("Response: ${response.data}");
-      print("Success: ${response.data["success"]}");
-      print("Keys: ${response.data.keys}");
 
       if (response.data["success"] == true) {
-        final accessToken =
-            response.data["data"]["accessToken"] ?? response.data["data"]["token"];
+        final accessToken = response.data["data"]["accessToken"] ??
+            response.data["data"]["token"];
         final refreshToken = response.data["data"]["refreshToken"];
 
         DioClient.setToken(accessToken);
@@ -154,11 +218,8 @@ class AuthProvider extends ChangeNotifier {
 
       _serverError = response.data["message"] ?? "Login failed";
     } on DioException catch (e) {
-      debugPrint("Login Ex: ");
-      debugPrint(e.toString());
       if (e.response != null) {
-        _serverError =
-            e.response?.data["message"] ?? "Login failed";
+        _serverError = e.response?.data["message"] ?? "Login failed";
       } else {
         _serverError = "Unable to connect to server";
       }
@@ -185,13 +246,11 @@ class AuthProvider extends ChangeNotifier {
     final password = passwordController.text;
     final confirmPassword = confirmPasswordController.text;
 
-    // Full Name
     if (fullName.isEmpty) {
       _fullNameError = "Full name is required";
       hasError = true;
     }
 
-    // Username
     if (username.isEmpty) {
       _usernameError = "Username is required";
       hasError = true;
@@ -200,7 +259,6 @@ class AuthProvider extends ChangeNotifier {
       hasError = true;
     }
 
-    // Email
     if (email.isEmpty) {
       _emailError = "Email is required";
       hasError = true;
@@ -209,7 +267,6 @@ class AuthProvider extends ChangeNotifier {
       hasError = true;
     }
 
-    // Password
     if (password.isEmpty) {
       _passwordError = "Password is required";
       hasError = true;
@@ -218,7 +275,6 @@ class AuthProvider extends ChangeNotifier {
       hasError = true;
     }
 
-    // Confirm Password
     if (confirmPassword.isEmpty) {
       _confirmPasswordError = "Confirm password is required";
       hasError = true;
@@ -256,14 +312,9 @@ class AuthProvider extends ChangeNotifier {
       return false;
     } on DioException catch (e) {
       _isLoading = false;
-      debugPrint("Exception ");
-      debugPrint(e.toString());
-
 
       if (e.response != null) {
-        final message =
-            e.response?.data["message"] ?? "Signup failed";
-
+        final message = e.response?.data["message"] ?? "Signup failed";
 
         if (message.toLowerCase().contains("email")) {
           _emailError = message;
@@ -285,6 +336,7 @@ class AuthProvider extends ChangeNotifier {
       return false;
     }
   }
+
   Future<bool> verifyOtp() async {
     clearError();
 
@@ -301,13 +353,14 @@ class AuthProvider extends ChangeNotifier {
 
     try {
       final response = await _authService.verifyOtp(
-        email: emailController.text.trim(),
+        email: recoveryEmailController.text.trim(),
         otp: otp,
       );
 
       _isLoading = false;
 
       if (response.data["success"] == true) {
+        _resetToken = response.data["data"]?["resetToken"];
         notifyListeners();
         return true;
       }
@@ -317,12 +370,57 @@ class AuthProvider extends ChangeNotifier {
       return false;
     } on DioException catch (e) {
       _isLoading = false;
-      _serverError =
-          e.response?.data["message"] ?? "Invalid OTP";
+      _serverError = e.response?.data["message"] ?? "Invalid OTP";
       notifyListeners();
       return false;
     }
   }
+
+  Future<bool> resetPassword() async {
+    if (!resetPasswordFormKey.currentState!.validate()) return false;
+
+    clearError();
+
+    if (_resetToken == null) {
+      _serverError = "Session expired. Please verify OTP again.";
+      notifyListeners();
+      return false;
+    }
+
+    _isLoading = true;
+    notifyListeners();
+
+    try {
+      final response = await _authService.resetPassword(
+        token: _resetToken!,
+        newPassword: resetPasswordController.text,
+      );
+
+      _isLoading = false;
+
+      if (response.data["success"] == true) {
+        _resetToken = null; // one-time use, clear after success
+        notifyListeners();
+        return true;
+      }
+
+      _serverError = response.data["message"] ?? "Reset password failed";
+      notifyListeners();
+      return false;
+    } on DioException catch (e) {
+      _isLoading = false;
+      _serverError =
+          e.response?.data["message"] ?? "Unable to connect to server";
+      notifyListeners();
+      return false;
+    } catch (e) {
+      _isLoading = false;
+      _serverError = e.toString();
+      notifyListeners();
+      return false;
+    }
+  }
+
 
   //google login
   Future<bool> googleLogin() async {
@@ -334,20 +432,12 @@ class AuthProvider extends ChangeNotifier {
     try {
       final GoogleSignInAccount user =
       await GoogleSignIn.instance.authenticate();
-      debugPrint('User: ');
-      debugPrint(user.toString());
-
 
       final GoogleSignInAuthentication authentication =
       await user.authentication;
-      debugPrint("Authentication: ");
-      debugPrint(authentication.toString());
 
       final String? idToken = authentication.idToken;
-      debugPrint("Id token: ");
-      debugPrint(idToken.toString());
       if (idToken == null) {
-        debugPrint("unable to get google token");
         _serverError = "Unable to get Google ID Token";
         _isLoading = false;
         notifyListeners();
@@ -357,104 +447,77 @@ class AuthProvider extends ChangeNotifier {
       final response = await _authService.googleLogin(idToken);
 
       if (response.data["success"] == true) {
-        debugPrint("tokenacess");
-        debugPrint(response.data.toString());
-
         final accessToken = response.data["data"]["accessToken"];
-
-       debugPrint("refreshtoken");
-       debugPrint(response.data.toString());
         final refreshToken = response.data["data"]["refreshToken"];
 
         DioClient.setToken(accessToken);
 
-        final pref =
-        await SharedPreferences.getInstance();
-
-        await pref.setString(
-          "token",
-          accessToken,
-        );
+        final pref = await SharedPreferences.getInstance();
+        await pref.setString("token", accessToken);
 
         if (refreshToken != null) {
-          await pref.setString(
-            "refreshToken",
-            refreshToken,
-          );
+          await pref.setString("refreshToken", refreshToken);
         }
 
         _isLoading = false;
         notifyListeners();
-
         return true;
       }
 
-      _serverError =
-          response.data["message"] ??
-              "Google Login Failed";
+      _serverError = response.data["message"] ?? "Google Login Failed";
     } on GoogleSignInException catch (e) {
       _serverError = e.description ?? e.code.name;
     } on DioException catch (e) {
       _serverError =
-          e.response?.data["message"] ??
-              "Unable to connect to server";
+          e.response?.data["message"] ?? "Unable to connect to server";
     } catch (e) {
       _serverError = e.toString();
     }
 
     _isLoading = false;
     notifyListeners();
-
     return false;
   }
 
-    //recovery pGE
-Future<bool> sendRecoveryLink() async {
-  clearError();
+  //recovery page
+  Future<bool> sendRecoveryLink() async {
+    clearError();
 
-  if (recoveryEmailController.text
-      .trim()
-      .isEmpty) {
-    _emailError = "Email is required";
-    notifyListeners();
-    return false;
-  }
-
-  _isLoading = true;
-  notifyListeners();
-
-  try {
-    final response = await _authService.forgotPassword(
-      recoveryEmailController.text.trim(),
-    );
-
-    _isLoading = false;
-
-    if (response.data["success"] == true) {
+    if (recoveryEmailController.text.trim().isEmpty) {
+      _emailError = "Email is required";
       notifyListeners();
-      return true;
+      return false;
     }
 
-    _serverError =
-        response.data["message"] ?? "Recovery request failed";
-
+    _isLoading = true;
     notifyListeners();
-    return false;
 
-  } on DioException catch (e) {
-    _isLoading = false;
-    _serverError =
-        e.response?.data["message"] ?? "Something went wrong";
-    notifyListeners();
-    return false;
+    try {
+      final response = await _authService.forgotPassword(
+        recoveryEmailController.text.trim(),
+      );
+
+      _isLoading = false;
+
+      if (response.data["success"] == true) {
+        notifyListeners();
+        return true;
+      }
+
+      _serverError = response.data["message"] ?? "Recovery request failed";
+      notifyListeners();
+      return false;
+    } on DioException catch (e) {
+      _isLoading = false;
+      _serverError = e.response?.data["message"] ?? "Something went wrong";
+      notifyListeners();
+      return false;
+    }
   }
-}
-
 
   //---------------------------------------
   // Logout
   //---------------------------------------
-
   Future<void> logout() async {
     try {
       await _authService.logout();
@@ -463,69 +526,61 @@ Future<bool> sendRecoveryLink() async {
     final pref = await SharedPreferences.getInstance();
 
     await pref.remove("token");
-    await pref.remove("refreshToken"); // यदि प्रयोग गर्छौ भने
+    await pref.remove("refreshToken");
 
     DioClient.clearToken();
 
     clear();
   }
 
-
   //---------------------------------------
   // Clear Controllers
   //---------------------------------------
-
   void clear() {
-
     emailController.clear();
     passwordController.clear();
     fullNameController.clear();
     usernameController.clear();
     confirmPasswordController.clear();
     _recoveryEmailController.clear();
+    resetPasswordController.clear();
+    resetConfirmController.clear();
+    _resetToken = null;
 
     for (final controller in _otpControllers) {
       controller.clear();
     }
 
     clearError();
-
     notifyListeners();
   }
 
-
   void clearError() {
-      _fullNameError = null;
-      _usernameError = null;
-      _emailError = null;
-      _passwordError = null;
-      _confirmPasswordError = null;
-      _serverError = null;
-      _errorMessage = null;
-
-    }
-
+    _fullNameError = null;
+    _usernameError = null;
+    _emailError = null;
+    _passwordError = null;
+    _confirmPasswordError = null;
+    _serverError = null;
+    _errorMessage = null;
+  }
 
   //---------------------------------------
 
   @override
   void dispose() {
-
     emailController.dispose();
-
     passwordController.dispose();
-
     fullNameController.dispose();
-
     usernameController.dispose();
-
     confirmPasswordController.dispose();
     _recoveryEmailController.dispose();
+    resetPasswordController.dispose();
+    resetConfirmController.dispose();
 
-    for(final controller in _otpControllers){
+    for (final controller in _otpControllers) {
       controller.dispose();
     }
-
 
     super.dispose();
   }

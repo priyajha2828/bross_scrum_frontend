@@ -37,12 +37,7 @@ class SignUpPage extends StatelessWidget {
                     child: Center(
                       child: ConstrainedBox(
                         constraints: const BoxConstraints(maxWidth: 400),
-                        child: Container(
-                          padding: const EdgeInsets.all(28),
-                          decoration: BoxDecoration(
-                            color: CustomColor.logincontainer(context),
-                            borderRadius: BorderRadius.circular(28),
-                          ),
+
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -494,7 +489,7 @@ class SignUpPage extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
+
                       ),
                     ),
                   ),
